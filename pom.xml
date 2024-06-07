@@ -11,4 +11,25 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.killa.sierravp.SIERRAVP</exec.mainClass>
     </properties>
+    <dependencies>
+        <!-- Hibernate Core dependency -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>7.0.0.Alpha2</version>
+        </dependency>
+        <!-- JPA API dependency -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <!-- MySQL Connector dependency -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        <!-- Hibernate EntityManager dependency -->
+    </dependencies>
 </project>
