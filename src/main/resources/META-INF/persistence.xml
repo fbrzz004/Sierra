@@ -7,10 +7,15 @@
     <persistence-unit name="UnidadPersistencia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!-- Agrega más clases de entidad aquí -->
-        <class>com.killa.sierravp.Usuario</class>
-        <class>com.killa.sierravp.Admin</class>
-        <class>com.killa.sierravp.Profesor</class>
-        <class>com.killa.sierravp.Alumno</class>
+        <!-- Usuarios-->
+        <class>com.killa.sierravp.domain.Usuario</class>
+        <class>com.killa.sierravp.domain.Admin</class>
+        <class>com.killa.sierravp.domain.Profesor</class>
+        <!-- Related to college -->
+        <class>com.killa.sierravp.domain.Facultad</class>
+        <class>com.killa.sierravp.domain.EscuelaProfesional</class>
+        <!-- Related to perfomance -->
+        <class>com.killa.sierravp.domain.Ranking</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://34.176.158.86:3306/SIERRAVP"/>

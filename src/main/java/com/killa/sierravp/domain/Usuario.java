@@ -27,7 +27,7 @@ public class Usuario implements Serializable{
     private String nombres;
     private String apellidos;
     private String contraseña;
-    private String correoInstitucional;
+    private String correo;
     
     public boolean autenticar(String user, String password){
         return false;
@@ -68,12 +68,14 @@ public class Usuario implements Serializable{
         this.contraseña = contraseña;
     }
 
-    public String getCorreoInstitucional() {
-        return correoInstitucional;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCorreoInstitucional(String correoInstitucional) {
-        this.correoInstitucional = correoInstitucional;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
+
+    
       
 }

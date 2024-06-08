@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,10 +15,7 @@ import java.util.Set;
  * @author karlo
  */
 @Entity
-public class Curso implements Serializable{
-    @Id
-    int id;
-    String nombre;
-    @OneToMany(mappedBy = "curso")
+public class Profesor extends Usuario{
+    @OneToMany(mappedBy = "profesor")
     private Set<Clase> clases;
 }
