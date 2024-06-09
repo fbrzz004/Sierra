@@ -11,11 +11,16 @@
         <class>com.killa.sierravp.domain.Usuario</class>
         <class>com.killa.sierravp.domain.Admin</class>
         <class>com.killa.sierravp.domain.Profesor</class>
+        <class>com.killa.sierravp.domain.Alumno</class>
         <!-- Related to college -->
         <class>com.killa.sierravp.domain.Facultad</class>
         <class>com.killa.sierravp.domain.EscuelaProfesional</class>
+        <class>com.killa.sierravp.domain.Curso</class>
+        <class>com.killa.sierravp.domain.Clase</class>
         <!-- Related to perfomance -->
         <class>com.killa.sierravp.domain.Ranking</class>
+        <class>com.killa.sierravp.domain.CRA</class>
+        <class>com.killa.sierravp.domain.Nota</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://34.176.158.86:3306/SIERRAVP"/>
