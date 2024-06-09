@@ -7,6 +7,8 @@ package com.killa.sierravp.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -23,10 +25,15 @@ import java.io.Serializable;
 @DiscriminatorColumn(name = "tipo_usuario")
 public class Usuario implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int DNI;
+    @Column(nullable = false)
     private String nombres;
+    @Column(nullable = false)
     private String apellidos;
+    @Column(nullable = false)
     private String contraseña;
+    @Column(nullable = false)
     private String correo;
     
     public boolean autenticar(String user, String password){

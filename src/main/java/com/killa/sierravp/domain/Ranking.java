@@ -4,12 +4,16 @@
  */
 package com.killa.sierravp.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.io.Serializable;
 
 /**
  *
@@ -18,8 +22,9 @@ import jakarta.persistence.OneToOne;
 //Ya esta relacionado con Alumno y su relacion es unidireccional solo Rank la tiene, porque 
 //que el alum tenga tambien conocimiento de la relacion es inecesario, lo mismo ocurre con facu y escuel Prof.
 @Entity
-public class Ranking {
+public class Ranking implements Serializable { //EL ranking calcula el periodo de matricula basandose
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @ManyToOne
     @JoinColumn(name = "fac_id", referencedColumnName = "id")
@@ -28,8 +33,9 @@ public class Ranking {
     @JoinColumn(name = "ep_id", referencedColumnName = "id")
     private EscuelaProfesional escuelaProfesional;
     @OneToOne
-    @JoinColumn(name = "alumno_codigo", referencedColumnName = "codigo")
+    @JoinColumn(name = "codigo_alumno", referencedColumnName = "codigo")
     private Alumno alumno;
+    @Column(nullable = false)
     private int posicion;
 
     public Ranking() { //no borrar los constructores vacios, son necesarios para el ORM

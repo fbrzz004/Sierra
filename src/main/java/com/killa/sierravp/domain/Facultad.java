@@ -4,37 +4,35 @@
  */
 package com.killa.sierravp.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author karlo
  */
 
-//Ya esta el mapeo bidireccional de Facultad con alumno, y EP
+//Facultad ya esta OK no conoce sus alum ni ranking pero estos si saben a que fac pertenecen
 @Entity
-public class Facultad {
+public class Facultad implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(nullable = false)
     private String nombre;
     @OneToMany(mappedBy = "facultad")
-    private List<Alumno> alumnos;
-    @OneToMany(mappedBy = "facultad")
-    private EscuelaProfesional ep;
+    private Set <EscuelaProfesional> ep;
     
     public Facultad() {
     }
 
-    public Facultad(int id, String nombre, List<Alumno> alumnos) {
-        this.id = id;
-        this.nombre = nombre;
-        this.alumnos = alumnos;
-    }
-
-    
     
     public int getId() {
         return id;
@@ -52,20 +50,14 @@ public class Facultad {
         this.nombre = nombre;
     }
 
-    public List<Alumno> getAlumnos() {
-        return alumnos;
-    }
-
-    public void setAlumnos(List<Alumno> alumnos) {
-        this.alumnos = alumnos;
-    }
-
-    public EscuelaProfesional getEp() {
+    public Set <EscuelaProfesional> getEp() {
         return ep;
     }
 
-    public void setEp(EscuelaProfesional ep) {
+    public void setEp(Set <EscuelaProfesional> ep) {
         this.ep = ep;
     }
+
+
     
 }

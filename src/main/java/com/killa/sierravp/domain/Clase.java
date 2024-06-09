@@ -5,10 +5,13 @@
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -18,14 +21,57 @@ import java.util.Set;
 //en un muchos a muchos es ventajoso usar Set porque asi no realizo operaciones extra en bdd
 //se borra de forma directa solo el elemento que quiero borrar
 @Entity
-public class Clase {
+public class Clase implements Serializable {
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
     @ManyToMany(mappedBy = "clases")
-    Set<Alumno> alumnos;
+    private Set<Alumno> alumnos;
+
     @ManyToOne
-            @JoinColumn(name = "profesor_id") 
-    Profesor profesor;
+    @JoinColumn(name = "profesor_id", nullable = false)
+    private Profesor profesor;
+
     @ManyToOne
-    Set<Curso> curso;
+    @JoinColumn(name = "curso_id", nullable = false)
+    private Curso curso;
+
+    public Clase() {
+    }
+
+    
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Set<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(Set<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+    
 }
