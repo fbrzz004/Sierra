@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://jakarta.ee/xml/ns/persistence
+                                 http://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="UnidadPersistencia" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Agrega más clases de entidad aquí -->
+        <!-- Usuarios-->
+        <class>com.killa.sierravp.domain.Usuario</class>
+        <class>com.killa.sierravp.domain.Admin</class>
+        <class>com.killa.sierravp.domain.Profesor</class>
+        <class>com.killa.sierravp.domain.Alumno</class>
+        <!-- Related to college -->
+        <class>com.killa.sierravp.domain.Facultad</class>
+        <class>com.killa.sierravp.domain.EscuelaProfesional</class>
+        <class>com.killa.sierravp.domain.Curso</class>
+        <class>com.killa.sierravp.domain.Clase</class>
+        <!-- Related to perfomance -->
+        <class>com.killa.sierravp.domain.Ranking</class>
+        <class>com.killa.sierravp.domain.CRA</class>
+        <class>com.killa.sierravp.domain.Nota</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://34.176.158.86:3306/SIERRAVP"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="Vamos@Chicos"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
