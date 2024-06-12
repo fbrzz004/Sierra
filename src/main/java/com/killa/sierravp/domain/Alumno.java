@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -24,9 +18,7 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
-
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int codigo;
 
     @ManyToOne
@@ -54,7 +46,7 @@ public class Alumno extends Usuario {
 
     @OneToMany(mappedBy = "alumno")
     private Set<CRA> craHistorico;
-    
+
     public Alumno() {
     }
 
@@ -114,4 +106,11 @@ public class Alumno extends Usuario {
         this.notas = notas;
     }
 
+    public Set<CRA> getCraHistorico() {
+        return craHistorico;
+    }
+
+    public void setCraHistorico(Set<CRA> craHistorico) {
+        this.craHistorico = craHistorico;
+    }
 }
