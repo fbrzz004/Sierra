@@ -1,7 +1,9 @@
 package com.killa.sierravp.domain;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -15,6 +17,7 @@ import java.util.Set;
  *
  * @author karlo
  */
+
 @Entity
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
@@ -47,9 +50,48 @@ public class Alumno extends Usuario {
     @OneToMany(mappedBy = "alumno")
     private Set<CRA> craHistorico;
 
+    // Nuevos atributos para manejo del rendimiento académico
+    @Column(name = "cra_ponderado_actual")
+    private double craPonderadoActual;
+
+    @ElementCollection
+    @CollectionTable(name = "cra_historico_values", joinColumns = @JoinColumn(name = "alumno_id"))
+    @Column(name = "cra_value")
+    private Set<Double> craHistoricoValues;
+
+    @Column(name = "posicion_ranking")
+    private int posicionRanking;
+
+    // Constructor por defecto necesario para JPA
     public Alumno() {
     }
 
+    // Getters y setters para los nuevos atributos
+    public double getCraPonderadoActual() {
+        return craPonderadoActual;
+    }
+
+    public void setCraPonderadoActual(double craPonderadoActual) {
+        this.craPonderadoActual = craPonderadoActual;
+    }
+
+    public Set<Double> getCraHistoricoValues() {
+        return craHistoricoValues;
+    }
+
+    public void setCraHistoricoValues(Set<Double> craHistoricoValues) {
+        this.craHistoricoValues = craHistoricoValues;
+    }
+
+    public int getPosicionRanking() {
+        return posicionRanking;
+    }
+
+    public void setPosicionRanking(int posicionRanking) {
+        this.posicionRanking = posicionRanking;
+    }
+
+    // Métodos existentes
     public int getCodigo() {
         return codigo;
     }
