@@ -12,7 +12,7 @@ public class UsuarioRepository {
     private EntityManager entityManager;
 
     public UsuarioRepository() {
-        entityManager = Persistence.createEntityManagerFactory("sierravpPU").createEntityManager();
+        entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
     }
 
     public Usuario findByCorreoAndContraseña(String correo, String contraseña) {

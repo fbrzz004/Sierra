@@ -62,6 +62,10 @@ public class Alumno extends Usuario {
     @Column(name = "posicion_ranking")
     private int posicionRanking;
 
+    @OneToOne (mappedBy = "alumno")
+    private BigFiveScores bfScores;
+    @OneToOne(mappedBy = "alumno")
+    private InteresesAcademicos interesesAcademicos;
     // Constructor por defecto necesario para JPA
     public Alumno() {
     }
@@ -155,4 +159,22 @@ public class Alumno extends Usuario {
     public void setCraHistorico(Set<CRA> craHistorico) {
         this.craHistorico = craHistorico;
     }
+
+    public BigFiveScores getBfScores() {
+        return bfScores;
+    }
+
+    public void setBfScores(BigFiveScores bfScores) {
+        this.bfScores = bfScores;
+    }
+
+    public InteresesAcademicos getInteresesAcademicos() {
+        return interesesAcademicos;
+    }
+
+    public void setInteresesAcademicos(InteresesAcademicos interesesAcademicos) {
+        this.interesesAcademicos = interesesAcademicos;
+    }
+    
+    
 }
