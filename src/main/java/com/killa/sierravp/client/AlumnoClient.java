@@ -54,7 +54,7 @@ public class AlumnoClient {
         System.out.println("Ingrese su ID de estudiante: ");
         int id = scanner.nextInt();
 
-        Alumno alumno = alumnoService.consultarRendimiento(id);
+        Alumno alumno = alumnoService.findByID(id);
 
         if (alumno != null) {
             System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());

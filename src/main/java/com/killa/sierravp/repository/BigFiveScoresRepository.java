@@ -5,7 +5,6 @@
 package com.killa.sierravp.repository;
 
 import com.killa.sierravp.domain.BigFiveScores;
-import com.killa.sierravp.domain.InteresesAcademicos;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
