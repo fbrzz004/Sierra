@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +27,8 @@ public class Curso implements Serializable {
     private String nombre;
     @OneToMany(mappedBy = "curso")
     private Set<Clase> clases;
+    @Column(nullable = false) 
+    private int creditos;
 
     public Curso() {
     }
@@ -54,5 +55,13 @@ public class Curso implements Serializable {
 
     public void setClases(Set<Clase> clases) {
         this.clases = clases;
+    }
+    
+     public int getCreditos() {
+        return creditos; 
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos; 
     }
 }   

@@ -74,4 +74,8 @@ public class Clase implements Serializable {
         this.curso = curso;
     }
     
+    public int getCreditos() {
+        return curso.getCreditos();
+    }
+
 }

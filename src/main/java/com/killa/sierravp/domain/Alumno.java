@@ -69,6 +69,8 @@ public class Alumno extends Usuario {
 
     @Column(name = "posicion_ranking")
     private int posicionRanking;
+    
+    private String nombre;
 
     // Constructor por defecto necesario para JPA
     public Alumno() {
@@ -163,4 +165,9 @@ public class Alumno extends Usuario {
     public void setCraHistorico(Set<CRA> craHistorico) {
         this.craHistorico = craHistorico;
     }
+    
+    public String getNombre() {
+        return nombre;
+    }
+
 }
