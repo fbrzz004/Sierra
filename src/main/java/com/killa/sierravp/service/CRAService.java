@@ -75,6 +75,8 @@ public class CRAService {
     }
 
     // Método para calcular el CRA de un alumno en una clase específica
+    // EJEMPLO
+    
     private double calcularCRAPorAlumno(Alumno alumno, List<Nota> notas) {
         double sumaNotas = 0.0;
         int countNotas = 0;

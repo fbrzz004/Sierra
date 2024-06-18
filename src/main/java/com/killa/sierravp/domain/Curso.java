@@ -55,4 +55,4 @@ public class Curso implements Serializable {
     public void setClases(Set<Clase> clases) {
         this.clases = clases;
     }
-}
+}   
