@@ -40,10 +40,6 @@ public class CRA {
         return craId;
     }
 
-    public void setCraId(int craId) {
-        this.craId = craId;
-    }
-
     public Alumno getAlumno() {
         return alumno;
     }

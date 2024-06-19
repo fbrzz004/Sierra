@@ -5,10 +5,13 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.domain.BigFiveScores;
+import com.killa.sierravp.util.Caracteristica_y_Id;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
+import com.killa.sierravp.util.Caractistica;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +20,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class AlumnoService {
+
     private SessionFactory sessionFactory;
     private static EntityManagerFactory emf;
 
@@ -41,9 +45,8 @@ public class AlumnoService {
     public List<Alumno> allAlumnosFromFacultad(int facultadID) {
         EntityManager em = emf.createEntityManager();
         try {
-            // Cambio principal aquí: alumnos por a
             TypedQuery<Alumno> query = em.createQuery(
-                "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
+                    "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
             query.setParameter("facultadID", facultadID);
             return query.getResultList();
         } finally {

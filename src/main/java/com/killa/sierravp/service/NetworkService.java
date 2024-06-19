@@ -1,13 +1,11 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.util.Caracteristica_y_Id;
 import com.killa.sierravp.util.PuntajesComparator;
 import com.killa.sierravp.util.puntajeAlumno;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -26,17 +24,6 @@ public class NetworkService {
 
     public NetworkService() {
         emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
-    }
-
-    public List<Alumno> allAlumnosFromFacultad(int facultadID) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Alumno> query= em.createQuery("SELECT alumnos FROM Alumno alumnos WHERE alumnos.facultad.id =:facultadID",Alumno.class);
-            query.setParameter("facultadID",facultadID);
-            return query.getResultList();
-        } finally{
-            em.close();
-        }
     }
     
     //este metodo se utiliza despues del filtro donde se selecciona los posibles mejores 
@@ -61,4 +48,59 @@ public class NetworkService {
         }
         return seleccionados;
     }
+
+        //maxCriterioLimite es el valor que ingresa el maximo permitido para una
+        //persona el cual luego se multiplica por maxAlumnos para obtener el limite total
+        //sobre el que trabaja el metodo
+        public LinkedList<Alumno> filtrarAlumnosMejorado(List<Alumno> alumnos,Caracteristica_y_Id aMaximizar,
+                Caracteristica_y_Id noDeseable, int maxAlumnos, int maxCriterioLimitePorAlum) {
+        //aMaximizar haria de valor en el problema de la mochila y noDeseable seria el peso
+        int maxCriterioLimite=maxCriterioLimitePorAlum*maxAlumnos;
+        int n = alumnos.size();
+        int[][] dp = new int[n + 1][maxCriterioLimite + 1];
+        boolean[][] keep = new boolean[n + 1][maxCriterioLimite + 1];
+        LinkedList<Alumno> resultado = new LinkedList<>();
+
+        // Inicializar las matrices, NO se HACE PORQUE ES EL VALOR DEFECTO QUE ASIGNA JAVA
+        /*
+        for (int i = 0; i <= n; i++) {
+            for (int w = 0; w <= maxCriterioLimite; w++) {
+                dp[i][w] = 0;
+                keep[i][w] = false;
+            }
+        }
+        */
+
+        // Algoritmo de programación dinámica que minimiza la caracteristica no deseable y 
+        //optimiza el criterio deseable
+        for (int i = 1; i <= n; i++) {
+            Alumno alumno = alumnos.get(i - 1);
+            int valor = alumno.procesarCaracte_Id(aMaximizar);
+            int peso = alumno.procesarCaracte_Id(noDeseable);
+
+            for (int w = 0; w <= maxCriterioLimite; w++) {
+                if (peso <= w) {
+                    int incluir = valor + dp[i - 1][w - peso];
+                    int excluir = dp[i - 1][w];
+
+                    dp[i][w] = Math.max(incluir, excluir);
+                    if (incluir > excluir) {
+                        keep[i][w] = true;
+                    }
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        // Selección de alumnos de acuerdo a la matriz keep
+        int capacidadRestante = maxCriterioLimite;
+        for (int i = n; i > 0 && resultado.size() <= maxAlumnos; i--) {
+            if (keep[i][capacidadRestante]) {
+                resultado.add(alumnos.get(i - 1));
+                capacidadRestante -= alumnos.get(i - 1).procesarCaracte_Id(noDeseable);
+            }
+        }
+        return resultado;
+    }    
 }
