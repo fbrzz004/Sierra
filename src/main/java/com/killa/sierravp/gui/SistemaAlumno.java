@@ -26,6 +26,7 @@ public class SistemaAlumno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField13 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         ButtonPerfil = new javax.swing.JButton();
         ButtonMatricula = new javax.swing.JButton();
@@ -59,13 +60,18 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
+        Notificacionpanel = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        jButton8 = new javax.swing.JButton();
         PanelDeMensaje = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
@@ -73,6 +79,9 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jTextField12 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+
+        jTextField13.setText("jTextField13");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -265,13 +274,14 @@ public class SistemaAlumno extends javax.swing.JFrame {
         });
         Social.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 90, 30));
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel9.setText("Limita tu busqueda :");
-        Social.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
-
         jButton3.setBackground(new java.awt.Color(195, 209, 229));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/campana.png"))); // NOI18N
         jButton3.setBorder(null);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         Social.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 60, 50));
 
         jPanel3.setBackground(new java.awt.Color(233, 238, 255));
@@ -314,6 +324,40 @@ public class SistemaAlumno extends javax.swing.JFrame {
 
         Social.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 490, 130));
 
+        Notificacionpanel.setBackground(new java.awt.Color(233, 238, 255));
+        Notificacionpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Notificacionpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel9.setText("Mensajes recibidos:");
+        Notificacionpanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jButton7.setBackground(new java.awt.Color(136, 244, 228));
+        jButton7.setText("Ver");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        Notificacionpanel.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 80, 30));
+
+        jTextPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextPane1.setText("Nombre y apellido te envio un mensaje");
+        jScrollPane2.setViewportView(jTextPane1);
+
+        Notificacionpanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 400, 30));
+
+        jButton8.setBackground(new java.awt.Color(255, 0, 51));
+        jButton8.setText("-");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        Notificacionpanel.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 50, 20));
+
+        Social.add(Notificacionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 440, 110));
+
         PanelDeMensaje.setBackground(new java.awt.Color(233, 238, 255));
         PanelDeMensaje.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelDeMensaje.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -352,7 +396,7 @@ public class SistemaAlumno extends javax.swing.JFrame {
 
         PanelDeMensaje.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 370, 390));
 
-        jButton6.setBackground(new java.awt.Color(190, 0, 51));
+        jButton6.setBackground(new java.awt.Color(239, 3, 67));
         jButton6.setText("X");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +406,10 @@ public class SistemaAlumno extends javax.swing.JFrame {
         PanelDeMensaje.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 40, 30));
 
         Social.add(PanelDeMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, 430, 490));
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel12.setText("Limita tu busqueda :");
+        Social.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
 
         jTabbedPane1.addTab("", Social);
 
@@ -395,6 +443,7 @@ public class SistemaAlumno extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTabbedPane1.setSelectedComponent(Social);
         PanelDeMensaje.setVisible(false);
+        Notificacionpanel.setVisible(false);
     }//GEN-LAST:event_ButtonSocialActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -430,6 +479,22 @@ public class SistemaAlumno extends javax.swing.JFrame {
         // TODO add your handling code here:
         PanelDeMensaje.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        PanelDeMensaje.setVisible(true);
+        Notificacionpanel.setVisible(false);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        Notificacionpanel.setVisible(false);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        Notificacionpanel.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -474,6 +539,7 @@ public class SistemaAlumno extends javax.swing.JFrame {
     private javax.swing.JPanel CRAalumno;
     private javax.swing.JPanel InfoPerfil;
     private javax.swing.JPanel Matricula;
+    private javax.swing.JPanel Notificacionpanel;
     private javax.swing.JPanel PanelDeMensaje;
     private javax.swing.JPanel Perfil;
     private javax.swing.JPanel Social;
@@ -484,10 +550,13 @@ public class SistemaAlumno extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -501,11 +570,13 @@ public class SistemaAlumno extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -514,5 +585,6 @@ public class SistemaAlumno extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }
