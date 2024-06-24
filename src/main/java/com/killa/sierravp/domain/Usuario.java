@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.Column;
@@ -18,21 +14,23 @@ import java.io.Serializable;
  *
  * @author karlo
  */
-//SE MANEJARA LA RELACION DE LOS USUARIOS TODO EN UNA SOLA TABLA, DONDE SE DISTINGIRA
-//ENTRE LOS TIPOS SEGUN LO QUE MARQUE LA COLUMNA TIPO DE USUARIO :)
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario")
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int DNI;
+    
     @Column(nullable = false)
     private String nombres;
+    
     @Column(nullable = false)
     private String apellidos;
+    
     @Column(nullable = false)
     private String contraseña;
+    
     @Column(nullable = false)
     private String correo;
     
@@ -82,7 +80,4 @@ public class Usuario implements Serializable{
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
-    
-      
 }

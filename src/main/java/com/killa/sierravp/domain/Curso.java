@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.Column;
@@ -23,8 +19,10 @@ public class Curso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Column(nullable = false)
     private String nombre;
+
     @OneToMany(mappedBy = "curso")
     private Set<Clase> clases;
     @Column(nullable = false) 

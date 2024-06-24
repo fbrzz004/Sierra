@@ -21,6 +21,10 @@
         <class>com.killa.sierravp.domain.Ranking</class>
         <class>com.killa.sierravp.domain.CRA</class>
         <class>com.killa.sierravp.domain.Nota</class>
+        <!-- Related to Network -->
+        <class>com.killa.sierravp.domain.InteresesAcademicos</class>
+        <class>com.killa.sierravp.domain.BigFiveScores</class>
+        
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://34.176.158.86:3306/SIERRAVP"/>

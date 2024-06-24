@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.Entity;
@@ -18,8 +14,7 @@ import java.util.Set;
  *
  * @author karlo
  */
-//en un muchos a muchos es ventajoso usar Set porque asi no realizo operaciones extra en bdd
-//se borra de forma directa solo el elemento que quiero borrar
+
 @Entity
 public class Clase implements Serializable {
     @Id
@@ -30,7 +25,7 @@ public class Clase implements Serializable {
     private Set<Alumno> alumnos;
 
     @ManyToOne
-    @JoinColumn(name = "profesor_id", nullable = false)
+    @JoinColumn(name = "profesor_id", referencedColumnName = "DNI", nullable = false)
     private Profesor profesor;
 
     @ManyToOne
@@ -39,8 +34,6 @@ public class Clase implements Serializable {
 
     public Clase() {
     }
-
-    
     
     public int getId() {
         return id;
@@ -77,5 +70,5 @@ public class Clase implements Serializable {
     public int getCreditos() {
         return curso.getCreditos();
     }
-
+    
 }

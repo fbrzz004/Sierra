@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.killa.sierravp.domain;
 
+import static com.killa.sierravp.util.AtributosInteresesAcade.investigacion;
+import com.killa.sierravp.util.Caracteristica_y_Id;
+import com.killa.sierravp.util.Caractistica;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -29,7 +28,7 @@ import java.util.Set;
 public class Alumno extends Usuario {
 
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    
     private int codigo;
 
     @ManyToOne
@@ -72,8 +71,62 @@ public class Alumno extends Usuario {
     
     private String nombre;
 
+    @OneToOne(mappedBy = "alumno")
+    private BigFiveScores bfScores;
+    @OneToOne(mappedBy = "alumno")
+    private InteresesAcademicos interesesAcademicos;
+
     // Constructor por defecto necesario para JPA
     public Alumno() {
+    }
+    
+    //Metodos especiales de alumno (se enucentra en mi clase alumno)
+    public int procesarCaracte_Id(Caracteristica_y_Id ci) {
+        int valor;
+        if (ci.getCaractistica() == Caractistica.BigFiveScores) {
+            var a = ci.getAtributoBf5();
+            valor=switch (a) {
+                case ansiedad -> this.bfScores.getAnsiedad();
+            case enojo -> this.bfScores.getEnojo();
+            case depresion -> this.bfScores.getDepresion();
+            case verguenza -> this.bfScores.getVerguenza();
+            case faltaDeAutocontrol -> this.bfScores.getFaltaDeAutocontrol();
+            case vulnerabilidad -> this.bfScores.getVulnerabilidad();
+            case amabilidad -> this.bfScores.getAmabilidad();
+            case sociabilidad -> this.bfScores.getSociabilidad();
+            case asertividad -> this.bfScores.getAsertividad();
+            case nivelDeActividad -> this.bfScores.getNivelDeActividad();
+            case busquedaDeNuevasExperiencias -> this.bfScores.getBusquedaDeNuevasExperiencias();
+            case alegria -> this.bfScores.getAlegria();
+            case imaginacion -> this.bfScores.getImaginacion();
+            case interesArtistico -> this.bfScores.getInteresArtistico();
+            case sensibilidad -> this.bfScores.getSensibilidad();
+            case ansiasDeAventura -> this.bfScores.getAnsiasDeAventura();
+            case intelecto -> this.bfScores.getIntelecto();
+            case liberalismo -> this.bfScores.getLiberalismo();
+            case confianzaEnOtros -> this.bfScores.getConfianzaEnOtros();
+            case moralidad -> this.bfScores.getMoralidad();
+            case altruismo -> this.bfScores.getAltruismo();
+            case cooperacion -> this.bfScores.getCooperacion();
+            case modestia -> this.bfScores.getModestia();
+            case empatia -> this.bfScores.getEmpatia();
+            case autoEficacia -> this.bfScores.getAutoEficacia();
+            case orden -> this.bfScores.getOrden();
+            case sentidoDelDeber -> this.bfScores.getSentidoDelDeber();
+            case disciplina -> this.bfScores.getDisciplina();
+            case prudencia -> this.bfScores.getPrudencia();
+            case orientacionAObjetivos -> this.bfScores.getOrientacionAObjetivos();
+            };
+        } else {
+            var a = ci.getAtributoIA();
+            valor= switch (a) {
+                case investigacion -> this.interesesAcademicos.getInvestigacion();
+                case trabajoEmpresarial -> this.interesesAcademicos.getTrabajoEmpresarial();
+                case emprendimiento -> this.interesesAcademicos.getEmprendimiento();
+                case voluntariado -> this.interesesAcademicos.getVoluntariado();
+            };
+        }
+        return valor;
     }
 
     // Getters y setters para los nuevos atributos
@@ -165,9 +218,25 @@ public class Alumno extends Usuario {
     public void setCraHistorico(Set<CRA> craHistorico) {
         this.craHistorico = craHistorico;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
+    
+    public BigFiveScores getBfScores() {
+        return bfScores;
+    }
 
+    public void setBfScores(BigFiveScores bfScores) {
+        this.bfScores = bfScores;
+    }
+
+    public InteresesAcademicos getInteresesAcademicos() {
+        return interesesAcademicos;
+    }
+
+    public void setInteresesAcademicos(InteresesAcademicos interesesAcademicos) {
+        this.interesesAcademicos = interesesAcademicos;
+    }
 }
+

@@ -1,82 +1,59 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
-/**
- *
- * @author USER
- */
-
 public class CRAService {
-    private SessionFactory sessionFactory;
+    private EntityManagerFactory emf;
 
-    // Constructor que inicializa la fábrica de sesiones de Hibernate
-    
+    // Constructor que inicializa la fábrica de EntityManager
     public CRAService() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+        emf = Persistence.createEntityManagerFactory("YourPersistenceUnitName"); // Asegúrate de que el nombre de la unidad de persistencia sea el correcto.
     }
 
     // Método para calcular el CRA de cada alumno en una clase específica
-    
     public void calcularCRAporClase(int claseId) {
-       
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
 
         try {
-            
-            // Obtener la clase por su ID
-            
-            Clase clase = session.get(Clase.class, claseId);
+            Clase clase = em.find(Clase.class, claseId);
             if (clase == null) {
                 System.out.println("Clase no encontrada");
                 return;
             }
 
-            // Obtener las notas de los alumnos en la clase
-            
-            List<Nota> notas = session.createQuery("FROM Nota WHERE clase.id = :claseId", Nota.class)
-                    .setParameter("claseId", claseId)
-                    .getResultList();
+            TypedQuery<Nota> query = em.createQuery("SELECT n FROM Nota n WHERE n.clase.id = :claseId", Nota.class);
+            query.setParameter("claseId", claseId);
+            List<Nota> notas = query.getResultList();
 
-            // Calcular el CRA para cada alumno
-            
-             // Calcular el CRA para cada alumno
             for (Alumno alumno : clase.getAlumnos()) {
                 double craValue = calcularCRAPorAlumno(alumno, notas);
                 CRA cra = new CRA(alumno, clase, craValue);
-                session.save(cra);
-
-                // Actualizar el CRA ponderado actual del alumno
-                
+                em.persist(cra);
                 alumno.setCraPonderadoActual(craValue);
-                session.update(alumno);
+                em.merge(alumno);
             }
 
-            transaction.commit();
+            em.getTransaction().commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             e.printStackTrace();
         } finally {
-            session.close();
+            em.close();
         }
     }
 
-    // Método para calcular el CRA de un alumno en una clase específica
-    // EJEMPLO
-    
+    // Método privado para calcular el CRA de un alumno en una clase específica
     private double calcularCRAPorAlumno(Alumno alumno, List<Nota> notas) {
         double sumaNotas = 0.0;
         int countNotas = 0;
@@ -88,11 +65,6 @@ public class CRAService {
             }
         }
 
-        // Si no hay notas para el alumno, evitar la división por cero
-        if (countNotas == 0) {
-            return 0.0;
-        }
-
-        return sumaNotas / countNotas;
+        return countNotas > 0 ? sumaNotas / countNotas : 0.0;
     }
 }
