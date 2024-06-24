@@ -8,17 +8,19 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
-import java.util.List;
+
+import java.util.*;
 
 public class CRAService {
     private EntityManagerFactory emf;
 
     // Constructor que inicializa la fábrica de EntityManager
     public CRAService() {
-        emf = Persistence.createEntityManagerFactory("YourPersistenceUnitName"); // Asegúrate de que el nombre de la unidad de persistencia sea el correcto.
+        emf = Persistence.createEntityManagerFactory("YourPersistenceUnitName"); 
     }
 
     // Método para calcular el CRA de cada alumno en una clase específica
+    
     public void calcularCRAporClase(int claseId) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -34,12 +36,27 @@ public class CRAService {
             query.setParameter("claseId", claseId);
             List<Nota> notas = query.getResultList();
 
+            // Utilizar un mapa para almacenar las notas de los alumnos
+            
+            Map<Alumno, List<Double>> notasMap = new HashMap<>();
+            for (Nota nota : notas) {
+                notasMap.computeIfAbsent(nota.getAlumno(), k -> new LinkedList<>()).add(nota.getValor());
+            }
+
+            int batchSize = 50; 
+            int count = 0;
+
             for (Alumno alumno : clase.getAlumnos()) {
-                double craValue = calcularCRAPorAlumno(alumno, notas);
+                double craValue = calcularCRAPorAlumno(alumno, notasMap.get(alumno));
                 CRA cra = new CRA(alumno, clase, craValue);
                 em.persist(cra);
                 alumno.setCraPonderadoActual(craValue);
                 em.merge(alumno);
+
+                if (++count % batchSize == 0) {
+                    em.flush();
+                    em.clear();
+                }
             }
 
             em.getTransaction().commit();
@@ -54,17 +71,17 @@ public class CRAService {
     }
 
     // Método privado para calcular el CRA de un alumno en una clase específica
-    private double calcularCRAPorAlumno(Alumno alumno, List<Nota> notas) {
-        double sumaNotas = 0.0;
-        int countNotas = 0;
-
-        for (Nota nota : notas) {
-            if (nota.getAlumno().equals(alumno)) {
-                sumaNotas += nota.getValor();
-                countNotas++;
-            }
+    
+    private double calcularCRAPorAlumno(Alumno alumno, List<Double> notas) {
+        if (notas == null || notas.isEmpty()) {
+            return 0.0;
         }
 
-        return countNotas > 0 ? sumaNotas / countNotas : 0.0;
+        double sumaNotas = 0.0;
+        for (double nota : notas) {
+            sumaNotas += nota;
+        }
+
+        return sumaNotas / notas.size();
     }
 }
