@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import java.util.Random;
 
 /**
  *
@@ -64,6 +65,56 @@ public class BigFiveScores {
     private int prudencia;
     private int orientacionAObjetivos;//logro de metas
 
+    public BigFiveScores() {
+    }
+
+    
+    //metodo para generar valores ramdom
+    
+    public BigFiveScores(boolean ramdom) {
+        Random random = new Random();
+
+        // Asignación de valores aleatorios para Neuroticism
+        this.ansiedad = random.nextInt(21); // valores de 0 a 20
+        this.enojo = random.nextInt(21);
+        this.depresion = random.nextInt(21);
+        this.verguenza = random.nextInt(21);
+        this.faltaDeAutocontrol = random.nextInt(21);
+        this.vulnerabilidad = random.nextInt(21);
+
+        // Asignación de valores aleatorios para Extroversion
+        this.amabilidad = random.nextInt(21);
+        this.sociabilidad = random.nextInt(21);
+        this.asertividad = random.nextInt(21);
+        this.nivelDeActividad = random.nextInt(21);
+        this.busquedaDeNuevasExperiencias = random.nextInt(21);
+        this.alegria = random.nextInt(21);
+
+        // Asignación de valores aleatorios para Apertura a experiencias
+        this.imaginacion = random.nextInt(21);
+        this.interesArtistico = random.nextInt(21);
+        this.sensibilidad = random.nextInt(21);
+        this.ansiasDeAventura = random.nextInt(21);
+        this.intelecto = random.nextInt(21);
+        this.liberalismo = random.nextInt(21);
+
+        // Asignación de valores aleatorios para Simpatia/Amabilidad
+        this.confianzaEnOtros = random.nextInt(21);
+        this.moralidad = random.nextInt(21);
+        this.altruismo = random.nextInt(21);
+        this.cooperacion = random.nextInt(21);
+        this.modestia = random.nextInt(21);
+        this.empatia = random.nextInt(21);
+
+        // Asignación de valores aleatorios para Escrupulosidad
+        this.autoEficacia = random.nextInt(21);
+        this.orden = random.nextInt(21);
+        this.sentidoDelDeber = random.nextInt(21);
+        this.disciplina = random.nextInt(21);
+        this.prudencia = random.nextInt(21);
+        this.orientacionAObjetivos = random.nextInt(21);
+    }
+    
     public Long getId() {
         return id;
     }

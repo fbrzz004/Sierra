@@ -5,13 +5,10 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.BigFiveScores;
-import com.killa.sierravp.util.Caracteristica_y_Id;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
-import com.killa.sierravp.util.Caractistica;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,7 +37,28 @@ public class AlumnoService {
         session.close();
         return alumno;
     }
+    
+    // Método para consultar el rendimiento de un alumno por su ID
+    public Alumno findByCodigo(int codigo) { //Anteriormente se llamo consultar rendimiento pero 
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumno> query = em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.codigo = :codigo", Alumno.class);
+            query.setParameter("codigo", codigo);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 
+    public void create(Alumno alumno) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(alumno);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
     // Método para obtener todos los alumnos de una facultad
     public List<Alumno> allAlumnosFromFacultad(int facultadID) {
         EntityManager em = emf.createEntityManager();
@@ -53,4 +71,19 @@ public class AlumnoService {
             em.close();
         }
     }
+    
 }
+/*
+
+public List<Alumno> allAlumnosFromFacultad(int facultadID) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumno> query = em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
+            query.setParameter("facultadID", facultadID);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+*/

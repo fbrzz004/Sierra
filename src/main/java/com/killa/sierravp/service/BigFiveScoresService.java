@@ -4,8 +4,11 @@
  */
 package com.killa.sierravp.service;
 
+import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.BigFiveScores;
 import com.killa.sierravp.repository.BigFiveScoresRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 /**
  *
@@ -14,13 +17,13 @@ import com.killa.sierravp.repository.BigFiveScoresRepository;
 public class BigFiveScoresService {
     BigFiveScoresRepository bfsr= new BigFiveScoresRepository();
     
-    public BigFiveScores BuscarByCod(int cod){
+    public BigFiveScores BuscarByCodigoAlumno(int cod){
         return bfsr.obtenerByCodigo(cod);
     }
     
     public float similitudCoseno(int idAlumno1, int idAlumno2){
-        BigFiveScores alumno1Scores = BuscarByCod(idAlumno1);
-        BigFiveScores alumno2Scores = BuscarByCod(idAlumno2);
+        BigFiveScores alumno1Scores = BuscarByCodigoAlumno(idAlumno1);
+        BigFiveScores alumno2Scores = BuscarByCodigoAlumno(idAlumno2);
 
         // Calcular el producto punto
         float productoPunto = (alumno1Scores.getAnsiedad() * alumno2Scores.getAnsiedad()) +
@@ -123,6 +126,10 @@ public class BigFiveScoresService {
 
         // Calcular la similitud coseno
         return productoPunto / (normaAlumno1 * normaAlumno2);
+    }
+    
+    public void create(BigFiveScores bfs) {
+        bfsr.create(bfs);
     }
     
 }

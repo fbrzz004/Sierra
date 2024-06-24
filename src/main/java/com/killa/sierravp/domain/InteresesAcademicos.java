@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import java.util.Random;
 
 /**
  *
@@ -31,7 +32,15 @@ public class InteresesAcademicos {
 
     public InteresesAcademicos() {
     }
-    
+
+    //generar intereses ramdom
+    public InteresesAcademicos(boolean ramdom) {
+        Random random = new Random();
+        this.investigacion= random.nextInt(11);
+        this.trabajoEmpresarial= random.nextInt(11);
+        this.emprendimiento= random.nextInt(11);
+        this.voluntariado= random.nextInt(11);
+    }
     // Getters y Setters
 
     public Long getId() {

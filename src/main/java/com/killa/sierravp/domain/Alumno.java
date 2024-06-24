@@ -73,7 +73,7 @@ public class Alumno extends Usuario {
     // Constructor por defecto necesario para JPA
     public Alumno() {
     }
-
+    
     //Metodos especiales de alumno (se enucentra en mi clase alumno)
     public int procesarCaracte_Id(Caracteristica_y_Id ci) {
         int valor;
