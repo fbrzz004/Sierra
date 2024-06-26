@@ -16,11 +16,12 @@ public class ProfesorRepository {
         entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
     }
 
-    //el enfoque de usar repository y service esta bastante bien, pero el problema que tiene 
+    //El problema que tiene 
     //findClaseByID es que el profesor no conoce el id, para que cumpla su funcion deberias 
     //recuperar todas las clases que dicta y con la lista que te retorna puedes obtener el id
-    //por ejemplo dicta Algo 1 y Algo 2 cuando tienes eso en la lista la app le muestra sus cursos y el selecciona
-    //con eso obtienes el id que selecciono y ahi si aplicas tus metodos de obtenerAlum
+    //por ejemplo dicta Algo 1 y Algo 2 cuando tienes eso en la lista la app le muestra sus cursos y el selecciona un curso,
+    //con eso obtienes el id del que selecciono y ahi si aplicas tus metodos de obtenerAlum
+    //pues seria algo como id = clasex.getId() lo que al final le enviarias a obtenerAlumno
     public Clase findClaseByID(int id) {
         try {
             return entityManager.find(Clase.class, id);

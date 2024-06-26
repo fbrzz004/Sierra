@@ -9,7 +9,7 @@ public class NotaService {
 
     NotaRepository nr = new NotaRepository();
 
-    public List<Nota> obtenerNotasPorCodigoAlumno(int codigoAlumno) {
-       return nr.obtenerNotasPorCodigoAlumno(codigoAlumno);
+    public List<Nota> obtenerNotasPorCodigoAlumno(int codigoAlumno, int idCurso) {
+       return nr.obtenerNotasPorAlumnoYCurso(codigoAlumno, idCurso);
     }
 }

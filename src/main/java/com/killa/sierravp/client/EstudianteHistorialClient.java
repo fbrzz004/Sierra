@@ -25,11 +25,14 @@ public class EstudianteHistorialClient {
             System.out.println("Opción no válida");
         }
     }
-
+    //el metodo debe permitir que el estudiante busque sus notas de un curso en particular
+    //debes añadir el codigo que permita obtener una lista de los cursos que llevo y que luego el alumno 
     public static void visualizarHistorialNotas() {
         System.out.println("Ingrese el código del estudiante:");
         int codigoAlumno = scanner.nextInt();
         Nota n1 = new Nota();
+        //aqui tienes que corregir el metodo de abajo para que se adapte a la logica de busqueda de curso
+        //segun el comentario del encabezado del metodo visualizarHistorialNotas() , por cierto ya cambie el metodo que permite recuperar las notas segun el codigo y el id de curso 
         List<Nota> notas =  notaService.obtenerNotasPorCodigoAlumno(codigoAlumno);
 
         if (Objects.isNull(notas)) {
