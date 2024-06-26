@@ -16,6 +16,11 @@ public class ProfesorRepository {
         entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
     }
 
+    //el enfoque de usar repository y service esta bastante bien, pero el problema que tiene 
+    //findClaseByID es que el profesor no conoce el id, para que cumpla su funcion deberias 
+    //recuperar todas las clases que dicta y con la lista que te retorna puedes obtener el id
+    //por ejemplo dicta Algo 1 y Algo 2 cuando tienes eso en la lista la app le muestra sus cursos y el selecciona
+    //con eso obtienes el id que selecciono y ahi si aplicas tus metodos de obtenerAlum
     public Clase findClaseByID(int id) {
         try {
             return entityManager.find(Clase.class, id);
@@ -26,7 +31,8 @@ public class ProfesorRepository {
 
     public List<Alumno> obtenerAlumnosPorClase(int claseId) {
         try {
-            return entityManager.createQuery("SELECT a FROM Alumno a JOIN a.notas n WHERE n.clase.id = :claseId", Alumno.class)
+            return entityManager.createQuery(
+                    "SELECT a FROM Alumno a JOIN a.clases c WHERE c.id = :claseId", Alumno.class)
                     .setParameter("claseId", claseId)
                     .getResultList();
         } finally {
@@ -34,6 +40,20 @@ public class ProfesorRepository {
         }
     }
 
+        /*
+        Forma anterior, el problema es que las notas todavia no estan en la bdd, ahora se hace buscando a los
+        alumnos que llevan esa clase
+        public List<Alumno> obtenerAlumnosPorClase(int claseId) {
+        try {
+            return entityManager.createQuery("SELECT a FROM Alumno a JOIN a.notas n WHERE n.clase.id = :claseId", Alumno.class)
+                    .setParameter("claseId", claseId)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+     */
+    
     public boolean guardarNota(Nota nota) {
         try {
             entityManager.getTransaction().begin();

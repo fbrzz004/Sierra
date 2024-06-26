@@ -26,27 +26,29 @@ public class ProfesorClient {
     }
 
     public static void ingresarNotas() {
+        
         System.out.println("Ingrese el ID de la clase:");
         int idClase = scanner.nextInt();
-        Clase clase = profesorService.findClaseByID(idClase);
+        Clase clase = profesorService.findClaseByID(idClase); //aqui esta un problema
+        //lo explico mejor en el repository
 
         if (clase == null) {
             System.out.println("Clase no encontrada.");
             return;
         }
-
+        //esto esta muy bien la logica de recuperar alumnos
         List<Alumno> alumnos = profesorService.obtenerAlumnosPorClase(idClase);
 
         for (Alumno alumno : alumnos) {
             System.out.println("Ingresando notas para el alumno: " + alumno.getNombres());
 
-            double notaParcial = leerNota("Nota parcial: ");
+            double notaParcial = leerNota("Nota parcial: "); //obtiene las notas mediante la consola 
             double notaFinal = leerNota("Nota final: ");
             double notaContinua = leerNota("Nota continua: ");
 
             if (notaParcial == -1 || notaFinal == -1 || notaContinua == -1) {
                 System.out.println("Notas fuera del rango permitido. Ingrese nuevamente.");
-                continue;
+                continue; //si hay error salta al siguiente alumno, en este caso deberias hacer que se insista hasta que ingrese valores correctos
             }
 
             boolean exitoParcial = guardarNota(notaParcial, TipoNota.EP, alumno, clase);
@@ -55,7 +57,7 @@ public class ProfesorClient {
 
             if (exitoParcial && exitoFinal && exitoContinua) {
                 System.out.println("Notas guardadas exitosamente.");
-            } else {
+            } else { //aqui podrias indicar que nota fallo usando swich 
                 System.out.println("Error al guardar las notas.");
             }
         }
