@@ -15,7 +15,7 @@ public class EstudianteHistorialClient {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("Seleccione una opción:");
+        System.out.println("=Seleccione una opción:");
         System.out.println("1. Visualizar historial de notas");
         int opcion = scanner.nextInt();
 
