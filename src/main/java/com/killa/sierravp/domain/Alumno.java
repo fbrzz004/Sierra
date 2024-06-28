@@ -21,7 +21,7 @@ import java.util.Set;
  * @author karlo
  */
 @Entity
-@DiscriminatorValue("ALUMNO")
+@DiscriminatorValue("alumno")
 public class Alumno extends Usuario {
 
     @Column(unique = true, nullable = false)

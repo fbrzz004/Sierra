@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
  * @author karlo
  */
 @Entity
+@DiscriminatorValue("profesor")
 public class Profesor extends Usuario {
     @OneToMany(mappedBy = "profesor")
     private Set<Clase> clases;

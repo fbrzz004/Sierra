@@ -4,6 +4,7 @@
  */
 package com.killa.sierravp.domain;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 /**
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
  * @author karlo
  */
 @Entity
+@DiscriminatorValue("administrativo")
 public class Administrativo extends Usuario{
     //metodos por implementar no tiene informacion ni relaciones adicionales a las de su padre solo 
     //se distingue por sus metodos

@@ -80,4 +80,11 @@ public class Usuario implements Serializable {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public void actualizarPerfil(String nombres, String apellidos, String contraseña, String correo) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.contraseña = contraseña;
+        this.correo = correo;
+    }
 }
