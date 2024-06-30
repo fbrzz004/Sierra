@@ -51,9 +51,9 @@ public class probandoCU07 {
         Alumno alum = new Alumno();
         //genero data para la comparacion
         for (int i = 0; i < 1000; i++) {
-            alum.setNombres("a"+i+1);
-            alum.setBfScores(new BigFiveScores(true));
-            alum.setInteresesAcademicos(new InteresesAcademicos(true));
+            alum.setPrimerNombre("a"+i+1);
+            alum.setBfScores(new BigFiveScores());
+            alum.setInteresesAcademicos(new InteresesAcademicos());
             alum.setFacultad(facultad);
             if (i%2==0) { //par le asigno cofware
                 alum.setEp(ep1);
@@ -80,7 +80,7 @@ public class probandoCU07 {
         LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(AllalumnosFacultad, aMaximizar, noDeseable, AllalumnosFacultad.size()/10,5 );
         LinkedList<Alumno> selecionados = networkService.recomendadosPostFiltro(alumnoService.findByCodigo(alumno.getCodigo()), filtrados,6);
         for (Alumno filtrado : selecionados) {
-            System.out.println("el id de su compañero recomendado es "+filtrado.getNombres());
+            System.out.println("el id de su compañero recomendado es "+filtrado.getPrimerNombre());
         }
     }
     

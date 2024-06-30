@@ -50,6 +50,14 @@ public class Nota implements Serializable{
     public Nota() {
     }
 
+    public Nota(Alumno alumno, Curso curso, Clase clase) {
+        this.alumno = alumno;
+        this.curso = curso;
+        this.clase = clase;
+    }
+
+    
+    
     public TipoNota getTipo() {
         return tipo;
     }

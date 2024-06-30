@@ -5,6 +5,7 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.domain.Clase;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -15,30 +16,35 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.Set;
 
 public class AlumnoService {
 
-    private SessionFactory sessionFactory;
     private static EntityManagerFactory emf;
 
     // Constructor que inicializa la fábrica de sesiones de Hibernate
     public AlumnoService() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
         emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
-    }
-
-    // Método para consultar el rendimiento de un alumno por su ID
-    public Alumno findByID(int id) { //Anteriormente se llamo consultar rendimiento pero 
-        //su funcion real es encontrar a un alumno asi que se renombro
-        // Abrir una nueva sesión de Hibernate
-        Session session = sessionFactory.openSession();
-        // Obtener la entidad Alumno desde la base de datos
-        Alumno alumno = session.get(Alumno.class, id);
-        session.close();
-        return alumno;
     }
     
     // Método para consultar el rendimiento de un alumno por su ID
+    public Alumno findByCodigo(int codigo) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            return em.createQuery(
+                "SELECT a FROM Alumno a " +
+                "LEFT JOIN FETCH a.clases c " +
+                "LEFT JOIN FETCH c.curso cu " +
+                "LEFT JOIN FETCH cu.clases " +
+                "WHERE a.codigo = :codigo", Alumno.class)
+                .setParameter("codigo", codigo)
+                .getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+    /*Metodo anterior que solo recuperaba alumno pero no sus clases relacionadas
     public Alumno findByCodigo(int codigo) { //Anteriormente se llamo consultar rendimiento pero 
         EntityManager em = emf.createEntityManager();
         try {
@@ -50,6 +56,9 @@ public class AlumnoService {
             em.close();
         }
     }
+    
+    */
+    
 
     public void create(Alumno alumno) {
         EntityManager em = emf.createEntityManager();

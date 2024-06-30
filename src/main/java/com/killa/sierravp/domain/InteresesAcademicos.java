@@ -31,16 +31,13 @@ public class InteresesAcademicos {
     private Alumno alumno;
 
     public InteresesAcademicos() {
-    }
-
-    //generar intereses ramdom
-    public InteresesAcademicos(boolean ramdom) {
         Random random = new Random();
         this.investigacion= random.nextInt(11);
         this.trabajoEmpresarial= random.nextInt(11);
         this.emprendimiento= random.nextInt(11);
         this.voluntariado= random.nextInt(11);
     }
+
     // Getters y Setters
 
     public Long getId() {

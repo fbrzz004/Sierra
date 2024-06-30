@@ -18,10 +18,10 @@ public class ClaseClient {
             System.out.println("Información de la clase:");
             System.out.println("ID: " + clase.getId());
             System.out.println("Curso: " + clase.getCurso().getNombre());
-            System.out.println("Profesor: " + clase.getProfesor().getNombres() + " " + clase.getProfesor().getApellidos());
+            System.out.println("Profesor: " + clase.getProfesor().getPrimerNombre() + " " + clase.getProfesor().getPrimerApellido());
             System.out.println("Alumnos inscritos: ");
             clase.getAlumnos().forEach(alumno -> {
-                System.out.println(alumno.getNombres() + " " + alumno.getApellidos());
+                System.out.println(alumno.getPrimerNombre()+ " " + alumno.getPrimerApellido());
             });
         } else {
             System.out.println("No se encontró la clase con el ID proporcionado.");
