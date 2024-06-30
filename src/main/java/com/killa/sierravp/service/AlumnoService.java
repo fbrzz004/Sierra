@@ -72,6 +72,17 @@ public class AlumnoService {
         }
     }
     
+    public List<Alumno> getAlumnosByClaseId(int codigoClase) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.clases.id :codigoClase", Alumno.class)
+                    .setParameter("codigoClase", codigoClase)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
 /*
 

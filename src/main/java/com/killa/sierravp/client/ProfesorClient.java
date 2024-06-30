@@ -2,7 +2,11 @@ package com.killa.sierravp.client;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
+import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.Nota;
+import com.killa.sierravp.service.AlumnoService;
+import com.killa.sierravp.service.ClaseService;
+import com.killa.sierravp.service.CursoService;
 import com.killa.sierravp.service.ProfesorService;
 import com.killa.sierravp.util.TipoNota;
 
@@ -11,6 +15,9 @@ import java.util.Scanner;
 
 public class ProfesorClient {
     private static ProfesorService profesorService = new ProfesorService();
+    private static ClaseService claseService = new ClaseService();
+    private static AlumnoService alumnoService = new AlumnoService();
+    private static CursoService cursoService = new CursoService();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -26,31 +33,35 @@ public class ProfesorClient {
     }
 
     public static void ingresarNotas() {
+        //mostrarle la lista de clases que el profesor dicta -> mediante el codigo del profesir
+        //obtengo el id de clase
         
-        System.out.println("Ingrese el ID de la clase:");
-        int idClase = scanner.nextInt();
-        Clase clase = profesorService.findClaseByID(idClase); //aqui esta un problema
-        //lo explico mejor en el repository
-
-        if (clase == null) {
-            System.out.println("Clase no encontrada.");
-            return;
+        System.out.println("Ingrese el código del profesor:");
+        int codigoProfesor = scanner.nextInt();
+        List<Clase> clases = claseService.getClasesByProfesorId(codigoProfesor);
+        if (clases.isEmpty()) {
+           System.out.println("El profesor no tiene clases disponibles.");
+           return;
         }
-        //esto esta muy bien la logica de recuperar alumnos
-        List<Alumno> alumnos = profesorService.obtenerAlumnosPorClase(idClase);
+        
+        System.out.println("Clases disponibles:");
+         clases.forEach(clase -> {
+             System.out.println(String.format("Clase con id [%s]", clase.getId()));
+         });
+        
+        System.out.println("Ingrese el código de la clase:");
+        int codigoClase = scanner.nextInt();
+
+        List<Alumno> alumnos = profesorService.obtenerAlumnosPorClase(codigoClase);
 
         for (Alumno alumno : alumnos) {
-            System.out.println("Ingresando notas para el alumno: " + alumno.getNombres());
+            System.out.println("Ingresando notas para el alumno: " + alumno.getCorreo());
 
             double notaParcial = leerNota("Nota parcial: "); //obtiene las notas mediante la consola 
             double notaFinal = leerNota("Nota final: ");
             double notaContinua = leerNota("Nota continua: ");
 
-            if (notaParcial == -1 || notaFinal == -1 || notaContinua == -1) {
-                System.out.println("Notas fuera del rango permitido. Ingrese nuevamente.");
-                continue; //si hay error salta al siguiente alumno, en este caso deberias hacer que se insista hasta que ingrese valores correctos
-            }
-
+            Clase clase = claseService.getClaseById(codigoClase);
             boolean exitoParcial = guardarNota(notaParcial, TipoNota.EP, alumno, clase);
             boolean exitoFinal = guardarNota(notaFinal, TipoNota.EF, alumno, clase);
             boolean exitoContinua = guardarNota(notaContinua, TipoNota.EC, alumno, clase);
@@ -64,11 +75,12 @@ public class ProfesorClient {
     }
 
     private static double leerNota(String mensaje) {
-        System.out.print(mensaje);
-        double nota = scanner.nextDouble();
-        if (nota < 0 || nota > 20) {
-            return -1;
-        }
+        double nota;
+
+        do {
+            System.out.print(mensaje);
+            nota = scanner.nextDouble();
+        } while(nota < 0 || nota > 20);
         return nota;
     }
 

@@ -23,22 +23,16 @@ public class ProfesorRepository {
     //con eso obtienes el id del que selecciono y ahi si aplicas tus metodos de obtenerAlum
     //pues seria algo como id = clasex.getId() lo que al final le enviarias a obtenerAlumno
     public Clase findClaseByID(int id) {
-        try {
-            return entityManager.find(Clase.class, id);
-        } finally {
-            entityManager.close();
-        }
+        return entityManager.find(Clase.class, id);
     }
 
     public List<Alumno> obtenerAlumnosPorClase(int claseId) {
-        try {
+
             return entityManager.createQuery(
                     "SELECT a FROM Alumno a JOIN a.clases c WHERE c.id = :claseId", Alumno.class)
                     .setParameter("claseId", claseId)
                     .getResultList();
-        } finally {
-            entityManager.close();
-        }
+
     }
 
         /*
@@ -66,7 +60,7 @@ public class ProfesorRepository {
             e.printStackTrace();
             return false;
         } finally {
-            entityManager.close();
+            
         }
     }
 }
