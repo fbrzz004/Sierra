@@ -16,8 +16,8 @@ import jakarta.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("administrativo")
+
 public class Administrativo extends Usuario implements UsuarioGenerico{
-    
     //metodos por implementar no tiene informacion ni relaciones adicionales a las de su padre solo 
     //se distingue por sus metodos
     
