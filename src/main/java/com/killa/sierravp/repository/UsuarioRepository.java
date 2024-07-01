@@ -26,4 +26,14 @@ public class UsuarioRepository {
             return null;
         }
     }
+
+    public Usuario findById(int dni) {
+        return entityManager.find(Usuario.class, dni);
+    }
+
+    public void update(Usuario usuario) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(usuario);
+        entityManager.getTransaction().commit();
+    }
 }

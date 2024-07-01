@@ -34,6 +34,10 @@ public class Clase implements Serializable {
 
     public Clase() {
     }
+
+    public Clase(Curso curso) {
+        this.curso = curso;
+    }
     
     public int getId() {
         return id;
@@ -66,9 +70,4 @@ public class Clase implements Serializable {
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-    
-    public int getCreditos() {
-        return curso.getCreditos();
-    }
-    
 }

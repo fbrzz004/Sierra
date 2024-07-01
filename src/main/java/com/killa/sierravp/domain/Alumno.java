@@ -1,15 +1,15 @@
-
 package com.killa.sierravp.domain;
 
 import static com.killa.sierravp.util.AtributosInteresesAcade.investigacion;
 import com.killa.sierravp.util.Caracteristica_y_Id;
 import com.killa.sierravp.util.Caractistica;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -24,9 +24,8 @@ import java.util.Set;
  */
 
 @Entity
-@DiscriminatorValue("ALUMNO")
-public class Alumno extends Usuario {
-
+@DiscriminatorValue("alumno")
+public class Alumno extends Usuario implements UsuarioGenerico{
     @Column(unique = true, nullable = false)
     
     private int codigo;
@@ -39,22 +38,24 @@ public class Alumno extends Usuario {
     @JoinColumn(name = "ep_id", referencedColumnName = "id", nullable = false)
     private EscuelaProfesional ep;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "alumnos_clases",
             joinColumns = @JoinColumn(name = "codigo_alumno", referencedColumnName = "codigo"),
             inverseJoinColumns = @JoinColumn(name = "curso_id", referencedColumnName = "id"))
     private Set<Clase> clases;
 
-    @OneToOne(mappedBy = "alumno")
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private Ranking ranking;
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Nota> notas;
 
     private boolean regular;
+    
+    private byte ciclo;
 
-    @OneToMany(mappedBy = "alumno")
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CRA> craHistorico;
 
     // Nuevos atributos para manejo del rendimiento académico
@@ -68,18 +69,18 @@ public class Alumno extends Usuario {
 
     @Column(name = "posicion_ranking")
     private int posicionRanking;
-    
-    private String nombre;
 
-    @OneToOne(mappedBy = "alumno")
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private BigFiveScores bfScores;
-    @OneToOne(mappedBy = "alumno")
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private InteresesAcademicos interesesAcademicos;
 
     // Constructor por defecto necesario para JPA
     public Alumno() {
+        super(); 
+        this.regular = true;
     }
-    
+      
     //Metodos especiales de alumno (se enucentra en mi clase alumno)
     public int procesarCaracte_Id(Caracteristica_y_Id ci) {
         int valor;
@@ -219,10 +220,6 @@ public class Alumno extends Usuario {
         this.craHistorico = craHistorico;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-    
     public BigFiveScores getBfScores() {
         return bfScores;
     }
@@ -238,5 +235,33 @@ public class Alumno extends Usuario {
     public void setInteresesAcademicos(InteresesAcademicos interesesAcademicos) {
         this.interesesAcademicos = interesesAcademicos;
     }
-}
 
+    public byte getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(byte ciclo) {
+        this.ciclo = ciclo;
+    }
+
+    @Override
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+
+    @Override
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    @Override
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    @Override
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+    
+}

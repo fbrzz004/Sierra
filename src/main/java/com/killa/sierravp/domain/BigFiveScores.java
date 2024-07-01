@@ -66,12 +66,6 @@ public class BigFiveScores {
     private int orientacionAObjetivos;//logro de metas
 
     public BigFiveScores() {
-    }
-
-    
-    //metodo para generar valores ramdom
-    
-    public BigFiveScores(boolean ramdom) {
         Random random = new Random();
 
         // Asignación de valores aleatorios para Neuroticism
