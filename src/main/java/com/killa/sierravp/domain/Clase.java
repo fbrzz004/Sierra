@@ -34,6 +34,12 @@ public class Clase implements Serializable {
     public Clase() {
     }
 
+    public Clase(Curso curso) {
+        this.curso = curso;
+    }
+
+    
+    
     public int getId() {
         return id;
     }
