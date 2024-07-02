@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -39,8 +40,7 @@ public class Facultad implements Serializable {
         this.nombre = nombreFacultad;
     }
 
-    
-    
+   
     
     public int getId() {
         return id;
@@ -66,6 +66,6 @@ public class Facultad implements Serializable {
         this.ep = ep;
     }
 
-
+    
     
 }

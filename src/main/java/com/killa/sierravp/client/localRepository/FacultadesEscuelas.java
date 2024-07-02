@@ -9,6 +9,7 @@ import com.killa.sierravp.domain.Facultad;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,7 +43,6 @@ public class FacultadesEscuelas {
         }
         // Convertir el Map de facultades a un HashSet
         HashSet<Facultad> facultades = new HashSet<>(facultadesMap.values());
-
         // Crear el resultado como un Map
         Map<String, Set<?>> resultado = new HashMap<>();
         resultado.put("facultades", facultades);
@@ -56,7 +56,7 @@ public class FacultadesEscuelas {
                 return facultad;
             }
         }
-        return null; // Si no se encuentra la facultad
+        return null; 
     }
 
     public static Facultad buscarFacultadPorId(Set<Facultad> facultades, int id) {
@@ -65,7 +65,7 @@ public class FacultadesEscuelas {
                 return facultad;
             }
         }
-        return null; // Si no se encuentra la facultad
+        return null; 
     }
     
     public static EscuelaProfesional buscarEpPorNombre(Set<EscuelaProfesional> eps, String nombre) {
@@ -74,7 +74,7 @@ public class FacultadesEscuelas {
                 return ep;
             }
         }
-        return null; // Si no se encuentra la facultad
+        return null; 
     }
 
     public static EscuelaProfesional buscarEpPorId(Set<EscuelaProfesional> eps, int id) {
@@ -83,6 +83,6 @@ public class FacultadesEscuelas {
                 return ep;
             }
         }
-        return null; // Si no se encuentra la facultad
+        return null; 
     }
 }
