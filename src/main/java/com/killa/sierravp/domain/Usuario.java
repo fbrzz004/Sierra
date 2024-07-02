@@ -46,6 +46,8 @@ public class Usuario implements Serializable {
 
     @Column(nullable = false)
     private String correo;
+    private String nombres;
+    private String apellidos;
 
     public boolean autenticar(String user, String password) {
         return false;

@@ -4,6 +4,9 @@
  */
 package com.killa.sierravp.gui;
 
+import com.killa.sierravp.service.UsuarioService;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jaraj
@@ -101,15 +104,34 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_UsuarioActionPerformed
 
     private void IniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarsesionActionPerformed
-        // TODO add your handling code here:
-        // Crear una instancia del JFrame SistemaAlumno
-        SistemaAlumno sistemaAlumnoFrame = new SistemaAlumno();
-        
-        // Hacer visible el nuevo JFrame
-        sistemaAlumnoFrame.setVisible(true);
-        
+    // Obtener el correo y la contraseña ingresados por el usuario
+    String correo = Usuario.getText();
+    String contraseña = new String(Password.getPassword()); // Convertir el char[] a String
+
+    // Validar las credenciales utilizando el servicio UsuarioService
+    UsuarioService usuarioService = new UsuarioService();
+    boolean autenticado = usuarioService.autenticarUsuario(correo, contraseña);
+
+    // Determinar el tipo de usuario y redirigir según el tipo
+    if (autenticado) {
+        // Determinar si el usuario es alumno o profesor (esto es un ejemplo, deberías tener una forma de determinarlo)
+        boolean esAlumno = determinarSiEsAlumno(correo); // Implementa esta función según tus reglas de negocio
+
+        // Crear una instancia del JFrame correspondiente
+        if (esAlumno) {
+            SistemaAlumno sistemaAlumnoFrame = new SistemaAlumno();
+            sistemaAlumnoFrame.setVisible(true);
+        } else {
+            SistemaProfesor sistemaProfesorFrame = new SistemaProfesor();
+            sistemaProfesorFrame.setVisible(true);
+        }
+
         // Cerrar el JFrame actual (Login)
         dispose();
+    } else {
+        // Mostrar mensaje de error porque las credenciales son incorrectas
+        JOptionPane.showMessageDialog(this, "Credenciales incorrectas. Por favor, inténtelo de nuevo.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_IniciarsesionActionPerformed
 
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
@@ -162,4 +184,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel personalogin;
     // End of variables declaration//GEN-END:variables
+
+    private boolean determinarSiEsAlumno(String correo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

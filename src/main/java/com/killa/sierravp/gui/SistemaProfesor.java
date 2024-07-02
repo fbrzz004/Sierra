@@ -26,21 +26,364 @@ public class SistemaProfesor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel3 = new javax.swing.JPanel();
+        Botonclases = new javax.swing.JButton();
+        ButtonNotas = new javax.swing.JButton();
+        ButtonCerrar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Clases = new javax.swing.JPanel();
+        CRACLASE = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cerrarCRA = new javax.swing.JButton();
+        Buscadordeclases = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        CURSOENCONTRADO = new javax.swing.JPanel();
+        Notapromedio = new javax.swing.JTextField();
+        Notamaxima1 = new javax.swing.JTextField();
+        Notaminima1 = new javax.swing.JTextField();
+        VERESTADISTICA = new javax.swing.JButton();
+        NOMBREDELCURSO = new javax.swing.JTextField();
+        Buscarclases1 = new javax.swing.JButton();
+        Notas = new javax.swing.JPanel();
+        BuscarCurso = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TABLADENOTAS = new javax.swing.JTable();
+        Buscadordecursos = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setBackground(new java.awt.Color(0, 26, 78));
+
+        Botonclases.setBackground(new java.awt.Color(3, 36, 102));
+        Botonclases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconclases.png"))); // NOI18N
+        Botonclases.setBorder(null);
+        Botonclases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonclasesActionPerformed(evt);
+            }
+        });
+
+        ButtonNotas.setBackground(new java.awt.Color(3, 36, 102));
+        ButtonNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconnotas.png"))); // NOI18N
+        ButtonNotas.setBorder(null);
+        ButtonNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonNotasActionPerformed(evt);
+            }
+        });
+
+        ButtonCerrar.setBackground(new java.awt.Color(3, 36, 102));
+        ButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconcerrarsesion.png"))); // NOI18N
+        ButtonCerrar.setToolTipText("");
+        ButtonCerrar.setBorder(null);
+        ButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCerrarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SIERRAVPnameAlumno.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ButtonNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Botonclases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(ButtonCerrar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 831, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(Botonclases, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(ButtonNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addComponent(ButtonCerrar)
+                .addGap(153, 153, 153))
         );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 830));
+
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
+
+        Clases.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        CRACLASE.setBackground(new java.awt.Color(42, 47, 46));
+        CRACLASE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/C.R.A DE LACLASE.png"))); // NOI18N
+        CRACLASE.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ranking General.png"))); // NOI18N
+        CRACLASE.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 670, -1, -1));
+
+        cerrarCRA.setBackground(new java.awt.Color(255, 0, 51));
+        cerrarCRA.setText("X");
+        cerrarCRA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarCRAActionPerformed(evt);
+            }
+        });
+        CRACLASE.add(cerrarCRA, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 0, 30, 30));
+
+        Clases.add(CRACLASE, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 860, 780));
+        CRACLASE.setVisible(false);
+
+        Buscadordeclases.setText("Buscar clase");
+        Buscadordeclases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadordeclasesActionPerformed(evt);
+            }
+        });
+        Clases.add(Buscadordeclases, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 370, 30));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONCLASESprofe.png"))); // NOI18N
+        Clases.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 160, 60));
+
+        CURSOENCONTRADO.setBackground(new java.awt.Color(233, 238, 255));
+        CURSOENCONTRADO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        CURSOENCONTRADO.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Notapromedio.setEditable(false);
+        Notapromedio.setBackground(new java.awt.Color(233, 238, 255));
+        Notapromedio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Notapromedio.setText("Nota promedio: ");
+        Notapromedio.setToolTipText("");
+        Notapromedio.setBorder(null);
+        Notapromedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotapromedioActionPerformed(evt);
+            }
+        });
+        CURSOENCONTRADO.add(Notapromedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
+
+        Notamaxima1.setEditable(false);
+        Notamaxima1.setBackground(new java.awt.Color(233, 238, 255));
+        Notamaxima1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Notamaxima1.setText("Nota maxima: ");
+        Notamaxima1.setToolTipText("");
+        Notamaxima1.setBorder(null);
+        Notamaxima1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Notamaxima1ActionPerformed(evt);
+            }
+        });
+        CURSOENCONTRADO.add(Notamaxima1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+
+        Notaminima1.setEditable(false);
+        Notaminima1.setBackground(new java.awt.Color(233, 238, 255));
+        Notaminima1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Notaminima1.setText("Nota minima: ");
+        Notaminima1.setToolTipText("");
+        Notaminima1.setBorder(null);
+        Notaminima1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Notaminima1ActionPerformed(evt);
+            }
+        });
+        CURSOENCONTRADO.add(Notaminima1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
+
+        VERESTADISTICA.setBackground(new java.awt.Color(255, 173, 173));
+        VERESTADISTICA.setText("Ver estadistica");
+        VERESTADISTICA.setBorder(null);
+        VERESTADISTICA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VERESTADISTICAActionPerformed(evt);
+            }
+        });
+        CURSOENCONTRADO.add(VERESTADISTICA, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 110, 30));
+
+        NOMBREDELCURSO.setEditable(false);
+        NOMBREDELCURSO.setBackground(new java.awt.Color(233, 238, 255));
+        NOMBREDELCURSO.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        NOMBREDELCURSO.setText("CURSO");
+        NOMBREDELCURSO.setBorder(null);
+        NOMBREDELCURSO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NOMBREDELCURSOActionPerformed(evt);
+            }
+        });
+        CURSOENCONTRADO.add(NOMBREDELCURSO, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 40));
+
+        Clases.add(CURSOENCONTRADO, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 640, 150));
+        CURSOENCONTRADO.setVisible(false);
+
+        Buscarclases1.setBackground(new java.awt.Color(255, 173, 173));
+        Buscarclases1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscador.png"))); // NOI18N
+        Buscarclases1.setBorder(null);
+        Buscarclases1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Buscarclases1ActionPerformed(evt);
+            }
+        });
+        Clases.add(Buscarclases1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 40, 30));
+
+        jTabbedPane1.addTab("tab2", Clases);
+
+        Notas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BuscarCurso.setBackground(new java.awt.Color(255, 173, 173));
+        BuscarCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscador.png"))); // NOI18N
+        BuscarCurso.setBorder(null);
+        BuscarCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarCursoActionPerformed(evt);
+            }
+        });
+        Notas.add(BuscarCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 40, 30));
+
+        TABLADENOTAS.setAutoCreateRowSorter(true);
+        TABLADENOTAS.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "E.P.", "EVC.", "E.F.", "Promedio"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TABLADENOTAS.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TABLADENOTAS.setAutoscrolls(false);
+        jScrollPane1.setViewportView(TABLADENOTAS);
+        if (TABLADENOTAS.getColumnModel().getColumnCount() > 0) {
+            TABLADENOTAS.getColumnModel().getColumn(0).setResizable(false);
+            TABLADENOTAS.getColumnModel().getColumn(1).setResizable(false);
+            TABLADENOTAS.getColumnModel().getColumn(2).setResizable(false);
+            TABLADENOTAS.getColumnModel().getColumn(3).setResizable(false);
+            TABLADENOTAS.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        Notas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 930, 620));
+
+        Buscadordecursos.setText("Buscar curso");
+        Buscadordecursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadordecursosActionPerformed(evt);
+            }
+        });
+        Notas.add(Buscadordecursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 370, 30));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONCURSOS.png"))); // NOI18N
+        Notas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 160, 60));
+
+        jTabbedPane1.addTab("tab1", Notas);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 1050, 830));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BotonclasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonclasesActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedComponent(Clases);
+        CURSOENCONTRADO.setVisible(false);
+        CRACLASE.setVisible(false);
+    }//GEN-LAST:event_BotonclasesActionPerformed
+
+    private void ButtonNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNotasActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedComponent(Notas);
+        TABLADENOTAS.setVisible(false);
+    }//GEN-LAST:event_ButtonNotasActionPerformed
+
+    private void ButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCerrarActionPerformed
+        // TODO add your handling code here:
+        Login loginFrame = new Login();
+
+        // Hacer visible el JFrame Login
+        loginFrame.setVisible(true);
+
+        // Cerrar el JFrame actual (SistemaAlumno)
+        dispose();
+    }//GEN-LAST:event_ButtonCerrarActionPerformed
+
+    private void BuscarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarCursoActionPerformed
+        // TODO add your handling code here:
+        TABLADENOTAS.setVisible(true);
+    }//GEN-LAST:event_BuscarCursoActionPerformed
+
+    private void BuscadordecursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadordecursosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscadordecursosActionPerformed
+
+    private void VERESTADISTICAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VERESTADISTICAActionPerformed
+        // TODO add your handling code here:
+        CRACLASE.setVisible(true);
+        CURSOENCONTRADO.setVisible(false);
+    }//GEN-LAST:event_VERESTADISTICAActionPerformed
+
+    private void BuscadordeclasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadordeclasesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscadordeclasesActionPerformed
+
+    private void NotapromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotapromedioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NotapromedioActionPerformed
+
+    private void NOMBREDELCURSOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NOMBREDELCURSOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NOMBREDELCURSOActionPerformed
+
+    private void Notamaxima1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Notamaxima1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Notamaxima1ActionPerformed
+
+    private void Notaminima1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Notaminima1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Notaminima1ActionPerformed
+
+    private void Buscarclases1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Buscarclases1ActionPerformed
+        // TODO add your handling code here:
+        CURSOENCONTRADO.setVisible(true);
+    }//GEN-LAST:event_Buscarclases1ActionPerformed
+
+    private void cerrarCRAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarCRAActionPerformed
+        // TODO add your handling code here:
+        CRACLASE.setVisible(false);
+        CURSOENCONTRADO.setVisible(true);
+    }//GEN-LAST:event_cerrarCRAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +421,35 @@ public class SistemaProfesor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Botonclases;
+    private javax.swing.JTextField Buscadordeclases;
+    private javax.swing.JTextField Buscadordecursos;
+    private javax.swing.JButton BuscarCurso;
+    private javax.swing.JButton Buscarclases1;
+    private javax.swing.JButton ButtonCerrar;
+    private javax.swing.JButton ButtonNotas;
+    private javax.swing.JButton ButtonPerfil;
+    private javax.swing.JButton ButtonPerfil1;
+    private javax.swing.JPanel CRACLASE;
+    private javax.swing.JPanel CURSOENCONTRADO;
+    private javax.swing.JPanel Clases;
+    private javax.swing.JTextField NOMBREDELCURSO;
+    private javax.swing.JTextField Notamaxima1;
+    private javax.swing.JTextField Notaminima1;
+    private javax.swing.JTextField Notapromedio;
+    private javax.swing.JPanel Notas;
+    private javax.swing.JTable TABLADENOTAS;
+    private javax.swing.JButton VERESTADISTICA;
+    private javax.swing.JButton cerrarCRA;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

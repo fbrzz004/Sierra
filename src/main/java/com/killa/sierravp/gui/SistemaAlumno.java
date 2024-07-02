@@ -37,49 +37,57 @@ public class SistemaAlumno extends javax.swing.JFrame {
         Perfil = new javax.swing.JPanel();
         InfoPerfil = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        Nombres = new javax.swing.JTextField();
+        Dni = new javax.swing.JTextField();
+        Apellidos = new javax.swing.JTextField();
+        Facultad = new javax.swing.JTextField();
+        Escuela = new javax.swing.JTextField();
+        Codigoalumno = new javax.swing.JTextField();
+        Correoalumno = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         CRAalumno = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Matricula = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        Tablaturnoalumno = new javax.swing.JScrollPane();
         TablaTurnoFecha = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         Social = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Buscargrupo = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
+        Notificacion = new javax.swing.JButton();
+        compañeroencontrado = new javax.swing.JPanel();
+        abrirpaneldemensaje = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
+        cualidadescompañero = new javax.swing.JTextField();
+        nombredecompañero = new javax.swing.JTextField();
         Notificacionpanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        vermensajede = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jButton8 = new javax.swing.JButton();
+        teenviounmensaje = new javax.swing.JTextPane();
+        minimizarnotis = new javax.swing.JButton();
         PanelDeMensaje = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jTextField12 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        recibidordemensaje = new javax.swing.JTextField();
+        chatdemensajes = new javax.swing.JPanel();
+        Enviarmensaje = new javax.swing.JButton();
+        escribirmensaje = new javax.swing.JTextField();
+        cerrarmensaje = new javax.swing.JButton();
+        loquenoquieroSOCIAL = new javax.swing.JComboBox<>();
+        loquequieroSOCIAL = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
         jTextField13.setText("jTextField13");
 
@@ -140,9 +148,9 @@ public class SistemaAlumno extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(ButtonCerrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,18 +182,46 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Fotoperfil.png"))); // NOI18N
         InfoPerfil.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 17, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        Nombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                NombresActionPerformed(evt);
             }
         });
-        InfoPerfil.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 210, 30));
-        InfoPerfil.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 210, 30));
-        InfoPerfil.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 210, 30));
-        InfoPerfil.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 210, 30));
-        InfoPerfil.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 210, 30));
-        InfoPerfil.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 210, 30));
-        InfoPerfil.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 210, 30));
+        InfoPerfil.add(Nombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 210, 30));
+        InfoPerfil.add(Dni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 210, 30));
+        InfoPerfil.add(Apellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 210, 30));
+        InfoPerfil.add(Facultad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 210, 30));
+        InfoPerfil.add(Escuela, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 210, 30));
+        InfoPerfil.add(Codigoalumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 210, 30));
+        InfoPerfil.add(Correoalumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 210, 30));
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Correo electrónico");
+        InfoPerfil.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 120, -1));
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Nombres");
+        InfoPerfil.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 80, -1));
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Apellidos");
+        InfoPerfil.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 80, -1));
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("DNI");
+        InfoPerfil.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 120, -1));
+
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Código de alumno");
+        InfoPerfil.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 120, -1));
+
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Escuela profesional");
+        InfoPerfil.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 120, -1));
+
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Facultad");
+        InfoPerfil.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 120, -1));
 
         Perfil.add(InfoPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 270, 780));
 
@@ -216,12 +252,24 @@ public class SistemaAlumno extends javax.swing.JFrame {
             new String [] {
                 "Turno", "Fecha"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TablaTurnoFecha.setShowGrid(false);
         TablaTurnoFecha.setShowHorizontalLines(true);
-        jScrollPane1.setViewportView(TablaTurnoFecha);
+        Tablaturnoalumno.setViewportView(TablaTurnoFecha);
+        if (TablaTurnoFecha.getColumnModel().getColumnCount() > 0) {
+            TablaTurnoFecha.getColumnModel().getColumn(0).setResizable(false);
+            TablaTurnoFecha.getColumnModel().getColumn(1).setResizable(false);
+        }
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 810, 680));
+        jPanel2.add(Tablaturnoalumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 810, 680));
 
         Matricula.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 870, 740));
 
@@ -240,89 +288,75 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/texto social.png"))); // NOI18N
         Social.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 960, 40));
 
-        jTextField8.setText("    Busca un compañero");
-        jTextField8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Social.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 320, 30));
-
-        jButton1.setBackground(new java.awt.Color(255, 173, 173));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscador.png"))); // NOI18N
-        jButton1.setBorder(null);
-        Social.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 40, 30));
+        Buscargrupo.setBackground(new java.awt.Color(255, 173, 173));
+        Buscargrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buscador.png"))); // NOI18N
+        Buscargrupo.setBorder(null);
+        Buscargrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscargrupoActionPerformed(evt);
+            }
+        });
+        Social.add(Buscargrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, 40, 30));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel8.setText("Mis mensajes :");
-        Social.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 170, -1, -1));
+        jLabel8.setText("No deseable :");
+        Social.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
-        jComboBox1.setToolTipText("");
-        jComboBox1.setBorder(null);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        Notificacion.setBackground(new java.awt.Color(195, 209, 229));
+        Notificacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/campana.png"))); // NOI18N
+        Notificacion.setBorder(null);
+        Notificacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                NotificacionActionPerformed(evt);
             }
         });
-        Social.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 160, 50, 30));
+        Social.add(Notificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 150, 60, 50));
 
-        jButton2.setBackground(new java.awt.Color(161, 255, 128));
-        jButton2.setFont(jButton2.getFont().deriveFont((jButton2.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, jButton2.getFont().getSize()+2));
-        jButton2.setText("Limitar");
-        jButton2.setBorder(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        compañeroencontrado.setBackground(new java.awt.Color(233, 238, 255));
+        compañeroencontrado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        compañeroencontrado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        abrirpaneldemensaje.setBackground(new java.awt.Color(255, 217, 217));
+        abrirpaneldemensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        abrirpaneldemensaje.setText("Enviar mensaje");
+        abrirpaneldemensaje.setBorder(null);
+        abrirpaneldemensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                abrirpaneldemensajeActionPerformed(evt);
             }
         });
-        Social.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 160, 90, 30));
-
-        jButton3.setBackground(new java.awt.Color(195, 209, 229));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/campana.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        Social.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 60, 50));
-
-        jPanel3.setBackground(new java.awt.Color(233, 238, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton5.setBackground(new java.awt.Color(255, 217, 217));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton5.setText("Enviar mensaje");
-        jButton5.setBorder(null);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 110, 30));
+        compañeroencontrado.add(abrirpaneldemensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 110, 30));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Perfilsocial.png"))); // NOI18N
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 80, 90));
+        compañeroencontrado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 80, 90));
 
-        jTextField9.setEditable(false);
-        jTextField9.setBackground(new java.awt.Color(233, 238, 255));
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField9.setText("Cualidades");
-        jTextField9.setToolTipText("");
-        jTextField9.setBorder(null);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        cualidadescompañero.setEditable(false);
+        cualidadescompañero.setBackground(new java.awt.Color(233, 238, 255));
+        cualidadescompañero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cualidadescompañero.setText("Cualidades");
+        cualidadescompañero.setToolTipText("");
+        cualidadescompañero.setBorder(null);
+        cualidadescompañero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                cualidadescompañeroActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+        compañeroencontrado.add(cualidadescompañero, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
 
-        jTextField11.setEditable(false);
-        jTextField11.setBackground(new java.awt.Color(233, 238, 255));
-        jTextField11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField11.setText("Nombre y apellido");
-        jTextField11.setBorder(null);
-        jPanel3.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+        nombredecompañero.setEditable(false);
+        nombredecompañero.setBackground(new java.awt.Color(233, 238, 255));
+        nombredecompañero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nombredecompañero.setText("Nombre y apellido");
+        nombredecompañero.setBorder(null);
+        nombredecompañero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombredecompañeroActionPerformed(evt);
+            }
+        });
+        compañeroencontrado.add(nombredecompañero, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
-        Social.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 490, 130));
+        Social.add(compañeroencontrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 490, 130));
+        compañeroencontrado.setVisible(false);
 
         Notificacionpanel.setBackground(new java.awt.Color(233, 238, 255));
         Notificacionpanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -332,29 +366,29 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jLabel9.setText("Mensajes recibidos:");
         Notificacionpanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        jButton7.setBackground(new java.awt.Color(136, 244, 228));
-        jButton7.setText("Ver");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        vermensajede.setBackground(new java.awt.Color(136, 244, 228));
+        vermensajede.setText("Ver");
+        vermensajede.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                vermensajedeActionPerformed(evt);
             }
         });
-        Notificacionpanel.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 80, 30));
+        Notificacionpanel.add(vermensajede, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 80, 30));
 
-        jTextPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextPane1.setText("Nombre y apellido te envio un mensaje");
-        jScrollPane2.setViewportView(jTextPane1);
+        teenviounmensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        teenviounmensaje.setText("Nombre y apellido te envio un mensaje");
+        jScrollPane2.setViewportView(teenviounmensaje);
 
         Notificacionpanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 400, 30));
 
-        jButton8.setBackground(new java.awt.Color(255, 0, 51));
-        jButton8.setText("-");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        minimizarnotis.setBackground(new java.awt.Color(255, 0, 51));
+        minimizarnotis.setText("-");
+        minimizarnotis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                minimizarnotisActionPerformed(evt);
             }
         });
-        Notificacionpanel.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 50, 20));
+        Notificacionpanel.add(minimizarnotis, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 50, 20));
 
         Social.add(Notificacionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 440, 110));
 
@@ -365,51 +399,75 @@ public class SistemaAlumno extends javax.swing.JFrame {
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lineamensaje.png"))); // NOI18N
         PanelDeMensaje.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 10));
 
-        jTextField10.setEditable(false);
-        jTextField10.setBackground(new java.awt.Color(233, 238, 255));
-        jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextField10.setText("Mensaje de Nombre y apellido");
-        jTextField10.setBorder(null);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        recibidordemensaje.setEditable(false);
+        recibidordemensaje.setBackground(new java.awt.Color(233, 238, 255));
+        recibidordemensaje.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        recibidordemensaje.setText("Mensaje de Nombre y apellido");
+        recibidordemensaje.setBorder(null);
+        recibidordemensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                recibidordemensajeActionPerformed(evt);
             }
         });
-        PanelDeMensaje.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+        PanelDeMensaje.add(recibidordemensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        chatdemensajes.setBackground(new java.awt.Color(255, 255, 255));
+        chatdemensajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        chatdemensajes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviarmensaje.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Enviarmensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviarmensaje.png"))); // NOI18N
+        Enviarmensaje.setBorder(null);
+        Enviarmensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                EnviarmensajeActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 40, 30));
+        chatdemensajes.add(Enviarmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 40, 30));
 
-        jTextField12.setText("   Escribir mensaje");
-        jTextField12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel5.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 370, 30));
+        escribirmensaje.setText("   Escribir mensaje");
+        escribirmensaje.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        chatdemensajes.add(escribirmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 370, 30));
 
-        PanelDeMensaje.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 370, 390));
+        PanelDeMensaje.add(chatdemensajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 370, 390));
 
-        jButton6.setBackground(new java.awt.Color(239, 3, 67));
-        jButton6.setText("X");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        cerrarmensaje.setBackground(new java.awt.Color(239, 3, 67));
+        cerrarmensaje.setText("X");
+        cerrarmensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                cerrarmensajeActionPerformed(evt);
             }
         });
-        PanelDeMensaje.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 40, 30));
+        PanelDeMensaje.add(cerrarmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 40, 30));
 
         Social.add(PanelDeMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, 430, 490));
 
+        loquenoquieroSOCIAL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        loquenoquieroSOCIAL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loquenoquieroSOCIALActionPerformed(evt);
+            }
+        });
+        Social.add(loquenoquieroSOCIAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 190, 40));
+
+        loquequieroSOCIAL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        loquequieroSOCIAL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loquequieroSOCIALActionPerformed(evt);
+            }
+        });
+        Social.add(loquequieroSOCIAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 190, 40));
+
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel12.setText("Limita tu busqueda :");
-        Social.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
+        jLabel12.setText("Mis mensajes :");
+        Social.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel20.setText("Mis mensajes :");
+        Social.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
+
+        jLabel21.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel21.setText("Deseable :");
+        Social.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jTabbedPane1.addTab("", Social);
 
@@ -446,55 +504,64 @@ public class SistemaAlumno extends javax.swing.JFrame {
         Notificacionpanel.setVisible(false);
     }//GEN-LAST:event_ButtonSocialActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void NombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_NombresActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void abrirpaneldemensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirpaneldemensajeActionPerformed
         // TODO add your handling code here:
         PanelDeMensaje.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_abrirpaneldemensajeActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void cualidadescompañeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cualidadescompañeroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_cualidadescompañeroActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void recibidordemensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recibidordemensajeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_recibidordemensajeActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void EnviarmensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarmensajeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_EnviarmensajeActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void cerrarmensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarmensajeActionPerformed
         // TODO add your handling code here:
         PanelDeMensaje.setVisible(false);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_cerrarmensajeActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void vermensajedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vermensajedeActionPerformed
         // TODO add your handling code here:
         PanelDeMensaje.setVisible(true);
         Notificacionpanel.setVisible(false);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_vermensajedeActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void minimizarnotisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizarnotisActionPerformed
         // TODO add your handling code here:
         Notificacionpanel.setVisible(false);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_minimizarnotisActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void NotificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificacionActionPerformed
         // TODO add your handling code here:
         Notificacionpanel.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_NotificacionActionPerformed
+
+    private void loquenoquieroSOCIALActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loquenoquieroSOCIALActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loquenoquieroSOCIALActionPerformed
+
+    private void BuscargrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscargrupoActionPerformed
+        // TODO add your handling code here:
+        compañeroencontrado.setVisible(true);
+    }//GEN-LAST:event_BuscargrupoActionPerformed
+
+    private void loquequieroSOCIALActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loquequieroSOCIALActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loquequieroSOCIALActionPerformed
+
+    private void nombredecompañeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombredecompañeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombredecompañeroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -532,32 +599,49 @@ public class SistemaAlumno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Apellidos;
+    private javax.swing.JButton Buscargrupo;
     private javax.swing.JButton ButtonCerrar;
     private javax.swing.JButton ButtonMatricula;
     private javax.swing.JButton ButtonPerfil;
     private javax.swing.JButton ButtonSocial;
     private javax.swing.JPanel CRAalumno;
+    private javax.swing.JTextField Codigoalumno;
+    private javax.swing.JTextField Correoalumno;
+    private javax.swing.JTextField Dni;
+    private javax.swing.JButton Enviarmensaje;
+    private javax.swing.JTextField Escuela;
+    private javax.swing.JTextField Facultad;
     private javax.swing.JPanel InfoPerfil;
     private javax.swing.JPanel Matricula;
+    private javax.swing.JTextField Nombres;
+    private javax.swing.JButton Notificacion;
     private javax.swing.JPanel Notificacionpanel;
     private javax.swing.JPanel PanelDeMensaje;
     private javax.swing.JPanel Perfil;
     private javax.swing.JPanel Social;
     private javax.swing.JTable TablaTurnoFecha;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JScrollPane Tablaturnoalumno;
+    private javax.swing.JButton abrirpaneldemensaje;
+    private javax.swing.JButton cerrarmensaje;
+    private javax.swing.JPanel chatdemensajes;
+    private javax.swing.JPanel compañeroencontrado;
+    private javax.swing.JTextField cualidadescompañero;
+    private javax.swing.JTextField escribirmensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -567,24 +651,15 @@ public class SistemaAlumno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JComboBox<String> loquenoquieroSOCIAL;
+    private javax.swing.JComboBox<String> loquequieroSOCIAL;
+    private javax.swing.JButton minimizarnotis;
+    private javax.swing.JTextField nombredecompañero;
+    private javax.swing.JTextField recibidordemensaje;
+    private javax.swing.JTextPane teenviounmensaje;
+    private javax.swing.JButton vermensajede;
     // End of variables declaration//GEN-END:variables
 }
