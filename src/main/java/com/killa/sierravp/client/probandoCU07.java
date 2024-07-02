@@ -5,10 +5,8 @@
 package com.killa.sierravp.client;
 
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.BigFiveScores;
 import com.killa.sierravp.domain.EscuelaProfesional;
 import com.killa.sierravp.domain.Facultad;
-import com.killa.sierravp.domain.InteresesAcademicos;
 import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.service.EscuelaProfesionalService;
 import com.killa.sierravp.service.FacultadService;
@@ -19,7 +17,6 @@ import com.killa.sierravp.util.Caracteristica_y_Id;
 import com.killa.sierravp.util.Caractistica;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
  *

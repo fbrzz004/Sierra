@@ -11,6 +11,7 @@ import com.killa.sierravp.domain.EscuelaProfesional;
 import com.killa.sierravp.domain.Profesor;
 import java.util.HashMap;
 import com.killa.sierravp.domain.Curso;
+import com.killa.sierravp.domain.Usuario;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author HITV
  */
 public class Universidad {
+
     private Map<String, FacultadData> facultades;
 
     public Universidad() {
@@ -39,7 +41,39 @@ public class Universidad {
         return facultades;
     }
 
+    public List<Usuario> obtenerUsuariosPorEscuela(String nombreFacultad, int idEscuela) {
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
+            EscuelaData escuela = facultad.obtenerEscuela(idEscuela);
+            if (escuela != null) {
+                List<Usuario> usuarios = new ArrayList<>();
+                usuarios.addAll(escuela.getAlumnos());
+                usuarios.addAll(escuela.getProfesores());
+                return usuarios;
+            }
+        }
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+
+    public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
+
+            for (EscuelaData escuela : facultad.getEscuelas().values()) {
+                if (escuela != null) {
+                    List<Usuario> usuarios = new ArrayList<>();
+                    usuarios.addAll(escuela.getAlumnos());
+                    usuarios.addAll(escuela.getProfesores());
+                    return usuarios;
+                }
+            }
+
+        }
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+
     public static class FacultadData {
+
         private String nombre;
         private Map<Integer, EscuelaData> escuelas;
 
@@ -69,11 +103,10 @@ public class Universidad {
         public void setNombre(String nombre) {
             this.nombre = nombre;
         }
-        
-        
     }
 
     public static class EscuelaData {
+
         private EscuelaProfesional escuela;
         private List<Alumno> alumnos;
         private List<Profesor> profesores;
@@ -127,7 +160,5 @@ public class Universidad {
         public void setEscuela(EscuelaProfesional escuela) {
             this.escuela = escuela;
         }
-        
-        
     }
 }

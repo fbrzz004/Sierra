@@ -50,10 +50,14 @@ public class ProbandoGenerarFacultades {
         // Mostrar todos los profesores
         System.out.println("\nProfesores de la Facultad:");
         for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
+            int i=0;
             for (Profesor profesor : escuelaData.getProfesores()) {
+                
                 System.out.println(profesor.getPrimerNombre() + " " + profesor.getPrimerApellido());
             }
         }
+        
+        
         
     }
 }

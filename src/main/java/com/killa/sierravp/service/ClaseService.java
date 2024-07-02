@@ -17,6 +17,10 @@ public class ClaseService {
     public Clase getClaseById(int id) {
         return em.find(Clase.class, id);
     }
+    
+    public Clase obtenerClasePorCodigo(){
+        return null;
+    }
 
     public void close() {
         em.close();
