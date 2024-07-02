@@ -10,10 +10,10 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>-Xms512m -Xmx3072m</exec.vmArgs>
+                <exec.vmArgs>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
-                <exec.mainClass>${packageClassName}</exec.mainClass>
+                <exec.mainClass>com.killa.sierravp.client.CRAClient</exec.mainClass>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -27,10 +27,10 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>-Xms512m -Xmx3072m -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+                <exec.vmArgs>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8 -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
-                <exec.mainClass>${packageClassName}</exec.mainClass>
+                <exec.mainClass>com.killa.sierravp.client.CRAClient</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -45,9 +45,9 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>-Xms512m -Xmx3072m</exec.vmArgs>
+                <exec.vmArgs>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.mainClass>${packageClassName}</exec.mainClass>
+                <exec.mainClass>com.killa.sierravp.client.CRAClient</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <exec.appArgs></exec.appArgs>
             </properties>

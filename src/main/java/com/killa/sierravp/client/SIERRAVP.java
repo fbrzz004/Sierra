@@ -18,7 +18,7 @@ public class SIERRAVP {
             System.out.println("2. Modificar Perfil de Usuario");
             System.out.println("3. Salir");
             int opcion = scanner.nextInt();
-            scanner.nextLine();  // limpiar buffer
+            scanner.nextLine();  
             switch (opcion) {
                 case 1:
                     ClaseClient.main(args);
@@ -39,16 +39,20 @@ public class SIERRAVP {
         System.out.println("Ingrese su DNI:");
         int dni = scanner.nextInt();
         scanner.nextLine();  // limpiar buffer
-        System.out.println("Ingrese sus nuevos nombres:");
-        String nombres = scanner.nextLine();
-        System.out.println("Ingrese sus nuevos apellidos:");
-        String apellidos = scanner.nextLine();
+        System.out.println("Ingrese su primer nombre:");
+        String n1 = scanner.nextLine();
+        System.out.println("Ingrese su segundo nombre:");
+        String a1 = scanner.nextLine();
+        System.out.println("Ingrese su apellido paterno:");
+        String n2 = scanner.nextLine();
+        System.out.println("Ingrese su apellido materno:");
+        String a2 = scanner.nextLine();
         System.out.println("Ingrese su nueva contraseña:");
         String contraseña = scanner.nextLine();
         System.out.println("Ingrese su nuevo correo:");
         String correo = scanner.nextLine();
-
-        boolean resultado = usuarioService.modificarPerfil(dni, nombres, apellidos, contraseña, correo);
+        
+        boolean resultado = usuarioService.modificarPerfil(dni, n1,n2, a1, a2, contraseña, correo);
         if (resultado) {
             System.out.println("Perfil actualizado exitosamente.");
         } else {

@@ -4,99 +4,61 @@ import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import com.killa.sierravp.repository.Universidad;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class CRAService {
-    private EntityManagerFactory emf;
+    private Universidad universidad;
 
-    // Constructor que inicializa la fábrica de sesiones de Hibernate
-    
-    public CRAService() {
-        emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
+    // Constructor que inicializa la clase CRAService con un objeto Universidad
+    public CRAService(Universidad universidad) {
+        this.universidad = universidad;
     }
 
-    // Método para calcular el CRA de cada alumno en una clase específica
+    // Método para calcular y registrar el CRA de una clase
     
-    public void calcularCRAporClase(int claseId) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+    public void calcularYRegistrarCRA(Clase clase) {
+        List<Nota> notas = clase.getNotas();
 
-        try {
-            
-            // Obtener la clase por su ID
-            
-            Clase clase = em.find(Clase.class, claseId);
-            if (clase == null) {
-                System.out.println("Clase no encontrada");
-                return;
-            }
+        // Calcular la media de las notas
+        
+        double media = notas.stream()
+                .mapToDouble(Nota::getValor)
+                .average()
+                .orElse(0);
 
-            // Obtener las notas de los alumnos en la clase
-            
-            TypedQuery<Nota> query = em.createQuery("SELECT n FROM Nota n WHERE n.clase.id = :claseId", Nota.class);
-            query.setParameter("claseId", claseId);
-            List<Nota> notas = query.getResultList();
+        // Calcular la desviación estándar de las notas
+        
+        double sumaCuadrados = notas.stream()
+                .mapToDouble(Nota::getValor)
+                .map(nota -> Math.pow(nota - media, 2))
+                .sum();
+        double desviacionEstandar = Math.sqrt(sumaCuadrados / notas.size());
 
-            if (notas.isEmpty()) {
-                System.out.println("No hay notas para esta clase");
-                return;
-            }
+        Map<Alumno, Double> craMap = new HashMap<>();
 
-            // Calcular la media y la desviación estándar de las notas
-            
-            DoubleSummaryStatistics stats = notas.stream()
-                    .mapToDouble(Nota::getValor)
-                    .summaryStatistics();
-            double media = stats.getAverage();
-            double sumaCuadrados = notas.stream()
-                    .mapToDouble(Nota::getValor)
-                    .map(nota -> Math.pow(nota - media, 2))
-                    .sum();
-            double desviacionEstandar = Math.sqrt(sumaCuadrados / notas.size());
+        // Calcular el CRA para cada alumno y almacenar en el mapa
+        
+        for (Nota nota : notas) {
+            Alumno alumno = nota.getAlumno();
+            double craValue = calcularCRAPorAlumno(nota.getValor(), media, desviacionEstandar, clase.getCurso().getCreditos());
+            craMap.put(alumno, craValue);
+        }
 
-            // Usa hashmap para organizar las notas por alumno
-            
-            Map<Alumno, Double> craMap = new HashMap<>();
+        // Guardar los valores del CRA en la clase y actualizar el CRA ponderado del alumno
+        
+        for (Map.Entry<Alumno, Double> entry : craMap.entrySet()) {
+            Alumno alumno = entry.getKey();
+            double craValue = entry.getValue();
 
-            // Calcular el CRA para cada alumno y almacenar en el mapa
-            
-            for (Nota nota : notas) {
-                Alumno alumno = nota.getAlumno();
-                double craValue = calcularCRAPorAlumno(nota.getValor(), media, desviacionEstandar, clase.getCurso().getCreditos());
-                craMap.put(alumno, craValue);
-            }
+            CRA cra = new CRA(alumno, clase, craValue);
+            clase.agregarCRA(cra);
 
-            // Guardar los valores del CRA en la base de datos
-            
-            for (Map.Entry<Alumno, Double> entry : craMap.entrySet()) {
-                Alumno alumno = entry.getKey();
-                double craValue = entry.getValue();
-
-                // Crear y persistir el nuevo registro CRA
-                
-                CRA cra = new CRA(alumno, clase, craValue);
-                em.persist(cra);
-
-                // Actualizar el CRA ponderado actual del alumno
-                
-                alumno.setCraPonderadoActual(craValue);
-                em.merge(alumno);
-            }
-
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
+            alumno.setCraPonderadoActual(craValue);
         }
     }
 
@@ -107,5 +69,24 @@ public class CRAService {
             return 50; // Evita división por cero
         }
         return (((nota - media) / desviacionEstandar) * 10 * creditos) + 50;
+    }
+
+    // Método para obtener todos los CRAs
+    
+    public List<CRA> getAllCRAs() {
+        return universidad.getFacultades().values().stream()
+                .flatMap(facultad -> facultad.getEscuelas().values().stream())
+                .flatMap(escuela -> escuela.getClases().stream())
+                .flatMap(clase -> clase.getCRAs().stream())
+                .collect(Collectors.toList());
+    }
+
+    // Método para obtener un CRA por su ID
+    
+    public CRA getCRAById(int id) {
+        return getAllCRAs().stream()
+                .filter(cra -> cra.getCraId()== id)
+                .findFirst()
+                .orElse(null);
     }
 }

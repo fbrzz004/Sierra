@@ -41,6 +41,7 @@ public class CRA {
     }
     
     // Constructor con parámetros
+    
     public CRA(Alumno alumno, Clase clase, double cra) {
         this.alumno = alumno;
         this.clase = clase;
@@ -51,6 +52,10 @@ public class CRA {
         return craId;
     }
 
+    public int setCraId() {
+        return craId;
+    }
+    
     public Alumno getAlumno() {
         return alumno;
     }
