@@ -18,30 +18,25 @@ public class CodigoGenerator {
 
     private static int currentCode;
 
-    // Inicializa el valor de currentCode leyendo del archivo de texto
     static {
-        String filePath = "nombres/" + "codigo.txt";
+        String filePath = "nombres/codigo.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine();
-            if (line != null) {
-                currentCode = Integer.parseInt(line);
-            } else {
-                currentCode = 22222222; // valor por defecto si el archivo está vacío
-            }
+            currentCode = line != null ? Integer.parseInt(line) : 22222222;
         } catch (IOException e) {
             e.printStackTrace();
-            currentCode = 22222222; // valor por defecto en caso de error de lectura
+            currentCode = 22222222;
         }
     }
 
     public synchronized static int generate() {
-        currentCode = currentCode + 1;
+        currentCode++;
+        saveCurrentCode();
         return currentCode;
     }
 
-    // Guarda el último valor de currentCode en el archivo de texto
     public static void saveCurrentCode() {
-        String filePath = "nombres/" + "codigo.txt";
+        String filePath = "nombres/codigo.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(Integer.toString(currentCode));
         } catch (IOException e) {

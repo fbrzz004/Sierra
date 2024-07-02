@@ -4,12 +4,14 @@ import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
+import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 public class AlumnoClient {
+
     private static CursoService cursoService = new CursoService();
     private static AlumnoService alumnoService = new AlumnoService();
     private static Scanner scanner = new Scanner(System.in);
@@ -18,7 +20,23 @@ public class AlumnoClient {
         System.out.println("Seleccione una opción:");
         System.out.println("1. Ver estadísticas de la clase");
         System.out.println("2. Consultar Cursos y clases que lleva el alumno");
+        System.out.println("3. Buscar recomendaciones de compañeros");
         int opcion = scanner.nextInt();
+        Alumno alumnoBusca = new Alumno();
+        String nombreFacultad = "Facultad de Ciencias Físicas";
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
+        if (escuelaFisica != null) {
+            for (Alumno alumno : escuelaFisica.getAlumnos()) {
+                if (alumno.getCiclo() == 5) {
+                    alumnoBusca = alumno;
+                    break;
+                }
+            }
+        } else {
+            System.out.println("No se encontró la escuela de Física.");
+        }
 
         switch (opcion) {
             case 1:
@@ -27,12 +45,14 @@ public class AlumnoClient {
             case 2:
                 consultarRendimiento();
                 break;
+            case 3:
+                CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
+                break;
             default:
                 System.out.println("Opción no válida");
         }
     }
 
-    
     public static void verEstadisticasClase() {
         System.out.println("Ingrese el ID de la clase:");
         int idClase = scanner.nextInt();
@@ -52,7 +72,7 @@ public class AlumnoClient {
         System.out.println("Nota mínima: " + notaMinima);
         System.out.println("Nota máxima: " + notaMaxima);
     }
-    
+
     //Se recuperan correctamente los cursos del alumno segun su id
     //OJO si tienen errores al momento de recuperar la informacion 
     //porque hibernate les dice lazy algo, tienen que adaptar su codigo a como esta el metodo de findByCodigo
@@ -63,7 +83,7 @@ public class AlumnoClient {
         Alumno alumno = alumnoService.findByCodigo(cod);
 
         if (alumno != null) {
-            System.out.println(alumno.getPrimerNombre()+" " + alumno.getPrimerApellido() );
+            System.out.println(alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
             /*
             System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());
             System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());

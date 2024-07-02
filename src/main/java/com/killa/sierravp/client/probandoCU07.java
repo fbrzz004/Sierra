@@ -38,18 +38,18 @@ public class probandoCU07 {
         Caracteristica_y_Id aMaximizar = new Caracteristica_y_Id(Caractistica.BigFiveScores, AtributoBf5.altruismo);
         Caracteristica_y_Id noDeseable = new Caracteristica_y_Id(Caractistica.InteresesAcademicos, AtributosInteresesAcade.trabajoEmpresarial);
         //recupero los alumnos de la bdd
-        //LinkedList<Alumno> AllalumnosFacultad = new LinkedList<>(alumnoService.allAlumnosFromFacultad(facultadService.obtenerIdFacultadPorNombre("Facultad de Derecho y Ciencia Política")));
+        LinkedList<Alumno> AllalumnosFacultad = new LinkedList<>(alumnoService.allAlumnosFromFacultad(facultadService.obtenerIdFacultadPorNombre("Facultad de Derecho y Ciencia Política")));
         //de todos mis alumn selecciono el del medio para que me sirva luego para probar el metodo
         Alumno alumno = alumnoService.findByCodigo(888);
         System.out.println(alumno.getPrimerNombre()+" "+alumno.getCorreo());
         
-        /*
+        
         LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(AllalumnosFacultad, aMaximizar, noDeseable, AllalumnosFacultad.size()/10,5 );
         LinkedList<Alumno> selecionados = networkService.recomendadosPostFiltro(alumnoService.findByCodigo(alumno.getCodigo()), filtrados,6);
         for (Alumno filtrado : selecionados) {
             System.out.println("el id de su compañero recomendado es "+filtrado.getPrimerNombre());
         }
-        */
+        
     }
     
     public void menu(){

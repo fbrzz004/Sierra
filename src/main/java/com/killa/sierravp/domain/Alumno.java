@@ -25,8 +25,6 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("alumno")
 public class Alumno extends Usuario implements UsuarioGenerico{
-    @Column(unique = true, nullable = false)
-    private int codigo;
 
     @ManyToOne
     @JoinColumn(name = "facultad_id", referencedColumnName = "id", nullable = false)
@@ -151,15 +149,6 @@ public class Alumno extends Usuario implements UsuarioGenerico{
 
     public void setPosicionRanking(int posicionRanking) {
         this.posicionRanking = posicionRanking;
-    }
-
-    // Métodos existentes
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public Facultad getFacultad() {

@@ -25,6 +25,9 @@ public class ProbandoGenerarFacultades {
         // Obtener la facultad
         Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
 
+       
+        
+        
         // Mostrar todas las escuelas profesionales de la facultad
         System.out.println("Escuelas Profesionales en la " + nombreFacultad + ":");
         for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
@@ -51,6 +54,7 @@ public class ProbandoGenerarFacultades {
                 System.out.println(profesor.getPrimerNombre() + " " + profesor.getPrimerApellido());
             }
         }
+        
     }
 }
 

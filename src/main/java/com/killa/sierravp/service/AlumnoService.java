@@ -5,11 +5,14 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.repository.Universidad;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
+import java.util.Collection;
 
+import java.util.LinkedList;
 
 import java.util.List;
 
@@ -21,20 +24,30 @@ public class AlumnoService {
     public AlumnoService() {
         emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
     }
-    
+
+    public List<Alumno> todosLosAlumnosDeFacultad(String nombreFacultad, Universidad universidad) {
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+        Collection<Universidad.EscuelaData> escuelasData = facultadData.getEscuelas().values();
+        List<Alumno> allAlumnos = new LinkedList<>();
+        for (Universidad.EscuelaData ep : escuelasData) {
+            allAlumnos.addAll(ep.getAlumnos());
+        }
+        return allAlumnos;
+    }
+
     // Método para consultar el rendimiento de un alumno por su ID
     public Alumno findByCodigo(int codigo) {
         EntityManager em = emf.createEntityManager();
-        
+
         try {
             return em.createQuery(
-                "SELECT a FROM Alumno a " +
-                "LEFT JOIN FETCH a.clases c " +
-                "LEFT JOIN FETCH c.curso cu " +
-                "LEFT JOIN FETCH cu.clases " +
-                "WHERE a.codigo = :codigo", Alumno.class)
-                .setParameter("codigo", codigo)
-                .getSingleResult();
+                    "SELECT a FROM Alumno a "
+                    + "LEFT JOIN FETCH a.clases c "
+                    + "LEFT JOIN FETCH c.curso cu "
+                    + "LEFT JOIN FETCH cu.clases "
+                    + "WHERE a.codigo = :codigo", Alumno.class)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
         } finally {
             em.close();
         }
@@ -47,7 +60,7 @@ public class AlumnoService {
         em.getTransaction().commit();
         em.close();
     }
-    
+
     // Método para obtener todos los alumnos de una facultad
     public List<Alumno> allAlumnosFromFacultad(int facultadID) {
         EntityManager em = emf.createEntityManager();
@@ -60,5 +73,5 @@ public class AlumnoService {
             em.close();
         }
     }
-    
+
 }
