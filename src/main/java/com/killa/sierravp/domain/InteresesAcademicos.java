@@ -87,4 +87,5 @@ public class InteresesAcademicos {
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
     }
+    
 }

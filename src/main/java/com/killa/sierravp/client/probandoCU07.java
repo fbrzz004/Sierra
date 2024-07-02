@@ -70,6 +70,7 @@ public class probandoCU07 {
         int id= scanner.nextInt();
         scanner.nextLine();
         */
+        //Modulo alumno Social
         //aqui en codigo digo que quiero que sea favorecido y que no por mi metodo, para no demorarme haciendo por consola
         Caracteristica_y_Id aMaximizar = new Caracteristica_y_Id(Caractistica.BigFiveScores, AtributoBf5.altruismo);
         Caracteristica_y_Id noDeseable = new Caracteristica_y_Id(Caractistica.InteresesAcademicos, AtributosInteresesAcade.trabajoEmpresarial);
