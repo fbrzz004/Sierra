@@ -26,10 +26,10 @@ public class UsuarioService {
         return usuario != null;
     }
 
-    public boolean modificarPerfil(int dni, String nombres, String apellidos, String contraseña, String correo) {
+    public boolean modificarPerfil(int dni, String primerNombre, String segundoNombre, String primerApe, String segundoApe,String contraseña, String correo) {
 	Usuario usuario = usuarioRepository.findById(dni);
 	if (usuario != null) {
-	    usuario.actualizarPerfil(nombres, apellidos, contraseña, correo);
+	    usuario.actualizarPerfil(primerNombre, segundoNombre, primerApe, segundoApe, contraseña, correo);
 	    usuarioRepository.update(usuario);
 	    return true;
 	}

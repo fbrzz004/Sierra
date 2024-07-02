@@ -132,9 +132,11 @@ public class Usuario implements Serializable {
         this.segundoApellido = segundoApellido;
     }
 
-    public void actualizarPerfil(String nombres, String apellidos, String contraseña, String correo) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
+    public void actualizarPerfil(String primerNombre, String segundoNombre, String primerApe, String segundoApe,String contraseña, String correo) {
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.primerApellido = primerApe;
+        this.segundoApellido = segundoApe;
         this.contraseña = contraseña;
         this.correo = correo;
     }
