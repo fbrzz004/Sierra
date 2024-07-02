@@ -32,6 +32,10 @@ public class BigFiveScoresRepository {
             return null;
         }
     }
+    
+    public BigFiveScores obtenerPorCodigo(int codigo) {
+        return null;
+    }
 
     public void create(BigFiveScores bfs) {
         em.getTransaction().begin();

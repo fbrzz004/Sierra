@@ -4,6 +4,7 @@
  */
 package com.killa.sierravp.service;
 
+import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.InteresesAcademicos;
 import com.killa.sierravp.repository.InteresesAcademyRepository;
 
@@ -18,9 +19,9 @@ public class InteresesAcademicosService {
         return iar.obtenerIntAcdAlumno(cod);
     }
 
-    public float similitudCoseno(int idAlumno1, int idAlumno2) {
-        InteresesAcademicos alumno1Intereses = BuscarIntAcdByCod(idAlumno1);
-        InteresesAcademicos alumno2Intereses = BuscarIntAcdByCod(idAlumno2);
+    public float similitudCoseno(Alumno a1, Alumno a2) {
+        InteresesAcademicos alumno1Intereses = a1.getInteresesAcademicos();
+        InteresesAcademicos alumno2Intereses = a2.getInteresesAcademicos();
 
         // Calcular el producto punto
         float productoPunto = (alumno1Intereses.getInvestigacion() * alumno2Intereses.getInvestigacion()) +
