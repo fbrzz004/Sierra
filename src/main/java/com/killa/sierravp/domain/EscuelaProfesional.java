@@ -35,6 +35,12 @@ public class EscuelaProfesional implements Serializable {
     public EscuelaProfesional() {
     }
 
+    public EscuelaProfesional(int id, String nombre, Facultad facultad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.facultad = facultad;
+    }
+   
     public int getId() {
         return id;
     }

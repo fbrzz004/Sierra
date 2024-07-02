@@ -33,6 +33,14 @@ public class Facultad implements Serializable {
     public Facultad() {
     }
 
+
+    public Facultad(int idFacultad, String nombreFacultad) {
+        this.id = idFacultad;
+        this.nombre = nombreFacultad;
+    }
+
+    
+    
     
     public int getId() {
         return id;
