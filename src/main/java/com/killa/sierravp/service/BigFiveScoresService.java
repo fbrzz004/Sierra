@@ -21,9 +21,9 @@ public class BigFiveScoresService {
         return bfsr.obtenerByCodigo(cod);
     }
     
-    public float similitudCoseno(int idAlumno1, int idAlumno2){
-        BigFiveScores alumno1Scores = BuscarByCodigoAlumno(idAlumno1);
-        BigFiveScores alumno2Scores = BuscarByCodigoAlumno(idAlumno2);
+    public float similitudCoseno(Alumno a1, Alumno a2){
+        BigFiveScores alumno1Scores = a1.getBfScores();
+        BigFiveScores alumno2Scores = a2.getBfScores();
 
         // Calcular el producto punto
         float productoPunto = (alumno1Scores.getAnsiedad() * alumno2Scores.getAnsiedad()) +

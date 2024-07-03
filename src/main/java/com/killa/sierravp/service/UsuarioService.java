@@ -20,16 +20,16 @@ public class UsuarioService {
         return usuario != null;
     }
 
-    public boolean modificarPerfil(int dni, String nombres, String apellidos, String contraseña, String correo) {
-        Usuario usuario = usuarioRepository.findById(dni);
-        if (usuario != null) {
-            usuario.actualizarPerfil(nombres, apellidos, contraseña, correo);
-            usuarioRepository.update(usuario);
-            return true;
-        }
-        return false;
+    public boolean modificarPerfil(int dni, String primerNombre, String segundoNombre, String primerApe, String segundoApe,String contraseña, String correo) {
+	Usuario usuario = usuarioRepository.findById(dni);
+	if (usuario != null) {
+	    usuario.actualizarPerfil(primerNombre, segundoNombre, primerApe, segundoApe, contraseña, correo);
+	    usuarioRepository.update(usuario);
+	    return true;
+	}
+	return false;
     }
-
+	
     // Método para obtener y ordenar rankings
     public List<Ranking> obtenerYOrdenarRankings() {
         List<Ranking> rankings = rankingService.obtenerRankings();

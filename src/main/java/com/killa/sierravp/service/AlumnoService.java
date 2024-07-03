@@ -5,47 +5,49 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.repository.Universidad;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
+import java.util.Collection;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.LinkedList;
 
 import java.util.List;
 
 public class AlumnoService {
 
-    private SessionFactory sessionFactory;
     private static EntityManagerFactory emf;
 
     // Constructor que inicializa la fábrica de sesiones de Hibernate
     public AlumnoService() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
         emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
     }
 
-    // Método para consultar el rendimiento de un alumno por su ID
-    public Alumno findByID(int id) { //Anteriormente se llamo consultar rendimiento pero 
-        //su funcion real es encontrar a un alumno asi que se renombro
-        // Abrir una nueva sesión de Hibernate
-        Session session = sessionFactory.openSession();
-        // Obtener la entidad Alumno desde la base de datos
-        Alumno alumno = session.get(Alumno.class, id);
-        session.close();
-        return alumno;
+    public List<Alumno> todosLosAlumnosDeFacultad(String nombreFacultad, Universidad universidad) {
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+        Collection<Universidad.EscuelaData> escuelasData = facultadData.getEscuelas().values();
+        List<Alumno> allAlumnos = new LinkedList<>();
+        for (Universidad.EscuelaData ep : escuelasData) {
+            allAlumnos.addAll(ep.getAlumnos());
+        }
+        return allAlumnos;
     }
-    
+
     // Método para consultar el rendimiento de un alumno por su ID
-    public Alumno findByCodigo(int codigo) { //Anteriormente se llamo consultar rendimiento pero 
+    public Alumno findByCodigo(int codigo) {
         EntityManager em = emf.createEntityManager();
+
         try {
-            TypedQuery<Alumno> query = em.createQuery(
-                    "SELECT a FROM Alumno a WHERE a.codigo = :codigo", Alumno.class);
-            query.setParameter("codigo", codigo);
-            return query.getSingleResult();
+            return em.createQuery(
+                    "SELECT a FROM Alumno a "
+                    + "LEFT JOIN FETCH a.clases c "
+                    + "LEFT JOIN FETCH c.curso cu "
+                    + "LEFT JOIN FETCH cu.clases "
+                    + "WHERE a.codigo = :codigo", Alumno.class)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
         } finally {
             em.close();
         }
@@ -58,7 +60,7 @@ public class AlumnoService {
         em.getTransaction().commit();
         em.close();
     }
-    
+
     // Método para obtener todos los alumnos de una facultad
     public List<Alumno> allAlumnosFromFacultad(int facultadID) {
         EntityManager em = emf.createEntityManager();
@@ -71,19 +73,5 @@ public class AlumnoService {
             em.close();
         }
     }
-    
-}
-/*
 
-public List<Alumno> allAlumnosFromFacultad(int facultadID) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Alumno> query = em.createQuery(
-                    "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
-            query.setParameter("facultadID", facultadID);
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
-    }
-*/
+}
