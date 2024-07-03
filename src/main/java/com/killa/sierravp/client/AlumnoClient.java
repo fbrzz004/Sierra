@@ -57,7 +57,8 @@ public class AlumnoClient {
         System.out.println("Ingrese el ID de la clase:");
         int idClase = scanner.nextInt();
 
-        List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);
+        //List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);
+        List<Nota> notas = null;//que ahora recupere de memoria
         if (notas.isEmpty()) {
             System.out.println("No se encontraron notas para la clase con ID " + idClase);
             return;
@@ -80,8 +81,8 @@ public class AlumnoClient {
         System.out.println("Ingrese su Codigo de estudiante: ");
         int cod = scanner.nextInt();
 
-        Alumno alumno = alumnoService.findByCodigo(cod);
-
+        //Alumno alumno = alumnoService.findByCodigo(cod);
+        Alumno alumno = null;
         if (alumno != null) {
             System.out.println(alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
             /*

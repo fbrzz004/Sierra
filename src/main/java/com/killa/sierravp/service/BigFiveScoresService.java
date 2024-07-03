@@ -6,20 +6,12 @@ package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.BigFiveScores;
-import com.killa.sierravp.repository.BigFiveScoresRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 
 /**
  *
  * @author karlo
  */
 public class BigFiveScoresService {
-    BigFiveScoresRepository bfsr= new BigFiveScoresRepository();
-    
-    public BigFiveScores BuscarByCodigoAlumno(int cod){
-        return bfsr.obtenerByCodigo(cod);
-    }
     
     public float similitudCoseno(Alumno a1, Alumno a2){
         BigFiveScores alumno1Scores = a1.getBfScores();
@@ -126,10 +118,6 @@ public class BigFiveScoresService {
 
         // Calcular la similitud coseno
         return productoPunto / (normaAlumno1 * normaAlumno2);
-    }
-    
-    public void create(BigFiveScores bfs) {
-        bfsr.create(bfs);
     }
     
 }

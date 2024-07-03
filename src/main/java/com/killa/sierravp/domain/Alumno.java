@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -75,6 +76,7 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     public Alumno() {
         super(); 
         this.regular = true;
+        this.clases = new HashSet<>();
     }
       
     //Metodos especiales de alumno (se enucentra en mi clase alumno)
@@ -126,6 +128,11 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         return valor;
     }
 
+    @Override
+    public String toString() {
+        return "Alumno: " + getPrimerNombre() + " " + getPrimerApellido() + ", Clases: " + clases.toString();
+    }
+    
     // Getters y setters para los nuevos atributos
     public double getCraPonderadoActual() {
         return craPonderadoActual;

@@ -70,7 +70,7 @@ public class CU07RecomendacionCompañeros {
         System.out.println("1 para características de personalidad, 2 para intereses académicos: ");
         opc = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer
-        int maxCriterioLimitePorAlumno=1;
+        int maxCriterioLimitePorAlumno = 1;
         switch (opc) {
             case 1:
                 System.out.println("Ingrese el índice de la característica de personalidad no deseada:");
@@ -92,15 +92,18 @@ public class CU07RecomendacionCompañeros {
 
         AlumnoService alumnoService = new AlumnoService();
         NetworkService networkService = new NetworkService();
-        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad, universidad); 
+        long inicio = System.nanoTime();
+        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad, universidad);
         LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, todosLosAlumnosDeFacultad.size() / 10, maxCriterioLimitePorAlumno);
         LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
-
+        long fin = System.nanoTime();
+        long tiempoTranscurrido = fin - inicio;
+        // Mostrar el tiempo transcurrido en milisegundos
+        System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
+        System.out.println("Se procesaron :  " + todosLosAlumnosDeFacultad.size() + " alumnos");
         System.out.println("Compañeros recomendados:");
         for (Alumno filtrado : seleccionados) {
-            System.out.println("ID del compañero recomendado: " + filtrado.getCodigo() + " - Nombre: " + filtrado.getPrimerNombre());
+            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " Escuela profesional: "+filtrado.getEp().getNombre() + "     ID del compañero recomendado: " + filtrado.getCodigo());
         }
     }
 }
-
-

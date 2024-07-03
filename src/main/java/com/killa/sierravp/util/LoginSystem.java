@@ -13,7 +13,6 @@ import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.BigFiveScores;
 import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.domain.Usuario;
-import com.killa.sierravp.repository.BigFiveScoresRepository;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.repository.Universidad.EscuelaData;
 import com.killa.sierravp.repository.Universidad.FacultadData;
@@ -111,20 +110,13 @@ public class LoginSystem {
 
             switch (opcion) {
                 case 1:
-                    // Implementar lógica para ver notas
+           
                     break;
                 case 2:
-                    // Implementar lógica para ver horarios
+    
                     break;
                 case 3:
-                    // Implementar lógica para ver BF5 Scores
-                    BigFiveScoresRepository repo = new BigFiveScoresRepository();
-                    BigFiveScores bfs = repo.obtenerByCodigo(alumno.getCodigo());
-                    if (bfs != null) {
-                        System.out.println("BF5 Scores: " + bfs.toString());
-                    } else {
-                        System.out.println("No se encontraron BF5 Scores.");
-                    }
+
                     break;
                 case 4:
                     System.out.println("Sesión cerrada.");

@@ -16,20 +16,5 @@ import jakarta.persistence.TypedQuery;
  * @author karlo
  */
 public class InteresesAcademyRepository {
-    EntityManager entityManager;
-
-    public InteresesAcademyRepository() {
-        entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
-    }
     
-    public InteresesAcademicos obtenerIntAcdAlumno(int codigo){
-        try {
-            TypedQuery<InteresesAcademicos> query = entityManager.createQuery(
-                "SELECT i FROM InteresesAcademicos i WHERE i.alumno.codigo = :codigo_alumno", InteresesAcademicos.class);
-            query.setParameter("codigo_alumno", codigo);
-            return query.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

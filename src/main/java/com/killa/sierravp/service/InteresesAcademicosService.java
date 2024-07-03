@@ -6,18 +6,12 @@ package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.InteresesAcademicos;
-import com.killa.sierravp.repository.InteresesAcademyRepository;
 
 /**
  *
  * @author karlo
  */
 public class InteresesAcademicosService {
-    InteresesAcademyRepository iar = new InteresesAcademyRepository();
-    
-    public InteresesAcademicos BuscarIntAcdByCod(int cod) {
-        return iar.obtenerIntAcdAlumno(cod);
-    }
 
     public float similitudCoseno(Alumno a1, Alumno a2) {
         InteresesAcademicos alumno1Intereses = a1.getInteresesAcademicos();
