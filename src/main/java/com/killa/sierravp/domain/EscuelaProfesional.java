@@ -72,4 +72,6 @@ public class EscuelaProfesional implements Serializable {
     public void setProfesores(Set<Profesor> profesores) {
         this.profesores = profesores;
     }
+    
+    
 }

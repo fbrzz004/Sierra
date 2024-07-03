@@ -27,7 +27,7 @@ public class Usuario implements Serializable {
     private int DNI;
 
     @Column(unique = true, nullable = false) //no deja crear profe ni admin si no le asigno un valor al codigo
-     int codigo;
+     private int codigo;
     
     @Column(nullable = false)
      String primerNombre;
@@ -140,4 +140,13 @@ public class Usuario implements Serializable {
         this.contraseña = contraseña;
         this.correo = correo;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
 }

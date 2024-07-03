@@ -7,12 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 
+/**
+ *
+ * @author karlo
+ */
 @Entity
 public class Clase implements Serializable {
     @Id
@@ -30,25 +31,15 @@ public class Clase implements Serializable {
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
 
-    @OneToMany(mappedBy = "clase")
-    private List<Nota> notas;
-
-    @OneToMany(mappedBy = "clase")
-    private List<CRA> cras;
-
-    // Constructor vacío requerido por JPA
     public Clase() {
-        this.notas = new ArrayList<>();
-        this.cras = new ArrayList<>();
     }
 
-    // Constructor para inicializar una clase con un curso
     public Clase(Curso curso) {
-        this();
         this.curso = curso;
     }
 
-    // Getters y setters para los atributos
+    
+    
     public int getId() {
         return id;
     }
@@ -81,24 +72,10 @@ public class Clase implements Serializable {
         this.curso = curso;
     }
 
-    public List<Nota> getNotas() {
-        return notas;
+    @Override
+    public String toString() {
+        return "Clase{" + "id=" + id + ", profesor=" + profesor + ", curso=" + curso + '}';
     }
-
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
-
-    public List<CRA> getCRAs() {
-        return cras;
-    }
-
-    public void setCRAs(List<CRA> cras) {
-        this.cras = cras;
-    }
-
-    // Método para agregar un CRA a la lista de CRAs de la clase
-    public void agregarCRA(CRA cra) {
-        this.cras.add(cra);
-    }
+    
+    
 }

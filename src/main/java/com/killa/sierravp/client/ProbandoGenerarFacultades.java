@@ -5,9 +5,12 @@
 package com.killa.sierravp.client;
 
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.repository.Universidad;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -15,42 +18,42 @@ import java.util.Map;
  */
 public class ProbandoGenerarFacultades {
 
-
     public static void main(String[] args) {
-        String nombreFacultad = "Facultad de Ciencias Físicas";
-        
+
+        String nombreFacultad = "Facultad de Medicina Veterinaria";
+
         // Generar la universidad con la facultad completa
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
-        
+
         // Obtener la facultad
         Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
 
-        // Mostrar todas las escuelas profesionales de la facultad
-        System.out.println("Escuelas Profesionales en la " + nombreFacultad + ":");
+        // Verificar asignaciones de cursos a alumnos
+        System.out.println("\nVerificando asignaciones de cursos a alumnos:");
         for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
-            System.out.println(escuelaData.getEscuela().getNombre());
-        }
-
-        // Mostrar todos los alumnos del ciclo 5 de la escuela de Física
-        System.out.println("\nAlumnos de la escuela de Física en el ciclo 5:");
-        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103); // Asumiendo que Física tiene el ID 1
-        if (escuelaFisica != null) {
-            for (Alumno alumno : escuelaFisica.getAlumnos()) {
-                if (alumno.getCiclo() == 5) {
-                    System.out.println(alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
+            for (Alumno alumno : escuelaData.getAlumnos()) {
+                System.out.println("Alumno: " + alumno.getPrimerNombre() + " " + alumno.getPrimerApellido() + " - Ciclo: " + alumno.getCiclo());
+                for (Clase clase : alumno.getClases()) {
+                    System.out.println("    Curso: " + clase.getCurso().getNombre());
+                    System.out.println("Profesor que dicta el curso: " + clase.getProfesor().getPrimerNombre()+" "+clase.getProfesor().getPrimerApellido());
                 }
             }
-        } else {
-            System.out.println("No se encontró la escuela de Física.");
         }
 
-        // Mostrar todos los profesores
-        System.out.println("\nProfesores de la Facultad:");
+        // Verificar asignaciones de cursos a profesores
+        System.out.println("\nVerificando asignaciones de cursos a profesores:");
         for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
             for (Profesor profesor : escuelaData.getProfesores()) {
-                System.out.println(profesor.getPrimerNombre() + " " + profesor.getPrimerApellido());
+                System.out.println("Profesor: " + profesor.getPrimerNombre() + " " + profesor.getPrimerApellido());
+                if (profesor.getClases() != null) {
+                    for (Clase clase :  profesor.getClases()) {
+                        System.out.println("    Curso que dicta: " + clase.getCurso().getNombre());
+                    }
+                } else {
+                    System.out.println("    No tiene cursos asignados.");
+                }
             }
         }
+
     }
 }
-

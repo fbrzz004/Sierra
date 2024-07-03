@@ -1,24 +1,18 @@
 package com.killa.sierravp.service;
 
+import com.killa.sierravp.domain.Ranking;
 import com.killa.sierravp.domain.Usuario;
 import com.killa.sierravp.repository.UsuarioRepository;
+import java.util.List;
 
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author karlo
- */
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
+    private RankingService rankingService;
 
     public UsuarioService() {
         usuarioRepository = new UsuarioRepository();
+        rankingService = new RankingService();
     }
 
     public boolean autenticarUsuario(String correo, String contraseña) {
@@ -34,5 +28,12 @@ public class UsuarioService {
 	    return true;
 	}
 	return false;
+    }
+	
+    // Método para obtener y ordenar rankings
+    public List<Ranking> obtenerYOrdenarRankings() {
+        List<Ranking> rankings = rankingService.obtenerRankings();
+        rankingService.ordenarRankings(rankings);
+        return rankings;
     }
 }

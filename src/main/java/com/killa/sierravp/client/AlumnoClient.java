@@ -4,62 +4,100 @@ import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
-import com.killa.sierravp.service.CursoService;
 import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.service.CursoService;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 public class AlumnoClient {
-    private static Universidad universidad = new Universidad();
-    private static AlumnoService alumnoService = new AlumnoService(universidad);
+
+    private static CursoService cursoService = new CursoService();
+    private static AlumnoService alumnoService = new AlumnoService();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        
-        System.out.println(" Consultar Cursos y clases que lleva el alumno: ");
-        System.out.println(" 1. SI - 2. NO ");
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Ver estadísticas de la clase");
+        System.out.println("2. Consultar Cursos y clases que lleva el alumno");
+        System.out.println("3. Buscar recomendaciones de compañeros");
         int opcion = scanner.nextInt();
+        Alumno alumnoBusca = new Alumno();
+        String nombreFacultad = "Facultad de Ciencias Físicas";
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
+        if (escuelaFisica != null) {
+            for (Alumno alumno : escuelaFisica.getAlumnos()) {
+                if (alumno.getCiclo() == 5) {
+                    alumnoBusca = alumno;
+                    break;
+                }
+            }
+        } else {
+            System.out.println("No se encontró la escuela de Física.");
+        }
 
         switch (opcion) {
             case 1:
-                consultarRendimiento();
+                //verEstadisticasClase();
                 break;
             case 2:
+                consultarRendimiento();
+                break;
+            case 3:
+                CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
                 break;
             default:
                 System.out.println("Opción no válida");
         }
     }
 
-    // Método para consultar el rendimiento de un alumno por su ID
-    private static void consultarRendimiento() {
-        System.out.print("Ingrese el código del alumno: ");
-        int codigo = scanner.nextInt();
-        Alumno alumno = alumnoService.consultarRendimiento(codigo);
+    public static void verEstadisticasClase() {
+        System.out.println("Ingrese el ID de la clase:");
+        int idClase = scanner.nextInt();
 
-        if (alumno != null) {
-            System.out.println("Nombre del alumno: " + alumno.getPrimerNombre());
-            System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
-            System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());
-        } else {
-            System.out.println("No se encontró un alumno con el ID proporcionado.");
+        //List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);
+        List<Nota> notas = null;//que ahora recupere de memoria
+        if (notas.isEmpty()) {
+            System.out.println("No se encontraron notas para la clase con ID " + idClase);
+            return;
         }
+
+        double media = cursoService.calcularMedia(notas);
+        int notaMinima = cursoService.obtenerNotaMinima(notas);
+        int notaMaxima = cursoService.obtenerNotaMaxima(notas);
+
+        System.out.println("Estadísticas de la clase:");
+        System.out.println("Media de notas: " + media);
+        System.out.println("Nota mínima: " + notaMinima);
+        System.out.println("Nota máxima: " + notaMaxima);
     }
 
-    // Método para obtener todos los alumnos
-    private static void obtenerTodosLosAlumnos() {
-        Map<Integer, Alumno> alumnos = (Map<Integer, Alumno>) alumnoService.obtenerTodosLosAlumnos();
+    //Se recuperan correctamente los cursos del alumno segun su id
+    //OJO si tienen errores al momento de recuperar la informacion 
+    //porque hibernate les dice lazy algo, tienen que adaptar su codigo a como esta el metodo de findByCodigo
+    public static void consultarRendimiento() {
+        System.out.println("Ingrese su Codigo de estudiante: ");
+        int cod = scanner.nextInt();
 
-        if (alumnos != null && !alumnos.isEmpty()) {
-            System.out.println("Lista de todos los alumnos:");
-            for (Map.Entry<Integer, Alumno> entry : alumnos.entrySet()) {
-                Alumno alumno = entry.getValue();
-                System.out.println("ID: " + alumno.getCodigo() + ", Nombre: " + alumno.getPrimerNombre() + " " + alumno.getSegundoNombre() + " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido() + ", CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
+        //Alumno alumno = alumnoService.findByCodigo(cod);
+        Alumno alumno = null;
+        if (alumno != null) {
+            System.out.println(alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
+            /*
+            System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());
+            System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
+            System.out.println("Histórico de CRA: " + alumno.getCraHistorico());
+             */
+            Set<Clase> clases = alumno.getClases();
+            System.out.print("El alumno lleva ");
+            System.out.println("");
+            for (Clase clase : clases) {
+                mostrarInfoAlumno(clase);
             }
         } else {
-            System.out.println("No hay alumnos registrados.");
+            System.out.println("No se pudo recuperar la información de rendimiento.");
         }
     }
 

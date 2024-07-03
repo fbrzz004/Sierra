@@ -34,8 +34,8 @@ public class NetworkService {
         float similitudCosenoBfs;
         float similitudCosenoIas;
         for (Alumno alumnosFiltrado : alumnosFiltrados) {
-            similitudCosenoBfs = bfs.similitudCoseno(alumno.getCodigo(), alumnosFiltrado.getCodigo());
-            similitudCosenoIas = ias.similitudCoseno(alumno.getCodigo(), alumnosFiltrado.getCodigo());
+            similitudCosenoBfs = bfs.similitudCoseno(alumno, alumnosFiltrado);
+            similitudCosenoIas = ias.similitudCoseno(alumno, alumnosFiltrado);
             //agrega un alumno con su puntaje promediado de simulitud entre los 2 criterios
             alumnosAndPuntaje.add(new puntajeAlumno(alumnosFiltrado, (similitudCosenoBfs + similitudCosenoIas) / 2));
         }
