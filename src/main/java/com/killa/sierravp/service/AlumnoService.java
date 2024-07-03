@@ -1,38 +1,109 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.domain.Clase;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class AlumnoService {
-    private Universidad universidad;
 
-    // Constructor que inicializa la clase AlumnoService con un objeto Universidad
-    public AlumnoService(Universidad universidad) {
-        this.universidad = universidad;
+    private static EntityManagerFactory emf;
+
+    // Constructor que inicializa la fábrica de sesiones de Hibernate
+    public AlumnoService() {
+        emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
     }
-
+    
     // Método para consultar el rendimiento de un alumno por su ID
-    public Alumno consultarRendimiento(int id) {
-        return getTodosLosAlumnos().stream()
-                .filter(alumno -> alumno.getCodigo()== id)
-                .findFirst()
-                .orElse(null);
+    public Alumno findByCodigo(int codigo) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            return em.createQuery(
+                "SELECT a FROM Alumno a " +
+                "LEFT JOIN FETCH a.clases c " +
+                "LEFT JOIN FETCH c.curso cu " +
+                "LEFT JOIN FETCH cu.clases " +
+                "WHERE a.codigo = :codigo", Alumno.class)
+                .setParameter("codigo", codigo)
+                .getSingleResult();
+        } finally {
+            em.close();
+        }
     }
-
-    // Método para obtener todos los alumnos de la universidad
-    public List<Alumno> getTodosLosAlumnos() {
-        return universidad.getFacultades().values().stream()
-                .flatMap(facultad -> facultad.getEscuelas().values().stream())
-                .flatMap(escuela -> escuela.getAlumnos().stream())
-                .collect(Collectors.toList());
+    /*Metodo anterior que solo recuperaba alumno pero no sus clases relacionadas
+    public Alumno findByCodigo(int codigo) { //Anteriormente se llamo consultar rendimiento pero 
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumno> query = em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.codigo = :codigo", Alumno.class);
+            query.setParameter("codigo", codigo);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
     }
+    
+    */
+    
 
-    // Método para obtener todos los alumnos en un formato de mapa (ID -> Alumno)
-    public List<Alumno> obtenerTodosLosAlumnos() {
-        return (List<Alumno>) getTodosLosAlumnos ().stream()
-                .collect(Collectors.toMap(Alumno::getCodigo, alumno -> alumno));
+    public void create(Alumno alumno) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(alumno);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
+    // Método para obtener todos los alumnos de una facultad
+    public List<Alumno> allAlumnosFromFacultad(int facultadID) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumno> query = em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
+            query.setParameter("facultadID", facultadID);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Alumno> getAlumnosByClaseId(int codigoClase) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.clases.id :codigoClase", Alumno.class)
+                    .setParameter("codigoClase", codigoClase)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 }
+/*
+
+public List<Alumno> allAlumnosFromFacultad(int facultadID) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumno> query = em.createQuery(
+                    "SELECT a FROM Alumno a WHERE a.facultad.id = :facultadID", Alumno.class);
+            query.setParameter("facultadID", facultadID);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+*/
