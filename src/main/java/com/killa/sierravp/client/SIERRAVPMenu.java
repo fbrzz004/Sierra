@@ -50,25 +50,19 @@ public class SIERRAVPMenu {
         
         Universidad.EscuelaData escuelaElegida = escuelas.get(idEscuela);
         
-        System.out.println("Cursos disponibles:");
-        for(Curso curso: escuelaElegida.getCursos()) {
-            System.out.println("Id[" + curso.getId() + "] Curso: " + curso);
-        }
-        
-        System.out.print("Seleccione un curso (número): ");
-        int idCurso = scanner.nextInt();
-        
-        List<Alumno> alumnos = escuelaElegida.getAlumnos();
-        //alumnos.stream().forEach(al -> {System.out.println("alumno " + al.getNombre());});
-        
         System.out.print("Digite la posición que requiere buscar: ");
         int posicionK = scanner.nextInt();
         
-        Alumno alumnoK = notaService.obtenerKesimoAlumnoPorNotaFinal(alumnos, idCurso, posicionK);
-        if (alumnoK == null) {
-            System.out.println("Alumno no encontrado");
-        } else {
-            System.out.print("El alumno: " + alumnoK + "obtuvo la posición numero " + posicionK);        
+        List<Alumno> alumnos = escuelaElegida.getAlumnos();
+        System.out.println("Cursos disponibles:");
+        for(Curso curso: escuelaElegida.getCursos()) {
+            System.out.println("== Curso con Id [" + curso.getId() + "]");        
+            Alumno alumnoK = notaService.obtenerKesimoAlumnoPorNotaFinal(alumnos, curso.getId(), posicionK);
+                if (alumnoK == null) {
+                    System.out.println("Alumno no encontrado en la posicion " + posicionK + " para el curso " + curso.getId());
+                } else {
+                    System.out.println("El alumno: " + alumnoK.getNombre() + " " + alumnoK.getPrimerApellido() + " obtuvo la posición numero [" + posicionK + "] para el curso [" + curso.getId()+ "]");     
+                }
         }
     }
 

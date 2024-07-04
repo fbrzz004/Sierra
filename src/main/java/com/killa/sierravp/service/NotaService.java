@@ -68,11 +68,11 @@ public class NotaService {
             
             if(notaFinal.isPresent()) {
                 AlumnoWrapper aw = new AlumnoWrapper(alumno, notaFinal.get().getCalificacion());
-                System.out.println("alumno " + aw.getAlumno() + "tiene nota final "+ notaFinal.get().getCalificacion());
+                //System.out.println("" + aw.getAlumno().getNombre() + "tiene nota final "+ notaFinal.get().getCalificacion());
                 alumnosWrapper.add(aw);
                 
             } else {
-                System.out.println("El alumno " + alumno.getNombre() + " no tiene nota final para el curso " + idCurso);
+                //System.out.println("El alumno " + alumno.getNombre() + " no tiene nota final para el curso " + idCurso);
             }
 
 
