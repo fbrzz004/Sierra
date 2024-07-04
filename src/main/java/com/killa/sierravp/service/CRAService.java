@@ -83,9 +83,9 @@ public class CRAService {
 
     // Método para obtener un CRA por su ID
     
-    public CRA getCRAById(int id) {
+    public CRA getCRAById(int codigo) {
         return getAllCRAs().stream()
-                .filter(cra -> cra.getCraId()== id)
+                .filter(cra -> cra.getCraId()== codigo)
                 .findFirst()
                 .orElse(null);
     }

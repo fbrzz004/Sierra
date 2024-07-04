@@ -2,8 +2,10 @@ package com.killa.sierravp.client;
 
 import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
+import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
 import java.util.List;
@@ -12,54 +14,45 @@ import java.util.Set;
 
 public class AlumnoClient {
 
-    private static CursoService cursoService = new CursoService();
-    private static AlumnoService alumnoService = new AlumnoService();
     private static Scanner scanner = new Scanner(System.in);
+    private static String nombreFacultad = "Facultad de Ciencias Físicas"; // Nombre de la facultad
 
     public static void main(String[] args) {
         System.out.println("Seleccione una opción:");
         System.out.println("1. Ver estadísticas de la clase");
-        System.out.println("2. Consultar Cursos y clases que lleva el alumno");
+        System.out.println("2. Consultar rendimiento del alumno");
         System.out.println("3. Buscar recomendaciones de compañeros");
         int opcion = scanner.nextInt();
-        Alumno alumnoBusca = new Alumno();
-        String nombreFacultad = "Facultad de Ciencias Físicas";
+        scanner.nextLine();  // Limpiar el buffer
+
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
-        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
-        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
-        if (escuelaFisica != null) {
-            for (Alumno alumno : escuelaFisica.getAlumnos()) {
-                if (alumno.getCiclo() == 5) {
-                    alumnoBusca = alumno;
-                    break;
-                }
-            }
-        } else {
-            System.out.println("No se encontró la escuela de Física.");
-        }
+        AlumnoService alumnoService = new AlumnoService(universidad);
+        CU03ConsultarRendimiento consultarrendimiento = new CU03ConsultarRendimiento(universidad);
 
         switch (opcion) {
             case 1:
-                //verEstadisticasClase();
+                verEstadisticasClase(universidad);
                 break;
             case 2:
-                consultarRendimiento();
+                consultarRendimiento(consultarrendimiento);
                 break;
             case 3:
-                CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
+                buscarRecomendacionesCompaneros(universidad, nombreFacultad);
                 break;
             default:
                 System.out.println("Opción no válida");
         }
     }
 
-    public static void verEstadisticasClase() {
+    public static void verEstadisticasClase(Universidad universidad) {
         System.out.println("Ingrese el ID de la clase:");
         int idClase = scanner.nextInt();
+        scanner.nextLine();  // Limpiar el buffer
 
-        //List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);
-        List<Nota> notas = null;//que ahora recupere de memoria
-        if (notas.isEmpty()) {
+        CursoService cursoService = new CursoService(universidad);
+        List<Nota> notas = null;  // Aquí deberías obtener las notas de la clase desde la memoria
+
+        if (notas == null || notas.isEmpty()) {
             System.out.println("No se encontraron notas para la clase con ID " + idClase);
             return;
         }
@@ -74,31 +67,32 @@ public class AlumnoClient {
         System.out.println("Nota máxima: " + notaMaxima);
     }
 
-    //Se recuperan correctamente los cursos del alumno segun su id
-    //OJO si tienen errores al momento de recuperar la informacion 
-    //porque hibernate les dice lazy algo, tienen que adaptar su codigo a como esta el metodo de findByCodigo
-    public static void consultarRendimiento() {
-        System.out.println("Ingrese su Codigo de estudiante: ");
-        int cod = scanner.nextInt();
+    public static void consultarRendimiento(CU03ConsultarRendimiento consultarrendimiento) {
+        System.out.println("Ingrese el ID del alumno:");
+        int codigoAlumno = scanner.nextInt();
+        scanner.nextLine(); 
 
-        //Alumno alumno = alumnoService.findByCodigo(cod);
-        Alumno alumno = null;
-        if (alumno != null) {
-            System.out.println(alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
-            /*
-            System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());
-            System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
-            System.out.println("Histórico de CRA: " + alumno.getCraHistorico());
-             */
-            Set<Clase> clases = alumno.getClases();
-            System.out.print("El alumno lleva ");
-            System.out.println("");
-            for (Clase clase : clases) {
-                mostrarInfoAlumno(clase);
+        consultarrendimiento.consultarRendimiento(codigoAlumno);
+    }
+
+    public static void buscarRecomendacionesCompaneros(Universidad universidad, String nombreFacultad) {
+        Alumno alumnoBusca = null;
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
+
+        if (escuelaFisica != null) {
+            for (Alumno alumno : escuelaFisica.getAlumnos()) {
+                if (alumno.getCiclo() == 5) {
+                    alumnoBusca = alumno;
+                    break;
+                }
             }
         } else {
-            System.out.println("No se pudo recuperar la información de rendimiento.");
+            System.out.println("No se encontró la escuela de Física.");
+            return;
         }
+
+        CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
     }
 
     public static void mostrarInfoAlumno(Clase clase) {

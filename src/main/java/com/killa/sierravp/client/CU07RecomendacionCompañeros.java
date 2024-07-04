@@ -17,17 +17,15 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
- * @author HITV
+ * Clase para la recomendación de compañeros.
+ * 
  */
 public class CU07RecomendacionCompañeros {
 
-    //por el momento solo trabajo con una facultad
+    // Método para recomendar compañeros basado en características de un alumno
     public static void RecomendarCompañeros(Alumno alumno, Universidad universidad) {
         Scanner scanner = new Scanner(System.in);
         String nombreFacultad = alumno.getEp().getFacultad().getNombre();
-        //String nombreFacultad = "Facultad de Ciencias Físicas";
-        //Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
 
         System.out.println("Generar recomendación de compañeros");
 
@@ -90,20 +88,32 @@ public class CU07RecomendacionCompañeros {
                 throw new IllegalArgumentException("Opción no válida");
         }
 
-        AlumnoService alumnoService = new AlumnoService();
+        // Crear una instancia de AlumnoService con la universidad proporcionada
+        AlumnoService alumnoService = new AlumnoService(universidad);
         NetworkService networkService = new NetworkService();
+        
         long inicio = System.nanoTime();
-        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad, universidad);
+        
+        // Obtener todos los alumnos de la facultad
+        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad);
+        
+        // Filtrar los alumnos basándose en las características deseadas
         LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, todosLosAlumnosDeFacultad.size() / 10, maxCriterioLimitePorAlumno);
+        
+        // Obtener los compañeros recomendados después del filtrado
         LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
+        
         long fin = System.nanoTime();
         long tiempoTranscurrido = fin - inicio;
+        
         // Mostrar el tiempo transcurrido en milisegundos
         System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
         System.out.println("Se procesaron :  " + todosLosAlumnosDeFacultad.size() + " alumnos");
         System.out.println("Compañeros recomendados:");
+        
+        // Mostrar los compañeros recomendados
         for (Alumno filtrado : seleccionados) {
-            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " Escuela profesional: "+filtrado.getEp().getNombre() + "     ID del compañero recomendado: " + filtrado.getCodigo());
+            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " Escuela profesional: " + filtrado.getEp().getNombre() + "     ID del compañero recomendado: " + filtrado.getCodigo());
         }
     }
 }
