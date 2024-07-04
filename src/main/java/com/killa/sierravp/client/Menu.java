@@ -6,6 +6,7 @@ package com.killa.sierravp.client;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Nota;
+import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.repository.Universidad;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class Menu {
     }
 
     public void iniciarMenu() {
+        
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Ingrese su correo electrónico: ");
@@ -85,7 +87,7 @@ public class Menu {
         System.out.println("\n--- Datos Personales ---");
         System.out.println("Nombre: " + alumno.getNombre());
         System.out.println("Código: " + alumno.getCodigo());
-        System.out.println("Escuela: " + alumno.getEscuela());
+        System.out.println("Escuela: " + alumno.getEp());
         System.out.println("Facultad: " + alumno.getFacultad());
     }
 
@@ -116,7 +118,7 @@ public class Menu {
         }
 
         System.out.println("\n--- Buscar Recomendaciones ---");
-        System.out.println("Seleccione un interés o habilidad que desea:");
+        System.out.println("Seleccione un interés o habilidad que desea maximizar entre sus recomendados:");
         for (int i = 0; i < intereses.size(); i++) {
             System.out.println((i + 1) + ". " + intereses.get(i));
         }
@@ -158,7 +160,7 @@ public class Menu {
                 System.out.println("--------------------------------------------------");
                 System.out.println("Nombre: " + recom.getNombre());
                 System.out.println("Código: " + recom.getCodigo());
-                System.out.println("Escuela: " + recom.getEscuela());
+                System.out.println("Escuela: " + recom.getEp());
                 System.out.println("Facultad: " + recom.getFacultad());
                 System.out.println("--------------------------------------------------");
             }
@@ -166,10 +168,19 @@ public class Menu {
     }
 
     public static void main(String[] args) {
-        Universidad universidad = new Universidad(); // Supongamos que ya tienes una instancia de Universidad
+        String nombreFacultad = "Facultad de Derecho y Ciencia Política"; // Nombre de la facultad Facultad de Ciencias Fisicas
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad); // Supongamos que ya tienes una instancia de Universidad
         Login login = new Login(universidad); // Instancia de Login, que permite autenticar usuarios
 
         Menu menu = new Menu(universidad, login); // Instancia de Menu, que utiliza Universidad y Login
+        Alumno alumno = universidad.obtenerAlumnoPorId(500);
+        Profesor profesor = universidad.obtenerProfesorPorId(150);
+        System.out.println("Alumno: ");
+        System.out.println(alumno.getCorreo() + "  "+ alumno.getContraseña());
+        System.out.println(alumno.getCorreo() + "  "+ alumno.getContraseña());
+        System.out.println("Profesor: ");
+        System.out.println(profesor.getCorreo() + "  "+ profesor.getContraseña());
+        System.out.println(profesor.getCorreo() + "  "+ profesor.getContraseña());
         menu.iniciarMenu(); // Inicia el menú para el usuario
     }
 

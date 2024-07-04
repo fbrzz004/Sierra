@@ -87,6 +87,18 @@ public class Universidad {
         }   
         return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
     }
+    
+    public Profesor obtenerProfesorPorId(int idProfesor) {
+        HashMap<Integer, Profesor > mapaProfesor = new HashMap(500);
+        for (FacultadData facultad : facultades.values()) { //toma una facultad unicamente
+            for (EscuelaData escuela : facultad.getEscuelas().values()) { //
+                for (Profesor profesor : escuela.getProfesores()) {                   
+                    mapaProfesor.put(profesor.getCodigo(), profesor);
+                }
+            }
+        }   
+        return mapaProfesor.get(idProfesor);  // Devuelve null si no se encuentra el alumno
+    }
 
     public List<Nota> obtenerNotasDeAlumno(Alumno alumno) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
