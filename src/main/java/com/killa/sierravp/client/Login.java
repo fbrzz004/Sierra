@@ -33,21 +33,12 @@ public class Login {
     }
 
     // Método para verificar el login y devolver el tipo de usuario (alumno o profesor)
-    public String verificarLogin(int codigoUsuario, String correo, String contraseña) {
-        Usuario usuario = usuariosRegistrados.get(codigoUsuario);
-        if (usuario == null || !usuario.getCorreo().equals(correo) || !usuario.getContraseña().equals(contraseña)) {
-            return "no encontrado";
+    public int obtenerCodigoUsuarioPorCorreo(String correo, String contrasena) {
+        for (Usuario usuario : usuariosRegistrados.values()) {
+            if (usuario.getCorreo().equals(correo) && usuario.getContraseña().equals(contrasena)) {
+                return usuario.getCodigo();
+            }
         }
-        if (usuario instanceof Alumno) {
-            return "alumno";
-        } else if (usuario instanceof Profesor) {
-            return "profesor";
-        } else {
-            return "no encontrado";
-        }
-    }
-
-    int obtenerCodigoUsuarioPorCorreo(String correo, String contrasena) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return -1; // Retornar -1 si no se encuentra ningún usuario con las credenciales proporcionadas
     }
 }
