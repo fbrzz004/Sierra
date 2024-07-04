@@ -37,6 +37,7 @@ public class NetworkService {
             similitudCosenoBfs = bfs.similitudCoseno(alumno, alumnosFiltrado);
             similitudCosenoIas = ias.similitudCoseno(alumno, alumnosFiltrado);
             //agrega un alumno con su puntaje promediado de simulitud entre los 2 criterios
+            alumnosFiltrado.setSimilitud((similitudCosenoBfs + similitudCosenoIas) / 2);
             alumnosAndPuntaje.add(new puntajeAlumno(alumnosFiltrado, (similitudCosenoBfs + similitudCosenoIas) / 2));
         }
         for (int i = 0; i < cantidadCompañeros && !alumnosAndPuntaje.isEmpty(); i++) { //aqui garantizo que se detendra si obtengo los compañeros o el arbolito esta vacio

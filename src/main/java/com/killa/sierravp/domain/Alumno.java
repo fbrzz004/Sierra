@@ -73,6 +73,8 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private InteresesAcademicos interesesAcademicos;
 
+    private float Similitud;
+    
     // Constructor por defecto necesario para JPA
     public Alumno() {
         super(); 
@@ -263,5 +265,13 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     public String getNombre() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    public float getSimilitud() {
+        return Similitud;
+    }
+
+    public void setSimilitud(float Similitud) {
+        this.Similitud = Similitud;
+    }
+
 }

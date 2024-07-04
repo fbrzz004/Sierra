@@ -1,11 +1,8 @@
 package com.killa.sierravp.client;
 
-import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
-import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.Set;
 public class AlumnoClient {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static String nombreFacultad = "Facultad de Ciencias Físicas"; // Nombre de la facultad
+    private static String nombreFacultad = "Facultad de Derecho y Ciencia Política"; // Nombre de la facultad Facultad de Ciencias Fisicas
 
     public static void main(String[] args) {
         System.out.println("Seleccione una opción:");
@@ -26,8 +23,8 @@ public class AlumnoClient {
         scanner.nextLine();  // Limpiar el buffer
 
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
-        AlumnoService alumnoService = new AlumnoService(universidad);
         CU03ConsultarRendimiento consultarrendimiento = new CU03ConsultarRendimiento(universidad);
+        CU07RecomendacionCompañerosMejorado recomendacionCompañeros = new CU07RecomendacionCompañerosMejorado(universidad);
 
         switch (opcion) {
             case 1:
@@ -37,7 +34,9 @@ public class AlumnoClient {
                 consultarRendimiento(consultarrendimiento);
                 break;
             case 3:
-                buscarRecomendacionesCompaneros(universidad, nombreFacultad);
+                Alumno alumno = universidad.obtenerAlumnoPorId(500); //aqui debe ir el id del alummno que se logeeo
+                //o mejor lo pasas como parametro, lo envio asi para poder probrar nomas
+                recomendacionCompañeros.RecomendarCompañeros(alumno);
                 break;
             default:
                 System.out.println("Opción no válida");
@@ -74,27 +73,7 @@ public class AlumnoClient {
 
         consultarrendimiento.consultarRendimiento(codigoAlumno);
     }
-
-    public static void buscarRecomendacionesCompaneros(Universidad universidad, String nombreFacultad) {
-        Alumno alumnoBusca = null;
-        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
-        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
-
-        if (escuelaFisica != null) {
-            for (Alumno alumno : escuelaFisica.getAlumnos()) {
-                if (alumno.getCiclo() == 5) {
-                    alumnoBusca = alumno;
-                    break;
-                }
-            }
-        } else {
-            System.out.println("No se encontró la escuela de Física.");
-            return;
-        }
-
-        CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
-    }
-
+    
     public static void mostrarInfoAlumno(Clase clase) {
         StringBuilder sb = new StringBuilder();
         sb.append(clase.getCurso().getNombre()).append(" y su id de curso es ").append(clase.getCurso().getId());

@@ -20,10 +20,16 @@ import java.util.Scanner;
  * Clase para la recomendación de compañeros.
  * 
  */
-public class CU07RecomendacionCompañeros {
+public class CU07RecomendacionCompañerosMejorado {
+    private Universidad universidad;
+
+    public CU07RecomendacionCompañerosMejorado(Universidad universidad) {
+        this.universidad = universidad;
+    }
+    
 
     // Método para recomendar compañeros basado en características de un alumno
-    public static void RecomendarCompañeros(Alumno alumno, Universidad universidad) {
+    public void RecomendarCompañeros(Alumno alumno) {
         Scanner scanner = new Scanner(System.in);
         String nombreFacultad = alumno.getEp().getFacultad().getNombre();
 
@@ -113,7 +119,7 @@ public class CU07RecomendacionCompañeros {
         
         // Mostrar los compañeros recomendados
         for (Alumno filtrado : seleccionados) {
-            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " Escuela profesional: " + filtrado.getEp().getNombre() + "     ID del compañero recomendado: " + filtrado.getCodigo());
+            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " EP: " + filtrado.getEp().getNombre() + " Ciclo: " + filtrado.getCiclo());
         }
     }
 }
