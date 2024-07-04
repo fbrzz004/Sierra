@@ -163,5 +163,9 @@ public class Usuario implements Serializable {
         return Objects.equals(correo, usuario.correo) &&
                Objects.equals(contraseña, usuario.contraseña);
     }  
+
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

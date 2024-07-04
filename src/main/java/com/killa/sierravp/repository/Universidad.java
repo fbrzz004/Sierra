@@ -88,6 +88,26 @@ public class Universidad {
         return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
     }
 
+    public List<Nota> obtenerNotasDeAlumno(Alumno alumno) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public double calcularCRAAlumno(Alumno alumno) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public List<String> obtenerInteresesAlumno(Alumno alumno) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public List<Alumno> buscarRecomendacionesAlumnos(Alumno alumno, String interes1, String interes2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Alumno obtenerAlumnoPorCodigo(int codigoUsuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public static class FacultadData {
 
         private String nombre;
