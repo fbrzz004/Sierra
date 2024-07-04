@@ -1,7 +1,6 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.Universidad;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AlumnoService {
-    private Universidad universidad;
+    private Universidad universidad = new Universidad();
 
     // Constructor que inicializa la clase AlumnoService con un objeto Universidad
     

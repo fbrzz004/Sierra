@@ -18,12 +18,24 @@ import java.util.Scanner;
 
 /**
  * Clase para la recomendación de compañeros.
- * 
+ *
  */
 public class CU07RecomendacionCompañeros {
 
+    private Universidad universidad;
+
+    public CU07RecomendacionCompañeros(Universidad universidad) {
+        this.universidad = universidad;
+    }
+
     // Método para recomendar compañeros basado en características de un alumno
-    public static void RecomendarCompañeros(Alumno alumno, Universidad universidad) {
+    public void RecomendarCompañeros(Alumno alumno) {
+        if (universidad == null) {
+            throw new IllegalStateException("La universidad no está inicializada.");
+        }
+        AlumnoService alumnoService = new AlumnoService(universidad);
+        NetworkService networkService = new NetworkService();
+
         Scanner scanner = new Scanner(System.in);
         String nombreFacultad = alumno.getEp().getFacultad().getNombre();
 
@@ -88,25 +100,35 @@ public class CU07RecomendacionCompañeros {
                 throw new IllegalArgumentException("Opción no válida");
         }
 
-        // Crear una instancia de AlumnoService con la universidad proporcionada
-        AlumnoService alumnoService = new AlumnoService(universidad);
-        NetworkService networkService = new NetworkService();
-        
         long inicio = System.nanoTime();
 
         List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad);
-        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, maxCriterioLimitePorAlumno);
+        for (Alumno alumno1 : todosLosAlumnosDeFacultad) {
+            System.out.println(alumno1.toString());
+        }
+        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, todosLosAlumnosDeFacultad.size() / 10, noDeseable, maxCriterioLimitePorAlumno);
+
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Total de alumnos obtenidos postFiltrado: " + filtrados.size());
+        for (Alumno alumno1 : filtrados) {
+            System.out.println(alumno1.toString());
+        }
 
         LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
-        
+
         long fin = System.nanoTime();
         long tiempoTranscurrido = fin - inicio;
-        
+
         // Mostrar el tiempo transcurrido en milisegundos
         System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
         System.out.println("Se procesaron :  " + todosLosAlumnosDeFacultad.size() + " alumnos");
         System.out.println("Compañeros recomendados:");
-        
+
         // Mostrar los compañeros recomendados
         for (Alumno filtrado : seleccionados) {
             System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " Escuela profesional: " + filtrado.getEp().getNombre() + "     ID del compañero recomendado: " + filtrado.getCodigo());

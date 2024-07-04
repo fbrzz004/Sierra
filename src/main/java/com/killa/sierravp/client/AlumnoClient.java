@@ -1,6 +1,5 @@
 package com.killa.sierravp.client;
 
-import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
@@ -13,7 +12,7 @@ import java.util.Set;
 public class AlumnoClient {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static String nombreFacultad = "Facultad de Medicina Humana"; // Nombre de la facultad OJO se debe mandar como parametro
+    private static String nombreFacultad = "Facultad de Ciencias Físicas"; // Nombre de la facultad OJO se debe mandar como parametro
 
     public static void main(String[] args) {
         System.out.println("Seleccione una opción:");
@@ -24,9 +23,9 @@ public class AlumnoClient {
         scanner.nextLine();  // Limpiar el buffer
 
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
-        AlumnoService alumnoService = new AlumnoService(universidad);
         CU03ConsultarRendimiento consultarrendimiento = new CU03ConsultarRendimiento(universidad);
-
+        CU07RecomendacionCompañeros recomendacionCompañeros = new CU07RecomendacionCompañeros(universidad);
+        
         switch (opcion) {
             case 1:
                 verEstadisticasClase(universidad);
@@ -34,8 +33,12 @@ public class AlumnoClient {
             case 2:
                 consultarRendimiento(consultarrendimiento);
                 break;
-            case 3:
-                buscarRecomendacionesCompaneros(universidad, nombreFacultad);
+            case 3:               
+                Alumno alumnoBusca = universidad.obtenerAlumnoPorId(400); // cuando hagas el login tienes que mandar a este metodo al estudiante que se logeo
+                if (alumnoBusca==null) {
+                    System.out.println("no se estan generando alumnos");
+                }
+                buscarRecomendacionesCompaneros(recomendacionCompañeros,alumnoBusca);
                 break;
             default:
                 System.out.println("Opción no válida");
@@ -73,24 +76,10 @@ public class AlumnoClient {
         consultarrendimiento.consultarRendimiento(codigoAlumno);
     }
 
-    public static void buscarRecomendacionesCompaneros(Universidad universidad, String nombreFacultad) {
-        Alumno alumnoBusca = null;
-        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
-        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(255); //aqui se busca el id de una ep en base a su nombre que debo recuperar del alumno
-                                                                                            //logeado cuando usaba fisica funcionaba piolin id 103
-        if (escuelaFisica != null) {
-            for (Alumno alumno : escuelaFisica.getAlumnos()) {
-                if (alumno.getCiclo() == 5) {
-                    alumnoBusca = alumno;
-                    break;
-                }
-            }
-        } else {
-            System.out.println("No se encontró la escuela de Obstetricia.");
-            return;
-        }
-
-        CU07RecomendacionCompañeros.RecomendarCompañeros(alumnoBusca, universidad);
+    public static void buscarRecomendacionesCompaneros(CU07RecomendacionCompañeros recomendacionCompañeros,Alumno alumnoBusca) {
+    //aqui se busca el id de una ep en base a su nombre que debo recuperar del alumno
+    //logeado cuando usaba fisica funcionaba piolin id 103
+        recomendacionCompañeros.RecomendarCompañeros(alumnoBusca);
     }
 
     public static void mostrarInfoAlumno(Clase clase) {
