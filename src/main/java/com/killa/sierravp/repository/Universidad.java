@@ -88,7 +88,61 @@ public class Universidad {
         }
         return null;  // Devuelve null si no se encuentra el alumno
     }
+    
+    // Método auxiliar para obtener una clase por su ID
+    public Clase obtenerClasePorId(int claseId) {
+        for (FacultadData facultadData : facultades.values()) {
+            for (EscuelaData escuelaData : facultadData.getEscuelas().values()) {
+                for (Clase clase : escuelaData.getClases()) {
+                    if (clase.getId() == claseId) {
+                        return clase;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
+    // Método auxiliar para obtener un ciclo por su ID
+    public Ciclo obtenerCicloPorId(int cicloId) {
+        for (FacultadData facultadData : facultades.values()) {
+            for (EscuelaData escuelaData : facultadData.getEscuelas().values()) {
+                for (EscuelaProfesional escuelaProfesional : escuelaData.getEscuelasProfesionales()) {
+                    for (Ciclo ciclo : escuelaProfesional.getCiclos()) {
+                        if (ciclo.getId() == cicloId) {
+                            return ciclo;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    // Método auxiliar para obtener una Escuela Profesional por su ID
+    public EscuelaProfesional obtenerEscuelaProfesionalPorId(int escuelaProfesionalId) {
+        for (FacultadData facultadData : facultades.values()) {
+            for (EscuelaData escuelaData : facultadData.getEscuelas().values()) {
+                for (EscuelaProfesional escuelaProfesional : escuelaData.getEscuelasProfesionales()) {
+                    if (escuelaProfesional.getId() == escuelaProfesionalId) {
+                        return escuelaProfesional;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    // Método auxiliar para obtener una facultad por su ID
+    public Facultad obtenerFacultadPorId(int facultadId) {
+        for (FacultadData facultad : facultades.values()) {
+            if (facultad.getId() == facultadId) {
+                return facultad;
+            }
+        }
+        return null;
+    }
+    
     public static class FacultadData {
 
         private String nombre;

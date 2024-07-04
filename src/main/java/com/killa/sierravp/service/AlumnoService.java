@@ -20,10 +20,10 @@ public class AlumnoService {
     // Método para consultar el rendimiento de un alumno por su ID y nombre de la facultad
     
     public Alumno consultarRendimiento(int codigo, String nombreFacultad) {
-        List<Alumno> allAlumnos = todosLosAlumnosDeFacultad(nombreFacultad);
-        for (Alumno alumno : allAlumnos) {
+        List<Alumno> todosLosAlumnos = todosLosAlumnosDeFacultad(nombreFacultad);
+        for (Alumno alumno : todosLosAlumnos) {
             if (alumno.getCodigo() == codigo) {
-                calcularPosicionRanking(alumno, allAlumnos);
+                calcularPosicionRanking(alumno, todosLosAlumnos);
                 return alumno;
             }
         }

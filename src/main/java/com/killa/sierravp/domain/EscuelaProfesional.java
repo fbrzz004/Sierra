@@ -31,14 +31,17 @@ public class EscuelaProfesional implements Serializable {
     private Facultad facultad;
     @ManyToMany(mappedBy = "eps")
     private Set<Profesor> profesores;
-
+    
     public EscuelaProfesional() {
     }
-
+   
+    private Set<Ciclo> ciclos;
+    
     public EscuelaProfesional(int id, String nombre, Facultad facultad) {
         this.id = id;
         this.nombre = nombre;
         this.facultad = facultad;
+        
     }
    
     public int getId() {
@@ -73,5 +76,11 @@ public class EscuelaProfesional implements Serializable {
         this.profesores = profesores;
     }
     
-    
+    public Set<Ciclo> getCiclos() {
+        return ciclos;
+    }
+
+    public void setCiclos(Set<Ciclo> ciclos) {
+        this.ciclos = ciclos;
+    }
 }
