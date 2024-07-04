@@ -93,14 +93,10 @@ public class CU07RecomendacionCompañeros {
         NetworkService networkService = new NetworkService();
         
         long inicio = System.nanoTime();
-        
-        // Obtener todos los alumnos de la facultad
-        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad);
-        
-        // Filtrar los alumnos basándose en las características deseadas
-        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, todosLosAlumnosDeFacultad.size() / 10, maxCriterioLimitePorAlumno);
-        
-        // Obtener los compañeros recomendados después del filtrado
+
+        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad, universidad);
+        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, maxCriterioLimitePorAlumno);
+
         LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
         
         long fin = System.nanoTime();
