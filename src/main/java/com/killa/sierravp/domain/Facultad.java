@@ -66,6 +66,4 @@ public class Facultad implements Serializable {
         this.ep = ep;
     }
 
-    
-    
 }

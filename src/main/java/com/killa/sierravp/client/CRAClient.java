@@ -1,82 +1,37 @@
 package com.killa.sierravp.client;
 
+import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CRAService;
-import com.killa.sierravp.domain.Clase;
-import com.killa.sierravp.domain.CRA;
+import com.killa.sierravp.client.GenerarFacultades;
 
 import java.util.Scanner;
 
 public class CRAClient {
-    private static Universidad universidad = new Universidad();
-    private static CRAService craService = new CRAService(universidad);
+    private static Universidad universidad;
+    private static CRAService craService;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        
-        System.out.println("Seleccione una opción:");
-        System.out.println("1. Calcular y registrar CRA de una clase");
-        System.out.println("2. Ver todos los CRAs");
-        System.out.println("3. Buscar CRA por ID");
-        
-        int opcion = scanner.nextInt();
+        String nombreFacultad = "Facultad de Derecho y Ciencia Política"; // Nombre de la facultad
+        universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
+        craService = new CRAService(universidad);
 
-        switch (opcion) {
-            case 1:
-                calcularYRegistrarCRA();
-                break;
-            case 2:
-                verTodosLosCRAs();
-                break;
-            case 3:
-                buscarCRAporId();
-                break;
-            default:
-                System.out.println("Opción no válida");
-        }
-    }
+        // Obtener el código del alumno
+        System.out.println("Ingrese el código del alumno:");
+        int codigoAlumno = scanner.nextInt();
 
-    private static void calcularYRegistrarCRA() {
-        System.out.println("Ingrese el ID de la clase:");
-        int idClase = scanner.nextInt();
+        // Calcular el CRA del alumno
+        craService.mostrarNotasAlumno(codigoAlumno);
 
-        // Supongamos que tienes un método en CRAService para obtener la clase por ID
-        Clase clase = obtenerClasePorId(idClase);  // Implementa este método según tu lógica
-        if (clase != null) {
-            craService.calcularYRegistrarCRA(clase);
-            System.out.println("CRA calculado y registrado para la clase con ID " + idClase);
+        // Obtener el alumno y mostrar su CRA ponderado actual
+        Alumno alumno = universidad.obtenerAlumnoPorId(codigoAlumno);
+        if (alumno != null) {
+            System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
         } else {
-            System.out.println("No se encontró una clase con el ID proporcionado.");
+            System.out.println("No se encontró un alumno con el código proporcionado.");
         }
-    }
-
-    private static void verTodosLosCRAs() {
-        System.out.println("Todos los CRAs:");
-        craService.getAllCRAs().forEach(cra -> 
-            System.out.println("CRA ID: " + cra.getCraId() + ", Valor: " + cra.getCra()));
-    }
-
-    private static void buscarCRAporId() {
-        System.out.print("Ingrese el ID del CRA: ");
-        int craId = scanner.nextInt();
-        CRA cra = craService.getCRAById(craId);
-
-        if (cra != null) {
-            System.out.println("CRA encontrado: Valor = " + cra.getCra());
-        } else {
-            System.out.println("No se encontró un CRA con el ID proporcionado.");
-        }
-    }
-
-    // Implementa este método para obtener la clase por ID, según tu lógica
-    private static Clase obtenerClasePorId(int idClase) {
-        // Ejemplo de implementación:
-        // return universidad.getFacultades().values().stream()
-        //         .flatMap(facultad -> facultad.getEscuelas().values().stream())
-        //         .flatMap(escuela -> escuela.getClases().stream())
-        //         .filter(clase -> clase.getId() == idClase)
-        //         .findFirst()
-        //         .orElse(null);
-        return null; // Reemplaza con tu lógica
     }
 }
+

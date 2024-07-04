@@ -110,7 +110,7 @@ public class GenerarFacultades {
 
             for (byte cicloActual = 1; cicloActual <= 10; cicloActual++) {
                 for (int grupo = 1; grupo <= 5; grupo++) {
-                    for (int k = 1; k <= 40; k++) {
+                    for (int k = 1; k <= 320; k++) {
                         Alumno alumno = GenerarNombresUsuario(new Alumno(), nombresMujer, nombresVaron, apellidos, k);
                         alumno.generarCorreo();
                         alumno.setFacultad(facultad);
@@ -144,9 +144,10 @@ public class GenerarFacultades {
 
                         for (Clase cl : clasesAlumno) {
                             Curso curso = cl.getCurso();
-                            alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo));
+                            //alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo));//creo que el error esta aqui porque asigno un nuevo grupo de notas cada vez por lo que de 15 solo me quedo con 3                       
+                            Set<Nota> notas = generarNotaAlumno(alumno, curso, cl, grupo);
+                            alumno.getNotas().addAll(notas);
                         }
-
                         escuelaData.agregarAlumno(alumno);
                     }
                 }

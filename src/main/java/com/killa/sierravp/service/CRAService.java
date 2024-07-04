@@ -2,18 +2,26 @@ package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.*;
 import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.repository.Universidad.EscuelaData;
+import com.killa.sierravp.util.CodigoClaseGenerator;
+import com.killa.sierravp.util.CodigoCursoGenerator;
 
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class CRAService {
     private Universidad universidad;
+    private Map<Integer, Clase> claseCache;
+    private Map<Integer, Ciclo> cicloCache;
+    private Map<Integer, EscuelaProfesional> escuelaProfesionalCache;
+    private Map<Integer, Universidad.FacultadData> facultadCache;
 
     // Constructor que inicializa la clase CRAService con un objeto Universidad
     public CRAService(Universidad universidad) {
         this.universidad = universidad;
+        this.claseCache = new HashMap<>();
+        this.cicloCache = new HashMap<>();
+        this.escuelaProfesionalCache = new HashMap<>();
+        this.facultadCache = new HashMap<>();
     }
 
     // Método para calcular el CRA de cada alumno en una clase específica
@@ -33,15 +41,15 @@ public class CRAService {
         }
 
         // Calcular la media y la desviación estándar de las notas
-        DoubleSummaryStatistics stats = notas.stream()
-                .mapToDouble(Nota::getValor)
-                .summaryStatistics();
-        double media = stats.getAverage();
-        double sumaCuadrados = notas.stream()
-                .mapToDouble(Nota::getValor)
-                .map(nota -> Math.pow(nota - media, 2))
-                .sum();
-        double desviacionEstandar = Math.sqrt(sumaCuadrados / notas.size());
+        double sum = 0.0, sumSq = 0.0;
+        int n = notas.size();
+        for (Nota nota : notas) {
+            double valor = nota.getValor();
+            sum += valor;
+            sumSq += valor * valor;
+        }
+        double media = sum / n;
+        double desviacionEstandar = Math.sqrt((sumSq / n) - (media * media));
 
         // Calcular el CRA para cada alumno y actualizar su CRA ponderado actual
         for (Nota nota : notas) {
@@ -97,69 +105,48 @@ public class CRAService {
     // Método para calcular el CRA por facultad
     public void calcularCRAPorFacultad(int facultadId) {
         // Obtener la facultad por su ID usando el método auxiliar
-        Facultad facultad = obtenerFacultadPorId(facultadId);
+        Universidad.FacultadData facultad = obtenerFacultadPorId(facultadId);
         if (facultad == null) {
             System.out.println("Facultad no encontrada");
             return;
         }
 
         // Calcular el CRA para cada Escuela Profesional en la facultad
-        for (EscuelaProfesional escuelaProfesional : facultad.getEscuelasProfesionales()) {
-            calcularCRAPorEscuelaProfesional(escuelaProfesional.getId());
+        for (EscuelaData escuelaData : facultad.getEscuelas().values()) {
+            for (EscuelaProfesional escuelaProfesional : escuelaData.getEscuelasProfesionales()) {
+                calcularCRAPorEscuelaProfesional(escuelaProfesional.getId());
+            }
         }
     }
 
-    // Método auxiliar para obtener una clase por su ID
+    // Método para mostrar las notas de un alumno por su código
+    public void mostrarNotasAlumno(int codigoAlumno) {
+        Alumno alumno = universidad.obtenerAlumnoPorId(codigoAlumno);
+        if (alumno == null) {
+            System.out.println("Alumno no encontrado.");
+            return;
+        }
+
+        System.out.println("Notas del Alumno: " + alumno.getPrimerNombre() + " " + alumno.getPrimerApellido());
+        for (Nota nota : alumno.getNotas()) {
+            System.out.println("Curso: " + nota.getCurso().getNombre() + " - Nota: " + nota.getCalificacion() + " (" + nota.getTipo() + ")");
+        }
+    }
+
+    // Métodos auxiliares para obtener entidades con caché
     private Clase obtenerClasePorId(int claseId) {
-        for (Universidad.FacultadData facultadData : universidad.getFacultades().values()) {
-            for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
-                for (Clase clase : escuelaData.getClases()) {
-                    if (clase.getId() == claseId) {
-                        return clase;
-                    }
-                }
-            }
-        }
-        return null;
+        return claseCache.computeIfAbsent(claseId, universidad::obtenerClasePorId);
     }
 
-    // Método auxiliar para obtener un ciclo por su ID
     private Ciclo obtenerCicloPorId(int cicloId) {
-        for (Universidad.FacultadData facultadData : universidad.getFacultades().values()) {
-            for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
-                for (EscuelaProfesional escuelaProfesional : escuelaData.getEscuelasProfesionales()) {
-                    for (Ciclo ciclo : escuelaProfesional.getCiclos()) {
-                        if (ciclo.getId() == cicloId) {
-                            return ciclo;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
+        return cicloCache.computeIfAbsent(cicloId, universidad::obtenerCicloPorId);
     }
 
-    // Método auxiliar para obtener una Escuela Profesional por su ID
     private EscuelaProfesional obtenerEscuelaProfesionalPorId(int escuelaProfesionalId) {
-        for (Universidad.FacultadData facultadData : universidad.getFacultades().values()) {
-            for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
-                for (EscuelaProfesional escuelaProfesional : escuelaData.getEscuelasProfesionales()) {
-                    if (escuelaProfesional.getId() == escuelaProfesionalId) {
-                        return escuelaProfesional;
-                    }
-                }
-            }
-        }
-        return null;
+        return escuelaProfesionalCache.computeIfAbsent(escuelaProfesionalId, universidad::obtenerEscuelaProfesionalPorId);
     }
 
-    // Método auxiliar para obtener una facultad por su ID
-    private Facultad obtenerFacultadPorId(int facultadId) {
-        for (Facultad facultad : universidad.getFacultades().values()) {
-            if (facultad.getId() == facultadId) {
-                return facultad;
-            }
-        }
-        return null;
+    private Universidad.FacultadData obtenerFacultadPorId(int facultadId) {
+        return facultadCache.computeIfAbsent(facultadId, universidad::obtenerFacultadPorId);
     }
 }

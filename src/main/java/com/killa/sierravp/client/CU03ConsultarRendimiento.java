@@ -30,7 +30,7 @@ public class CU03ConsultarRendimiento {
 
         if (alumno != null) {
             
-            System.out.println("Alumno: " + alumno.getPrimerNombre() + " " + alumno.getSegundoNombre()+ " " + alumno.getPrimerApellido() + " " + alumno.getSegundoApellido());
+            System.out.println("Alumno: " + alumno.getPrimerNombre() + " " + " " + alumno.getPrimerApellido());
             System.out.println("Posición en el ranking: " + alumno.getPosicionRanking());
             System.out.println("CRA Ponderado Actual: " + alumno.getCraPonderadoActual());
             

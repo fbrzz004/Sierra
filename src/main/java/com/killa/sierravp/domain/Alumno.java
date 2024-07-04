@@ -26,7 +26,7 @@ import java.util.Set;
  */
 @Entity
 @DiscriminatorValue("alumno")
-public class Alumno extends Usuario implements UsuarioGenerico{
+public class Alumno extends Usuario implements UsuarioGenerico {
 
     @ManyToOne
     @JoinColumn(name = "facultad_id", referencedColumnName = "id", nullable = false)
@@ -47,10 +47,10 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     private Ranking ranking;
 
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Nota> notas;
+    private Set<Nota> notas = new HashSet<>();
 
     private boolean regular;
-    
+
     private byte ciclo;
 
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -70,64 +70,95 @@ public class Alumno extends Usuario implements UsuarioGenerico{
 
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private BigFiveScores bfScores;
-    
+
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private InteresesAcademicos interesesAcademicos;
 
-    private float Similitud;
-    
     // Constructor por defecto necesario para JPA
     public Alumno() {
-        super(); 
+        super();
         this.regular = true;
         this.clases = new HashSet<>();
     }
-      
+
     //Metodos especiales de alumno (se encuentra en mi clase alumno)
-    
     public int procesarCaracte_Id(Caracteristica_y_Id ci) {
         int valor;
         if (ci.getCaractistica() == Caractistica.BigFiveScores) {
             var a = ci.getAtributoBf5();
-            valor=switch (a) {
-                case ansiedad -> this.bfScores.getAnsiedad();
-            case enojo -> this.bfScores.getEnojo();
-            case depresion -> this.bfScores.getDepresion();
-            case verguenza -> this.bfScores.getVerguenza();
-            case faltaDeAutocontrol -> this.bfScores.getFaltaDeAutocontrol();
-            case vulnerabilidad -> this.bfScores.getVulnerabilidad();
-            case amabilidad -> this.bfScores.getAmabilidad();
-            case sociabilidad -> this.bfScores.getSociabilidad();
-            case asertividad -> this.bfScores.getAsertividad();
-            case nivelDeActividad -> this.bfScores.getNivelDeActividad();
-            case busquedaDeNuevasExperiencias -> this.bfScores.getBusquedaDeNuevasExperiencias();
-            case alegria -> this.bfScores.getAlegria();
-            case imaginacion -> this.bfScores.getImaginacion();
-            case interesArtistico -> this.bfScores.getInteresArtistico();
-            case sensibilidad -> this.bfScores.getSensibilidad();
-            case ansiasDeAventura -> this.bfScores.getAnsiasDeAventura();
-            case intelecto -> this.bfScores.getIntelecto();
-            case liberalismo -> this.bfScores.getLiberalismo();
-            case confianzaEnOtros -> this.bfScores.getConfianzaEnOtros();
-            case moralidad -> this.bfScores.getMoralidad();
-            case altruismo -> this.bfScores.getAltruismo();
-            case cooperacion -> this.bfScores.getCooperacion();
-            case modestia -> this.bfScores.getModestia();
-            case empatia -> this.bfScores.getEmpatia();
-            case autoEficacia -> this.bfScores.getAutoEficacia();
-            case orden -> this.bfScores.getOrden();
-            case sentidoDelDeber -> this.bfScores.getSentidoDelDeber();
-            case disciplina -> this.bfScores.getDisciplina();
-            case prudencia -> this.bfScores.getPrudencia();
-            case orientacionAObjetivos -> this.bfScores.getOrientacionAObjetivos();
+            valor = switch (a) {
+                case ansiedad ->
+                    this.bfScores.getAnsiedad();
+                case enojo ->
+                    this.bfScores.getEnojo();
+                case depresion ->
+                    this.bfScores.getDepresion();
+                case verguenza ->
+                    this.bfScores.getVerguenza();
+                case faltaDeAutocontrol ->
+                    this.bfScores.getFaltaDeAutocontrol();
+                case vulnerabilidad ->
+                    this.bfScores.getVulnerabilidad();
+                case amabilidad ->
+                    this.bfScores.getAmabilidad();
+                case sociabilidad ->
+                    this.bfScores.getSociabilidad();
+                case asertividad ->
+                    this.bfScores.getAsertividad();
+                case nivelDeActividad ->
+                    this.bfScores.getNivelDeActividad();
+                case busquedaDeNuevasExperiencias ->
+                    this.bfScores.getBusquedaDeNuevasExperiencias();
+                case alegria ->
+                    this.bfScores.getAlegria();
+                case imaginacion ->
+                    this.bfScores.getImaginacion();
+                case interesArtistico ->
+                    this.bfScores.getInteresArtistico();
+                case sensibilidad ->
+                    this.bfScores.getSensibilidad();
+                case ansiasDeAventura ->
+                    this.bfScores.getAnsiasDeAventura();
+                case intelecto ->
+                    this.bfScores.getIntelecto();
+                case liberalismo ->
+                    this.bfScores.getLiberalismo();
+                case confianzaEnOtros ->
+                    this.bfScores.getConfianzaEnOtros();
+                case moralidad ->
+                    this.bfScores.getMoralidad();
+                case altruismo ->
+                    this.bfScores.getAltruismo();
+                case cooperacion ->
+                    this.bfScores.getCooperacion();
+                case modestia ->
+                    this.bfScores.getModestia();
+                case empatia ->
+                    this.bfScores.getEmpatia();
+                case autoEficacia ->
+                    this.bfScores.getAutoEficacia();
+                case orden ->
+                    this.bfScores.getOrden();
+                case sentidoDelDeber ->
+                    this.bfScores.getSentidoDelDeber();
+                case disciplina ->
+                    this.bfScores.getDisciplina();
+                case prudencia ->
+                    this.bfScores.getPrudencia();
+                case orientacionAObjetivos ->
+                    this.bfScores.getOrientacionAObjetivos();
             };
         } else {
             var a = ci.getAtributoIA();
-            valor= switch (a) {
-                case investigacion -> this.interesesAcademicos.getInvestigacion();
-                case trabajoEmpresarial -> this.interesesAcademicos.getTrabajoEmpresarial();
-                case emprendimiento -> this.interesesAcademicos.getEmprendimiento();
-                case voluntariado -> this.interesesAcademicos.getVoluntariado();
+            valor = switch (a) {
+                case investigacion ->
+                    this.interesesAcademicos.getInvestigacion();
+                case trabajoEmpresarial ->
+                    this.interesesAcademicos.getTrabajoEmpresarial();
+                case emprendimiento ->
+                    this.interesesAcademicos.getEmprendimiento();
+                case voluntariado ->
+                    this.interesesAcademicos.getVoluntariado();
             };
         }
         return valor;
@@ -137,7 +168,7 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     public String toString() {
         return "Alumno: " + getPrimerNombre() + " " + getPrimerApellido() + ", Clases: " + clases.toString();
     }
-    
+
     // Getters y setters para los nuevos atributos
     public double getCraPonderadoActual() {
         return craPonderadoActual;
@@ -145,6 +176,10 @@ public class Alumno extends Usuario implements UsuarioGenerico{
 
     public void setCraPonderadoActual(double craPonderadoActual) {
         this.craPonderadoActual = craPonderadoActual;
+    }
+
+    public void addNota(Nota nota) {
+        this.notas.add(nota);
     }
 
     public Set<Double> getCraHistoricoValues() {
@@ -267,17 +302,7 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
-    public float getSimilitud() {
-        return Similitud;
-    }
-
-    public void setSimilitud(float Similitud) {
-        this.Similitud = Similitud;
-    }
-
-    
-     // Métodos hashCode y equals basados en código
+    // Métodos hashCode y equals basados en código
     @Override
     public int hashCode() {
         return Objects.hash(getCodigo());
@@ -285,11 +310,14 @@ public class Alumno extends Usuario implements UsuarioGenerico{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Alumno alumno = (Alumno) obj;
         return Objects.equals(getCodigo(), alumno.getCodigo());
     }
-    
 
 }

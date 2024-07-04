@@ -4,6 +4,7 @@ import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.Universidad;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,14 +21,12 @@ public class AlumnoService {
     // Método para consultar el rendimiento de un alumno por su ID y nombre de la facultad
     
     public Alumno consultarRendimiento(int codigo, String nombreFacultad) {
-        List<Alumno> todosLosAlumnos = todosLosAlumnosDeFacultad(nombreFacultad);
-        for (Alumno alumno : todosLosAlumnos) {
-            if (alumno.getCodigo() == codigo) {
-                calcularPosicionRanking(alumno, todosLosAlumnos);
-                return alumno;
-            }
+        HashMap<Integer,Alumno> map = new HashMap<>(2000);
+        List<Alumno> allAlumnos = todosLosAlumnosDeFacultad(nombreFacultad);
+        for (Alumno alumno : allAlumnos) {
+            map.put(alumno.getCodigo(), alumno);
         }
-        return null;
+        return map.get(codigo);
     }
 
     // Método para obtener todos los alumnos en un formato de lista (ID -> Alumno)
