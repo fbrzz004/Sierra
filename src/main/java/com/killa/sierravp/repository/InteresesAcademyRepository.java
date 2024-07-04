@@ -4,13 +4,6 @@
  */
 package com.killa.sierravp.repository;
 
-import com.killa.sierravp.domain.InteresesAcademicos;
-import com.killa.sierravp.domain.Usuario;
-import com.sun.source.tree.TryTree;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
-
 /**
  *
  * @author karlo
