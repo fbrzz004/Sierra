@@ -94,7 +94,7 @@ public class CU07RecomendacionCompañeros {
         NetworkService networkService = new NetworkService();
         long inicio = System.nanoTime();
         List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad, universidad);
-        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, todosLosAlumnosDeFacultad.size() / 10, maxCriterioLimitePorAlumno);
+        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, maxCriterioLimitePorAlumno);
         LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
         long fin = System.nanoTime();
         long tiempoTranscurrido = fin - inicio;
