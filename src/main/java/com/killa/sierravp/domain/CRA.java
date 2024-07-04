@@ -27,19 +27,35 @@ public class CRA {
     @JoinColumn(name = "codigo_alumno", referencedColumnName = "codigo", nullable = false)
     private Alumno alumno;
 
+    @ManyToOne
+    @JoinColumn(name = "clase_id", referencedColumnName = "id", nullable = false)
+    private Clase clase;
+     
     @Column(nullable = false)
     private String periodo;
 
     @Column(nullable = false)
     private double cra;
-
+    
     public CRA() {
     }
-
+    
+    // Constructor con parámetros
+    
+    public CRA(Alumno alumno, Clase clase, double cra) {
+        this.alumno = alumno;
+        this.clase = clase;
+        this.cra = cra;
+    }
+    
     public int getCraId() {
         return craId;
     }
 
+    public int setCraId() {
+        return craId;
+    }
+    
     public Alumno getAlumno() {
         return alumno;
     }
@@ -63,5 +79,6 @@ public class CRA {
     public void setCra(double cra) {
         this.cra = cra;
     }
-
+    
+    
 }

@@ -11,7 +11,9 @@ import com.killa.sierravp.domain.EscuelaProfesional;
 import com.killa.sierravp.domain.Profesor;
 import java.util.HashMap;
 import com.killa.sierravp.domain.Curso;
+import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.domain.Usuario;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import java.util.Map;
 public class Universidad {
 
     private Map<String, FacultadData> facultades;
-
+    
     public Universidad() {
         this.facultades = new HashMap<>();
     }
@@ -42,6 +44,7 @@ public class Universidad {
     }
 
     public List<Usuario> obtenerUsuariosPorEscuela(String nombreFacultad, int idEscuela) {
+        
         FacultadData facultad = obtenerFacultad(nombreFacultad);
         if (facultad != null) {
             EscuelaData escuela = facultad.obtenerEscuela(idEscuela);
@@ -56,6 +59,7 @@ public class Universidad {
     }
 
     public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
+        
         FacultadData facultad = obtenerFacultad(nombreFacultad);
         if (facultad != null) {
 
@@ -70,6 +74,19 @@ public class Universidad {
 
         }
         return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+    
+    public Alumno obtenerAlumnoPorId(int idAlumno) {
+        for (FacultadData facultad : facultades.values()) {
+            for (EscuelaData escuela : facultad.getEscuelas().values()) {
+                for (Alumno alumno : escuela.getAlumnos()) {
+                    if (alumno.getCodigo() == idAlumno) {
+                        return alumno;
+                    }
+                }
+            }
+        }
+        return null;  // Devuelve null si no se encuentra el alumno
     }
 
     public static class FacultadData {

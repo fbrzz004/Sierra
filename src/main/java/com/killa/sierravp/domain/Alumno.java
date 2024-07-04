@@ -69,6 +69,7 @@ public class Alumno extends Usuario implements UsuarioGenerico{
 
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private BigFiveScores bfScores;
+    
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private InteresesAcademicos interesesAcademicos;
 
@@ -79,7 +80,8 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         this.clases = new HashSet<>();
     }
       
-    //Metodos especiales de alumno (se enucentra en mi clase alumno)
+    //Metodos especiales de alumno (se encuentra en mi clase alumno)
+    
     public int procesarCaracte_Id(Caracteristica_y_Id ci) {
         int valor;
         if (ci.getCaractistica() == Caractistica.BigFiveScores) {
@@ -256,6 +258,10 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     @Override
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
+    }
+
+    public String getNombre() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

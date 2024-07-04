@@ -14,8 +14,8 @@ import com.killa.sierravp.util.LoginSystem;
 public class SIERRAVPMenu {
 
     public static void main(String[] args) {
-
-        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas("Facultad de Ciencias Físicas");
+        //OJO EN el menu tienes que llamar a la clase Universidad y pasarle una facultad comom parametro
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas("Facultad de Medicina Humana");
 
         LoginSystem loginSystem = new LoginSystem(universidad);
 

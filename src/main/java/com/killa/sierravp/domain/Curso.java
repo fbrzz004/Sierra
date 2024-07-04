@@ -1,5 +1,6 @@
 package com.killa.sierravp.domain;
 
+import com.killa.sierravp.util.CodigoCursoGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,8 +26,12 @@ public class Curso implements Serializable {
 
     @OneToMany(mappedBy = "curso")
     private Set<Clase> clases;
+    @Column(nullable = false) 
+    private int creditos;
 
     public Curso() {
+        this.id= CodigoCursoGenerator.generate();
+        this.creditos = 4;
     }
 
     public int getId() {
@@ -52,4 +57,12 @@ public class Curso implements Serializable {
     public void setClases(Set<Clase> clases) {
         this.clases = clases;
     }
-}
+    
+     public int getCreditos() {
+        return creditos; 
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos; 
+    }
+}   
