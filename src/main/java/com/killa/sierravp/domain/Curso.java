@@ -1,5 +1,6 @@
 package com.killa.sierravp.domain;
 
+import com.killa.sierravp.util.CodigoCursoGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,8 @@ public class Curso implements Serializable {
     private int creditos;
 
     public Curso() {
+        this.id= CodigoCursoGenerator.generate();
+        this.creditos = 4;
     }
 
     public int getId() {

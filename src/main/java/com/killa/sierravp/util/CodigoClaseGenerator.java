@@ -14,7 +14,7 @@ package com.killa.sierravp.util;
  * @author Leonid
  */
 
-public class CodigoCursoGenerator {
+public class CodigoClaseGenerator {
 
     private static int currentCode = 0;
 

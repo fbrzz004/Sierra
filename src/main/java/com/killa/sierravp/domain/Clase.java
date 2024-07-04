@@ -1,5 +1,6 @@
 package com.killa.sierravp.domain;
 
+import com.killa.sierravp.util.CodigoClaseGenerator;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,6 +41,7 @@ public class Clase implements Serializable {
     private List<CRA> cras;
 
     public Clase() {
+        this.id= CodigoClaseGenerator.generate();
     }
 
     public Clase(Curso curso) {

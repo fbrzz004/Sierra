@@ -18,7 +18,7 @@ public class ProbandoGenerarFacultades {
 
     public static void main(String[] args) {
 
-        String nombreFacultad = "Facultad de Medicina Veterinaria";
+        String nombreFacultad = "Facultad de Medicina Humana";
 
         // Generar la universidad con la facultad completa
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
