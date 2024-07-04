@@ -13,6 +13,7 @@ import java.util.HashMap;
 import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.domain.Usuario;
+import java.util.LinkedHashSet;
 
 import java.util.List;
 import java.util.Map;
@@ -71,22 +72,20 @@ public class Universidad {
                     return usuarios;
                 }
             }
-
         }
         return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
     }
     
     public Alumno obtenerAlumnoPorId(int idAlumno) {
-        for (FacultadData facultad : facultades.values()) {
-            for (EscuelaData escuela : facultad.getEscuelas().values()) {
-                for (Alumno alumno : escuela.getAlumnos()) {
-                    if (alumno.getCodigo() == idAlumno) {
-                        return alumno;
-                    }
+        HashMap<Integer, Alumno > mapaAlunos = new HashMap(2000);
+        for (FacultadData facultad : facultades.values()) { //toma una facultad unicamente
+            for (EscuelaData escuela : facultad.getEscuelas().values()) { //
+                for (Alumno alumno : escuela.getAlumnos()) {                   
+                    mapaAlunos.put(alumno.getCodigo(), alumno);
                 }
             }
-        }
-        return null;  // Devuelve null si no se encuentra el alumno
+        }   
+        return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
     }
 
     public static class FacultadData {

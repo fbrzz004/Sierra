@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -52,7 +53,7 @@ public class Usuario implements Serializable {
     }
 
     public Usuario() {
-        this.contraseña=generarContra(6);
+        this.contraseña=generarContra(7);
         this.codigo=  CodigoGenerator.generate();
     }
 
@@ -148,5 +149,19 @@ public class Usuario implements Serializable {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(correo, contraseña);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Usuario usuario = (Usuario) obj;
+        return Objects.equals(correo, usuario.correo) &&
+               Objects.equals(contraseña, usuario.contraseña);
+    }  
     
 }

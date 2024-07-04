@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -266,6 +267,7 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+
     public float getSimilitud() {
         return Similitud;
     }
@@ -273,5 +275,21 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     public void setSimilitud(float Similitud) {
         this.Similitud = Similitud;
     }
+
+    
+     // Métodos hashCode y equals basados en código
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCodigo());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Alumno alumno = (Alumno) obj;
+        return Objects.equals(getCodigo(), alumno.getCodigo());
+    }
+    
 
 }
