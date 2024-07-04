@@ -2,10 +2,8 @@ package com.killa.sierravp.client;
 
 import com.killa.sierravp.service.AlumnoService;
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.CRA;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
-import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.Set;
 public class AlumnoClient {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static String nombreFacultad = "Facultad de Ciencias Físicas"; // Nombre de la facultad
+    private static String nombreFacultad = "Facultad de Medicina Humana"; // Nombre de la facultad OJO se debe mandar como parametro
 
     public static void main(String[] args) {
         System.out.println("Seleccione una opción:");
@@ -78,8 +76,8 @@ public class AlumnoClient {
     public static void buscarRecomendacionesCompaneros(Universidad universidad, String nombreFacultad) {
         Alumno alumnoBusca = null;
         Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
-        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(103);
-
+        Universidad.EscuelaData escuelaFisica = facultadData.obtenerEscuela(255); //aqui se busca el id de una ep en base a su nombre que debo recuperar del alumno
+                                                                                            //logeado cuando usaba fisica funcionaba piolin id 103
         if (escuelaFisica != null) {
             for (Alumno alumno : escuelaFisica.getAlumnos()) {
                 if (alumno.getCiclo() == 5) {
@@ -88,7 +86,7 @@ public class AlumnoClient {
                 }
             }
         } else {
-            System.out.println("No se encontró la escuela de Física.");
+            System.out.println("No se encontró la escuela de Obstetricia.");
             return;
         }
 

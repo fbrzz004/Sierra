@@ -5,7 +5,7 @@
 package com.killa.sierravp.client;
 
 import com.killa.sierravp.repository.Universidad;
-import com.killa.sierravp.util.LoginSystem;
+
 
 /**
  *
@@ -17,9 +17,6 @@ public class SIERRAVPMenu {
         //OJO EN el menu tienes que llamar a la clase Universidad y pasarle una facultad comom parametro
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas("Facultad de Medicina Humana");
 
-        LoginSystem loginSystem = new LoginSystem(universidad);
-
-        loginSystem.iniciar();
     }
 
 }
