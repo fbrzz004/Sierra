@@ -144,9 +144,10 @@ public class GenerarFacultades {
 
                         for (Clase cl : clasesAlumno) {
                             Curso curso = cl.getCurso();
-                            alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo));
+                            //alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo));//creo que el error esta aqui porque asigno un nuevo grupo de notas cada vez por lo que de 15 solo me quedo con 3                       
+                            Set<Nota> notas = generarNotaAlumno(alumno, curso, cl, grupo);
+                            alumno.getNotas().addAll(notas);
                         }
-
                         escuelaData.agregarAlumno(alumno);
                     }
                 }
