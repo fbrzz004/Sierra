@@ -46,19 +46,16 @@ public class NotaService {
         return notasCurso;
     }
 
-    public Alumno obtenerKesimoAlumnoPorNotaFinal(List<Alumno> alumnos, int idCurso, int posicionK) {
+    public Alumno obtenerKenesimoAlumnoPorNotaFinal(List<Alumno> alumnos, int idCurso, int posicionK) {
         List<AlumnoWrapper> alumnosWrapper = new ArrayList<>();
-        //System.out.println("numero de alumnos total:: " + alumnos.size());
-        
+
         int iterationCount = 0;
         int maxIterations = 100;
         for (int i = 0; i < maxIterations; i++) {
             iterationCount++;
             Alumno alumno = alumnos.get(i);
-            //System.out.println("obteniendo notas para alumno " + alumno.getCorreo() + " y curso id " + idCurso);
             List<Nota> notasAlumno = obtenerNotasPorCodigoAlumnoCodigoCurso(alumno, idCurso); //notaRepository.obtenerNotasPorAlumnoYCurso(alumno.getCodigo(), idCurso);
             if (notasAlumno.isEmpty()) {
-                //System.out.println("no se encontraron notas para alumno " + alumno.getCorreo() + " y curso id " + idCurso);
                 continue;
             }
 
@@ -68,14 +65,8 @@ public class NotaService {
             
             if(notaFinal.isPresent()) {
                 AlumnoWrapper aw = new AlumnoWrapper(alumno, notaFinal.get().getCalificacion());
-                //System.out.println("" + aw.getAlumno().getNombre() + "tiene nota final "+ notaFinal.get().getCalificacion());
-                alumnosWrapper.add(aw);
-                
-            } else {
-                //System.out.println("El alumno " + alumno.getNombre() + " no tiene nota final para el curso " + idCurso);
+                alumnosWrapper.add(aw);          
             }
-
-
         }
      
         if(alumnosWrapper.isEmpty()) {
@@ -85,6 +76,8 @@ public class NotaService {
         AlumnoWrapper awEncontrado = quickSelect(alumnosWrapper, 0, alumnosWrapper.size() - 1, posicionK - 1);
         return awEncontrado.getAlumno();
     }
+    
+    // Método QuickSelect
     
     public static AlumnoWrapper quickSelect(List<AlumnoWrapper> alumnos, int low, int high, int k) {
         if (low == high) {
