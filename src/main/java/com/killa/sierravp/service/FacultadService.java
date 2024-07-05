@@ -43,4 +43,15 @@ public class FacultadService {
             throw new RuntimeException("Error al obtener el id de la facultad por nombre: " + nombreFacultad, e);
         }
     }
+    
+    public Facultad obtenerFacultadPorNombreConEscuelas(String nombreFacultad) {
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Facultad> query = em.createQuery(
+                    "SELECT f FROM Facultad f " +
+                    "LEFT JOIN FETCH f.ep ep " +
+                    "WHERE f.nombre = :nombre", Facultad.class);
+            query.setParameter("nombre", nombreFacultad);
+            return query.getSingleResult();
+        }
+    }
 }

@@ -34,8 +34,8 @@ public class NetworkService {
         float similitudCosenoBfs;
         float similitudCosenoIas;
         for (Alumno alumnosFiltrado : alumnosFiltrados) {
-            similitudCosenoBfs = bfs.similitudCoseno(alumno.getCodigo(), alumnosFiltrado.getCodigo());
-            similitudCosenoIas = ias.similitudCoseno(alumno.getCodigo(), alumnosFiltrado.getCodigo());
+            similitudCosenoBfs = bfs.similitudCoseno(alumno, alumnosFiltrado);
+            similitudCosenoIas = ias.similitudCoseno(alumno, alumnosFiltrado);
             //agrega un alumno con su puntaje promediado de simulitud entre los 2 criterios
             alumnosAndPuntaje.add(new puntajeAlumno(alumnosFiltrado, (similitudCosenoBfs + similitudCosenoIas) / 2));
         }
@@ -48,11 +48,14 @@ public class NetworkService {
     //maxCriterioLimite es el valor que ingresa el maximo permitido para una
     //persona el cual luego se multiplica por maxAlumnos para obtener el limite total
     //sobre el que trabaja el metodo
+    
+    
     public LinkedList<Alumno> filtrarAlumnos(List<Alumno> alumnos, Caracteristica_y_Id aMaximizar,
-            Caracteristica_y_Id noDeseable, int maxAlumnos, int maxCriterioLimitePorAlum) {
+            Caracteristica_y_Id noDeseable, int maxCriterioLimitePorAlum) {
         //aMaximizar haria de valor en el problema de la mochila y noDeseable seria el peso
+        int maxAlumnos = alumnos.size()/50;
         int maxCriterioLimite = maxCriterioLimitePorAlum * maxAlumnos;
-        int n = alumnos.size(); //mi ultimo indice es n recuerda que si el tam es n+1 el ultimo index es n porque se empieza en 0
+        int n = alumnos.size();
         int[][] dp = new int[n + 1][maxCriterioLimite + 1];
         boolean[][] keep = new boolean[n + 1][maxCriterioLimite + 1];
         LinkedList<Alumno> resultado = new LinkedList<>();

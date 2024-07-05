@@ -50,5 +50,10 @@ public class KeyMapaCursos {
         }
         return Objects.equals(this.Facultad, other.Facultad);
     }
-    
+
+    @Override
+    public String toString() {
+        return "KeyMapaCursos{" + "Facultad=" + Facultad + ", ciclo=" + ciclo + ", numeroCurso=" + numeroCurso + '}';
+    }
+       
 }

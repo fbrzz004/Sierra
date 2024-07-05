@@ -1,49 +1,45 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Clase;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import com.killa.sierravp.domain.Profesor;
+import com.killa.sierravp.repository.Universidad;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClaseService {
-    private EntityManagerFactory emf;
-    private EntityManager em;
+    private Universidad universidad;
 
-    public ClaseService() {
-        emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
-        em = emf.createEntityManager();
+    // Constructor que inicializa la clase ClaseService con un objeto Universidad
+    public ClaseService(Universidad universidad) {
+        this.universidad = universidad;
     }
 
+    // Método para obtener una clase por su ID
     public Clase getClaseById(int id) {
-        EntityManager em = emf.createEntityManager();
-        return em.find(Clase.class, id);
+        return universidad.getFacultades().values().stream()
+                .flatMap(facultad -> facultad.getEscuelas().values().stream())
+                .flatMap(escuela -> escuela.getClases().stream())
+                .filter(clase -> clase.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
-    public void close() {
-        em.close();
-        emf.close();
-    }
-    
+    // Método para obtener clases por el ID de un alumno
     public List<Clase> getClasesByAlumnoId(int codigoAlumno) {
-        try {
-            return em.createQuery(
-                    "SELECT a FROM Clase a WHERE a.alumnos.codigo = :codigoAlumno", Clase.class)
-                    .setParameter("codigoAlumno", codigoAlumno)
-                    .getResultList();
-        } finally {
-            em.close();
-        }
+        return universidad.getFacultades().values().stream()
+                .flatMap(facultad -> facultad.getEscuelas().values().stream())
+                .flatMap(escuela -> escuela.getClases().stream())
+                .filter(clase -> clase.getAlumnos().stream().anyMatch(alumno -> alumno.getCodigo() == codigoAlumno))
+                .collect(Collectors.toList());
     }
-    
+
+    // Método para obtener clases por el ID de un profesor
     public List<Clase> getClasesByProfesorId(int codigoProfesor) {
-       try {
-            return em.createQuery(
-                    "SELECT a FROM Clase a WHERE a.profesor.DNI = :codigoProfesor", Clase.class)
-                    .setParameter("codigoProfesor", codigoProfesor)
-                    .getResultList();
-        } finally {
-            em.close();
-        } 
+        return universidad.getFacultades().values().stream()
+                .flatMap(facultad -> facultad.getEscuelas().values().stream())
+                .flatMap(escuela -> escuela.getClases().stream())
+                .filter(clase -> clase.getProfesor().getDNI() == codigoProfesor)
+                .collect(Collectors.toList());
     }
 }

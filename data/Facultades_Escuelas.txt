@@ -1,0 +1,65 @@
+Escuela Profesional de Ciencias Biológicas,52,Facultad de Ciencias Biológicas,1
+Escuela Profesional de Genética y Biotecnología,53,Facultad de Ciencias Biológicas,1
+Escuela Profesional de Microbiología y Parasitología,54,Facultad de Ciencias Biológicas,1
+Escuela Profesional de Ingeniería Mecánica de Fluidos,102,Facultad de Ciencias Físicas,2
+Escuela Profesional de Física,103,Facultad de Ciencias Físicas,2
+Escuela Profesional de Investigación Operativa,152,Facultad de Ciencias Matemáticas,52
+Escuela Profesional de Matemática,153,Facultad de Ciencias Matemáticas,52
+Escuela Profesional de Computación Científica,154,Facultad de Ciencias Matemáticas,52
+Escuela Profesional de Estadística,155,Facultad de Ciencias Matemáticas,52
+Escuela Profesional de Toxicología,202,Facultad de Farmacia y Bioquímica,102
+Escuela Profesional de Ciencia de los Alimentos,203,Facultad de Farmacia y Bioquímica,102
+Escuela Profesional de Farmacia y Bioquímica,204,Facultad de Farmacia y Bioquímica,102
+Escuela Profesional de Enfermería,252,Facultad de Medicina Humana,152
+Escuela Profesional de Medicina Humana,253,Facultad de Medicina Humana,152
+Escuela Profesional de Tecnología Médica,254,Facultad de Medicina Humana,152
+Escuela Profesional de Obstetricia,255,Facultad de Medicina Humana,152
+Escuela Profesional de Nutrición,256,Facultad de Medicina Humana,152
+Escuela Profesional de Medicina Veterinaria,302,Facultad de Medicina Veterinaria,202
+Escuela Profesional de Odontología,352,Facultad de Odontología,252
+Escuela Profesional de Psicología,402,Facultad de Psicología,302
+Escuela Profesional de Psicología Organizacional y de la Gestión Humana,403,Facultad de Psicología,302
+Escuela Profesional de Administración,452,Facultad de Ciencias Administrativas,352
+Escuela Profesional de Administración de Negocios Internacionales,453,Facultad de Ciencias Administrativas,352
+Escuela Profesional de Administración de Turismo,454,Facultad de Ciencias Administrativas,352
+Escuela Profesional de Auditoria Empresarial y del Sector Público,502,Facultad de Ciencias Contables,402
+Escuela Profesional de Contabilidad,503,Facultad de Ciencias Contables,402
+Escuela Profesional de Gestión Tributaria,504,Facultad de Ciencias Contables,402
+Escuela Profesional de Economía,552,Facultad de Ciencias Económicas,452
+Escuela Profesional de Economía Internacional,553,Facultad de Ciencias Económicas,452
+Escuela Profesional de Economía Pública,554,Facultad de Ciencias Económicas,452
+Escuela Profesional de Educación,602,Facultad de Educación,502
+Escuela Profesional de Educación Física,603,Facultad de Educación,502
+Escuela Profesional de Antropología,652,Facultad de Ciencias Sociales,552
+Escuela Profesional de Arqueología,653,Facultad de Ciencias Sociales,552
+Escuela Profesional de Historia,654,Facultad de Ciencias Sociales,552
+Escuela Profesional de Sociología,655,Facultad de Ciencias Sociales,552
+Escuela Profesional de Trabajo Social,656,Facultad de Ciencias Sociales,552
+Escuela Profesional de Derecho,702,Facultad de Derecho y Ciencia Política,602
+Escuela Profesional de Ciencia Política,703,Facultad de Derecho y Ciencia Política,602
+Escuela Profesional de Arte,752,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Bibliotecología y Ciencias de la Información,753,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Conservación y Restauración,754,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Comunicación Social,755,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Filosofía,756,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Lingüística,757,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Literatura,758,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Danza,759,Facultad de Letras y Ciencias Humanas,652
+Escuela Profesional de Ingeniería de Sistemas,802,Facultad de Ingeniería de Sistemas e Informática,702
+Escuela Profesional de Ingeniería de Software,803,Facultad de Ingeniería de Sistemas e Informática,702
+Escuela Profesional de Ingeniería Biomédica,852,Facultad de Ingeniería Electrónica y Eléctrica,752
+Escuela Profesional de Ingeniería Electrónica,853,Facultad de Ingeniería Electrónica y Eléctrica,752
+Escuela Profesional de Ingeniería Eléctrica,854,Facultad de Ingeniería Electrónica y Eléctrica,752
+Escuela Profesional de Ingeniería de Telecomunicaciones,855,Facultad de Ingeniería Electrónica y Eléctrica,752
+Escuela Profesional de Ingeniería Geográfica,902,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería Geológica,903,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería Civil,904,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería Metalúrgica,905,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería de Minas,906,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería Ambiental,907,Facultad de Ingeniería Geológica Minera Metalúrgica y Geográfica,802
+Escuela Profesional de Ingeniería Textil y Confecciones,952,Facultad de Ingeniería Industrial,852
+Escuela Profesional de Ingeniería Industrial,953,Facultad de Ingeniería Industrial,852
+Escuela Profesional de Ingeniería de Seguridad y Salud en el Trabajo,954,Facultad de Ingeniería Industrial,852
+Escuela Profesional de Química,1002,Facultad de Ingeniería Industrial,902
+Escuela Profesional de Ingeniería Química,1003,Facultad de Ingeniería Industrial,902
+Escuela Profesional de Ingeniería Agroindustrial,1004,Facultad de Ingeniería Industrial,902

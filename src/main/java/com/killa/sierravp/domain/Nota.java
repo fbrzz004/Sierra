@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  *
@@ -46,6 +45,9 @@ public class Nota implements Serializable{
     
     @Column(nullable = false)
     private int calificacion;
+    
+    @Column(nullable = false)
+    private double valor;
 
     public Nota() {
     }
@@ -105,6 +107,12 @@ public class Nota implements Serializable{
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
     }
+    
+    public double getValor() {
+        return valor;
+    }
 
-
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
 }
