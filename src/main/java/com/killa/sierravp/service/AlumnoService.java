@@ -1,7 +1,6 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.Universidad;
 import java.util.Collection;
 import java.util.HashMap;
@@ -46,14 +45,5 @@ public class AlumnoService {
             allAlumnos.addAll(ep.getAlumnos());
         }
         return allAlumnos;
-    }
-    
-    private void calcularPosicionRanking(Alumno alumno, List<Alumno> alumnos) {
-        List<Alumno> alumnosOrdenados = alumnos.stream()
-                .sorted((a1, a2) -> Double.compare(a2.getCraPonderadoActual(), a1.getCraPonderadoActual()))
-                .collect(Collectors.toList());
-
-        int posicion = alumnosOrdenados.indexOf(alumno) + 1;
-        alumno.setPosicionRanking(posicion);
     }
 }
