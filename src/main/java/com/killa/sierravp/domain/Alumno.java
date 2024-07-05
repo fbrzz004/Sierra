@@ -85,6 +85,11 @@ public class Alumno extends Usuario implements UsuarioGenerico{
       
     //Metodos especiales de alumno (se encuentra en mi clase alumno)
     
+    public void actualizarPerfil(String contraseña, String correo){
+        this.setContraseña(contraseña);
+        this.setCorreo(correo);
+    }
+    
     public int procesarCaracte_Id(Caracteristica_y_Id ci) {
         int valor;
         if (ci.getCaractistica() == Caractistica.BigFiveScores) {
@@ -276,8 +281,6 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         this.Similitud = Similitud;
     }
 
-    
-     // Métodos hashCode y equals basados en código
     @Override
     public int hashCode() {
         return Objects.hash(getCodigo());
@@ -290,6 +293,4 @@ public class Alumno extends Usuario implements UsuarioGenerico{
         Alumno alumno = (Alumno) obj;
         return Objects.equals(getCodigo(), alumno.getCodigo());
     }
-    
-
 }
