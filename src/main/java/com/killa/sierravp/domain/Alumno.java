@@ -269,8 +269,9 @@ public class Alumno extends Usuario implements UsuarioGenerico{
     }
 
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.primerNombre;
     }
+
 
     public float getSimilitud() {
         return Similitud;

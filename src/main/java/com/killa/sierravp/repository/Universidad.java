@@ -12,6 +12,7 @@ import com.killa.sierravp.domain.Profesor;
 import java.util.HashMap;
 import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.Usuario;
+import java.util.LinkedHashSet;
 
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,6 @@ public class Universidad {
                     return usuarios;
                 }
             }
-
         }
         return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
     }
@@ -101,8 +101,8 @@ public class Universidad {
                     }
                 }
             }
-        }
-        return null;  // Devuelve null si no se encuentra el alumno
+        }   
+        return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
     }
 
     public static class FacultadData {

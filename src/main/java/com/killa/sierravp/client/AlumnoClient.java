@@ -12,6 +12,7 @@ import java.util.Set;
 public class AlumnoClient {
 
     private static Scanner scanner = new Scanner(System.in);
+
     private static String nombreFacultad = "Facultad de Derecho y Ciencia Política"; // Nombre de la facultad Facultad de Ciencias Fisicas
 
     public static void main(String[] args) {
@@ -77,7 +78,7 @@ public class AlumnoClient {
 
         consultarrendimiento.consultarRendimiento(codigoAlumno);
     }
-    
+
     public static void mostrarInfoAlumno(Clase clase) {
         StringBuilder sb = new StringBuilder();
         sb.append(clase.getCurso().getNombre()).append(" y su id de curso es ").append(clase.getCurso().getId());

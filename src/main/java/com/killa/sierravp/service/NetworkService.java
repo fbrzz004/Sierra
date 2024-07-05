@@ -49,11 +49,14 @@ public class NetworkService {
     //maxCriterioLimite es el valor que ingresa el maximo permitido para una
     //persona el cual luego se multiplica por maxAlumnos para obtener el limite total
     //sobre el que trabaja el metodo
+    
+    
     public LinkedList<Alumno> filtrarAlumnos(List<Alumno> alumnos, Caracteristica_y_Id aMaximizar,
-            Caracteristica_y_Id noDeseable, int maxAlumnos, int maxCriterioLimitePorAlum) {
+            Caracteristica_y_Id noDeseable, int maxCriterioLimitePorAlum) {
         //aMaximizar haria de valor en el problema de la mochila y noDeseable seria el peso
+        int maxAlumnos = alumnos.size()/50;
         int maxCriterioLimite = maxCriterioLimitePorAlum * maxAlumnos;
-        int n = alumnos.size(); //mi ultimo indice es n recuerda que si el tam es n+1 el ultimo index es n porque se empieza en 0
+        int n = alumnos.size();
         int[][] dp = new int[n + 1][maxCriterioLimite + 1];
         boolean[][] keep = new boolean[n + 1][maxCriterioLimite + 1];
         LinkedList<Alumno> resultado = new LinkedList<>();
