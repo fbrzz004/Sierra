@@ -51,19 +51,19 @@ public class SIERRAVP {
         int dni = scanner.nextInt();
         scanner.nextLine();  // limpiar buffer
         System.out.println("Ingrese su primer nombre:");
-        String n1 = scanner.nextLine();
+        String primerNombre = scanner.nextLine();
         System.out.println("Ingrese su segundo nombre:");
-        String a1 = scanner.nextLine();
+        String segundoNombre = scanner.nextLine();
         System.out.println("Ingrese su apellido paterno:");
-        String n2 = scanner.nextLine();
+        String primerApe = scanner.nextLine();
         System.out.println("Ingrese su apellido materno:");
-        String a2 = scanner.nextLine();
+        String segundoApe = scanner.nextLine();
         System.out.println("Ingrese su nueva contraseña:");
         String contraseña = scanner.nextLine();
         System.out.println("Ingrese su nuevo correo:");
         String correo = scanner.nextLine();
         
-        boolean resultado = usuarioService.modificarPerfil(dni, n1, n2, a1, a2, contraseña, correo);
+        boolean resultado = usuarioService.modificarPerfil(dni, primerNombre, segundoNombre, primerApe, segundoApe, contraseña, correo);
         if (resultado) {
             System.out.println("Perfil actualizado exitosamente.");
         } else {
