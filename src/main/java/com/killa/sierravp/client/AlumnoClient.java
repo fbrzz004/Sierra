@@ -20,6 +20,7 @@ public class AlumnoClient {
         System.out.println("1. Ver estadísticas de la clase");
         System.out.println("2. Consultar rendimiento del alumno");
         System.out.println("3. Buscar recomendaciones de compañeros");
+        System.out.println("4. Modificar perfil del usuario");  // Nueva opción
         int opcion = scanner.nextInt();
         scanner.nextLine();  // Limpiar el buffer
 
@@ -35,9 +36,12 @@ public class AlumnoClient {
                 consultarRendimiento(consultarrendimiento);
                 break;
             case 3:
-                Alumno alumno = universidad.obtenerAlumnoPorId(500); //aqui debe ir el id del alummno que se logeeo
-                //o mejor lo pasas como parametro, lo envio asi para poder probrar nomas
+                Alumno alumno = universidad.obtenerAlumnoPorId(500); // Aquí debe ir el id del alumno que se logee
+                // o mejor lo pasas como parámetro, lo envío así para poder probar nomás
                 recomendacionCompañeros.RecomendarCompañeros(alumno);
+                break;
+            case 4:
+                modificarPerfilUsuario(universidad);
                 break;
             default:
                 System.out.println("Opción no válida");
@@ -86,4 +90,40 @@ public class AlumnoClient {
             System.out.println("Id de la clase " + clase1.getId());
         }
     }
+    
+    public static void modificarPerfilUsuario(Universidad universidad) {
+        System.out.println("Ingrese el ID del usuario:");
+        int idUsuario = scanner.nextInt();
+        scanner.nextLine();  
+        Alumno alumno = null;
+        long inicio = 0;
+        long fin = 0;
+        long tiempoTranscurrido = 0;
+        inicio = System.nanoTime();
+        alumno = universidad.obtenerAlumnoPorId(idUsuario);
+        fin = System.nanoTime();
+        
+        tiempoTranscurrido = fin - inicio;
+        System.out.println("Solucion Optima");
+        System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
+        
+        if (alumno == null) {
+            System.out.println("No se encontró el usuario con ID " + idUsuario);
+            return;
+        }
+
+        System.out.println("Crendiales actuales: ");
+        System.out.println(" correo: " + alumno.getCorreo() + " password: "+alumno.getContraseña());
+        
+        System.out.println("Ingrese la contraseña:");
+        String contraseña = scanner.nextLine();
+        System.out.println("Ingrese el correo:");
+        String correo = scanner.nextLine();
+
+        alumno.actualizarPerfil(contraseña, correo);
+
+        System.out.println("Perfil actualizado exitosamente.");
+        System.out.println(" correo: " + alumno.getCorreo() + " password: "+alumno.getContraseña());
+    }
 }
+

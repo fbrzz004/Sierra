@@ -1,6 +1,10 @@
 package com.killa.sierravp.repository;
 
 import com.killa.sierravp.domain.*;
+import com.killa.sierravp.domain.Curso;
+import com.killa.sierravp.domain.Usuario;
+
+import java.util.LinkedHashSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +32,26 @@ public class Universidad {
         return facultades;
     }
 
-    public Alumno obtenerAlumnoPorId(int idAlumno) {
-        for (FacultadData facultad : facultades.values()) {
+    public List<Usuario> obtenerUsuariosPorEscuela(String nombreFacultad, int idEscuela) {
+
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
+            EscuelaData escuela = facultad.obtenerEscuela(idEscuela);
+            if (escuela != null) {
+                List<Usuario> usuarios = new ArrayList<>();
+                usuarios.addAll(escuela.getAlumnos());
+                usuarios.addAll(escuela.getProfesores());
+                return usuarios;
+            }
+        }
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+ 
+
+    public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
+
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
             for (EscuelaData escuela : facultad.getEscuelas().values()) {
                 for (Alumno alumno : escuela.getAlumnos()) {
                     if (alumno.getCodigo() == idAlumno) {
@@ -38,7 +60,62 @@ public class Universidad {
                 }
             }
         }
-        return null;
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+  
+  
+   //si no funciona la anterior lo reemplazas por esta:
+  
+    /*
+    
+    public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
+
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
+
+            for (EscuelaData escuela : facultad.getEscuelas().values()) {
+                if (escuela != null) {
+                    List<Usuario> usuarios = new ArrayList<>();
+                    usuarios.addAll(escuela.getAlumnos());
+                    usuarios.addAll(escuela.getProfesores());
+                    return usuarios;
+                }
+            }
+        }
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+    
+    */
+
+    public Alumno obtenerAlumnoPorId(int idAlumno) {
+        HashMap<Integer, Alumno> mapaAlunos = new HashMap(2000);
+        for (FacultadData facultad : facultades.values()) { //toma una facultad unicamente
+            for (EscuelaData escuela : facultad.getEscuelas().values()) { //
+                for (Alumno alumno : escuela.getAlumnos()) {
+                    mapaAlunos.put(alumno.getCodigo(), alumno);
+                }
+            }
+        }
+        System.out.println("Se busco entre -- > " + mapaAlunos.size() + " alumnos");
+        System.out.println("");
+        return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
+    }
+
+    public Alumno obtenerAlumnoPorIdIngenuo(int idAlumno) {
+        int c = 0;
+        for (FacultadData facultad : facultades.values()) {
+            for (EscuelaData escuela : facultad.getEscuelas().values()) {
+                for (Alumno alumno : escuela.getAlumnos()) {
+                    c++;
+                    if (alumno.getCodigo() == idAlumno) {
+                        System.out.println("Se busco entre -- > " + c +" alumnos");
+                        return alumno;
+                    }
+                }
+            }
+        }   
+        return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
+
     }
 
     public static class FacultadData {
@@ -146,4 +223,5 @@ public class Universidad {
             this.escuela = escuela;
         }
     }
+
 }

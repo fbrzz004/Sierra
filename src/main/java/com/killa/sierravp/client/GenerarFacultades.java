@@ -110,7 +110,7 @@ public class GenerarFacultades {
 
             for (byte cicloActual = 1; cicloActual <= 10; cicloActual++) {
                 for (int grupo = 1; grupo <= 5; grupo++) {
-                    for (int k = 1; k <= 320; k++) {
+                    for (int k = 1; k <= 280; k++) {
                         Alumno alumno = GenerarNombresUsuario(new Alumno(), nombresMujer, nombresVaron, apellidos, k);
                         alumno.generarCorreo();
                         alumno.setFacultad(facultad);
