@@ -3,6 +3,7 @@ package com.killa.sierravp.repository;
 import com.killa.sierravp.domain.Nota;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -13,8 +14,14 @@ public class NotaRepository {
     public NotaRepository() {
         entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
     }
-    
-    //se cambio para que te permita obtener las notas final, parcial y continua de un curso en especifico
+
+    public List<Nota> findByClaseId(int claseId) {
+        TypedQuery<Nota> query = entityManager.createQuery(
+                "SELECT n FROM Nota n WHERE n.clase.id = :claseId", Nota.class);
+        query.setParameter("claseId", claseId);
+        return query.getResultList();
+    }
+
     public List<Nota> obtenerNotasPorAlumnoYCurso(int codigoAlumno, int idCurso) {
         try {
             return entityManager.createQuery(
@@ -26,17 +33,4 @@ public class NotaRepository {
             entityManager.close();
         }
     }
-
-    /*
-    public List<Nota> obtenerNotasPorCodigoAlumno(int codigoAlumno) {
-        try {
-            return entityManager.createQuery("SELECT a FROM Alumno a JOIN a.notas n WHERE n.clase.id = :codigo_alumno", Nota.class)
-                    .setParameter("codigo_alumno", codigoAlumno)
-                    .getResultList();
-        } finally {
-            entityManager.close();
-        }
-    }
-     */
-    
 }

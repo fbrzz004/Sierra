@@ -3,59 +3,56 @@ package com.killa.sierravp.service;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.ClaseRepository;
-import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.repository.NotaRepository;
+import com.killa.sierravp.util.TipoNota;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.OptionalDouble;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ClaseService {
     private ClaseRepository claseRepository;
-    private Universidad universidad;
+    private NotaRepository notaRepository;
 
-    public ClaseService(Universidad universidad) {
-        this.universidad = universidad;
-        this.claseRepository = new ClaseRepository();
+    public ClaseService(ClaseRepository claseRepository, NotaRepository notaRepository) {
+        this.claseRepository = claseRepository;
+        this.notaRepository = notaRepository;
     }
 
     public Clase getClaseById(int id) {
         return claseRepository.findById(id);
     }
 
-    public List<Clase> getAllClases() {
-        return claseRepository.findAll();
-    }
-
     public List<Clase> getClasesByAlumnoId(int codigoAlumno) {
-        return universidad.getFacultades().values().stream()
-                .flatMap(facultad -> facultad.getEscuelas().values().stream())
-                .flatMap(escuela -> escuela.getClases().stream())
-                .filter(clase -> clase.getAlumnos().stream().anyMatch(alumno -> alumno.getCodigo() == codigoAlumno))
-                .collect(Collectors.toList());
+        return claseRepository.findByAlumnoId(codigoAlumno);
     }
 
     public List<Clase> getClasesByProfesorId(int codigoProfesor) {
-        return universidad.getFacultades().values().stream()
-                .flatMap(facultad -> facultad.getEscuelas().values().stream())
-                .flatMap(escuela -> escuela.getClases().stream())
-                .filter(clase -> clase.getProfesor().getDNI() == codigoProfesor)
-                .collect(Collectors.toList());
+        return claseRepository.findByProfesorId(codigoProfesor);
     }
 
-    public String obtenerEstadisticasDeClase(int idClase) {
-        Clase clase = getClaseById(idClase);
-        if (clase == null) {
-            return "Clase no encontrada";
+    public String obtenerEstadisticasClase(int claseId) {
+        List<Nota> notas = notaRepository.findByClaseId(claseId);
+        if (notas.isEmpty()) {
+            return "No se encontraron notas para la clase.";
         }
 
-        List<Nota> notas = clase.getNotas();
-        OptionalDouble promedio = notas.stream().mapToInt(Nota::getCalificacion).average();
-        long aprobados = notas.stream().filter(nota -> nota.getCalificacion() >= 11).count();
-        long desaprobados = notas.size() - aprobados;
+        Map<TipoNota, DoubleSummaryStatistics> estadisticas = notas.stream()
+                .collect(Collectors.groupingBy(
+                        Nota::getTipo,
+                        Collectors.summarizingDouble(Nota::getCalificacion)
+                ));
 
-        return "Estadísticas de la clase ID: " + idClase + "\n" +
-                "Promedio de notas: " + (promedio.isPresent() ? promedio.getAsDouble() : "N/A") + "\n" +
-                "Número de aprobados: " + aprobados + "\n" +
-                "Número de desaprobados: " + desaprobados;
+        StringBuilder sb = new StringBuilder();
+        estadisticas.forEach((tipo, stats) -> {
+            sb.append("Tipo de nota: ").append(tipo).append("\n");
+            sb.append("Promedio: ").append(stats.getAverage()).append("\n");
+            sb.append("Máximo: ").append(stats.getMax()).append("\n");
+            sb.append("Mínimo: ").append(stats.getMin()).append("\n");
+            sb.append("Cantidad: ").append(stats.getCount()).append("\n\n");
+        });
+
+        return sb.toString();
     }
 }

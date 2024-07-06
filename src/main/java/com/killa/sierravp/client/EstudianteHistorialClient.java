@@ -5,6 +5,8 @@ import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.repository.ClaseRepository;
+import com.killa.sierravp.repository.NotaRepository;
 import com.killa.sierravp.service.ClaseService;
 import com.killa.sierravp.service.CursoService;
 import com.killa.sierravp.service.NotaService;
@@ -24,8 +26,10 @@ public class EstudianteHistorialClient {
         // Inicializar Universidad y servicios
         String nombreFacultad = "Facultad de Ciencias Físicas";
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
+        NotaRepository notaRepository = new NotaRepository();
+        ClaseRepository claseRepository = new ClaseRepository();
         notaService = new NotaService(universidad);
-        claseService = new ClaseService(universidad);
+        claseService = new ClaseService(claseRepository, notaRepository);
         cursoService = new CursoService(universidad);
 
         System.out.println("Seleccione una opción:");
@@ -38,8 +42,7 @@ public class EstudianteHistorialClient {
             System.out.println("Opción no válida");
         }
     }
-    
-    // El método permite que el estudiante busque sus notas de un curso en particular
+
     public static void visualizarHistorialNotas() {
         System.out.println("Ingrese el código del estudiante:");
         int codigoAlumno = scanner.nextInt();
@@ -72,7 +75,6 @@ public class EstudianteHistorialClient {
         if (Objects.isNull(notas)) {
             System.out.println("Notas no encontradas.");
         } else {
-            // Mostrar las notas
             notas.forEach(nota -> System.out.println(String.format("ID [%s] Curso [%s] Nota [%s]", nota.getId(), nota.getCurso().getNombre(), nota.getCalificacion())));
         }
     }

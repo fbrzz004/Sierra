@@ -20,6 +20,20 @@ public class ClaseRepository {
         return entityManager.find(Clase.class, id);
     }
 
+    public List<Clase> findByAlumnoId(int codigoAlumno) {
+        TypedQuery<Clase> query = entityManager.createQuery(
+                "SELECT c FROM Clase c JOIN c.alumnos a WHERE a.codigo = :codigoAlumno", Clase.class);
+        query.setParameter("codigoAlumno", codigoAlumno);
+        return query.getResultList();
+    }
+
+    public List<Clase> findByProfesorId(int codigoProfesor) {
+        TypedQuery<Clase> query = entityManager.createQuery(
+                "SELECT c FROM Clase c WHERE c.profesor.dni = :codigoProfesor", Clase.class);
+        query.setParameter("codigoProfesor", codigoProfesor);
+        return query.getResultList();
+    }
+
     public List<Clase> findAll() {
         TypedQuery<Clase> query = entityManager.createQuery("SELECT c FROM Clase c", Clase.class);
         return query.getResultList();

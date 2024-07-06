@@ -2,7 +2,8 @@ package com.killa.sierravp.client;
 
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.service.ClaseService;
-import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.repository.ClaseRepository;
+import com.killa.sierravp.repository.NotaRepository;
 
 import java.util.Scanner;
 
@@ -12,11 +13,9 @@ public class ClaseClient {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        // inicializar Universidad
-        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas("Facultad de Ciencias Físicas");
-        
-        claseService = new ClaseService(universidad);
+        ClaseRepository claseRepository = new ClaseRepository();
+        NotaRepository notaRepository = new NotaRepository();
+        claseService = new ClaseService(claseRepository, notaRepository);
 
         System.out.println("Seleccione una opción:");
         System.out.println("1. Consultar información de la clase");
@@ -41,7 +40,7 @@ public class ClaseClient {
                 System.out.println("No se encontró la clase con el ID proporcionado.");
             }
         } else if (opcion == 2) {
-            String estadisticas = claseService.obtenerEstadisticasDeClase(id);
+            String estadisticas = claseService.obtenerEstadisticasClase(id);
             System.out.println(estadisticas);
         } else {
             System.out.println("Opción no válida. Intente nuevamente.");
