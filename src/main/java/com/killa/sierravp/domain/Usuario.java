@@ -1,6 +1,6 @@
 package com.killa.sierravp.domain;
 
-import com.killa.sierravp.util.CodigoGenerator;
+import com.killa.sierravp.util.CodigoGeneratorUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
 
     public Usuario() {
         this.contraseña=generarContra(7);
-        this.codigo=  CodigoGenerator.generate();
+        this.codigo=  CodigoGeneratorUsuario.generate();
     }
 
     public int getDNI() {

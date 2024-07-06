@@ -74,6 +74,15 @@ public class GenerarFacultades {
                 String nombreCurso = mc.get(nombreFacultad, ciclo, numeroCurso);
                 Curso c = new Curso();
                 c.setNombre(nombreCurso);
+                if (numeroCurso==2) {
+                    c.setCreditos(3);
+                }
+                else if (numeroCurso==5) {
+                    c.setCreditos(5);
+                }
+                else{
+                    c.setCreditos(4);
+                }
                 Set<Clase> clasesDelCurso = new HashSet<>();
                 c.setClases(clasesDelCurso);
 
@@ -166,17 +175,17 @@ public class GenerarFacultades {
         Nota ef = new Nota(alumno, curso, clase);
         ef.setTipo(TipoNota.EF);
         if (numeroClase <= 2) { //las clases 1 y 2 tendran notas del 8 al 14
-            ec.setCalificacion(random.nextInt(6) + 8);
-            ep.setCalificacion(random.nextInt(6) + 8);
-            ef.setCalificacion(random.nextInt(6) + 8);
+            ec.setCalificacion(random.nextInt(4) + 10);  //ec de 10 a 14
+            ep.setCalificacion(random.nextInt(7) + 7);
+            ef.setCalificacion(random.nextInt(6) + 8); // de 8 a 14
         } else if (numeroClase == 3) { //la clase 3 tendran notas del 14 al 19
-            ec.setCalificacion(random.nextInt(5) + 14);
+            ec.setCalificacion(random.nextInt(3) + 12); //ec de 12 a 15
             ep.setCalificacion(random.nextInt(5) + 14);
-            ef.setCalificacion(random.nextInt(5) + 14);
-        } else {
-            ec.setCalificacion(random.nextInt(8) + 12);
-            ep.setCalificacion(random.nextInt(8) + 12);
-            ef.setCalificacion(random.nextInt(8) + 12);
+            ef.setCalificacion(random.nextInt(8) + 12); //de 12 a 20
+        } else {                        //la clase 3 tendran notas del 9 al 17
+            ec.setCalificacion(random.nextInt(5) + 15); //ec de 15 a 20
+            ep.setCalificacion(random.nextInt(8) + 9);
+            ef.setCalificacion(random.nextInt(6) + 14); //ef de 14 a 20
         }
         notasAlumno.add(ec);
         notasAlumno.add(ep);
