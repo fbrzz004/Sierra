@@ -91,6 +91,10 @@ public class Universidad {
         return null;  // Devuelve null si no se encuentra el alumno
     }
 
+    public Profesor obtenerProfesorPorId(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public static class FacultadData {
         private String nombre;
         private int id;
