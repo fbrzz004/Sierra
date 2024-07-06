@@ -36,10 +36,7 @@ public class NotaService {
                 .filter(nota -> nota.getAlumno().getCodigo() == codigoAlumno)
                 .collect(Collectors.toList());
     }
-    
 
-    // Método para generar notas para los alumnos en una clase específica
-  
     public void generarNotasParaClase(Clase clase) {
         if (clase == null) {
             System.out.println("Clase no encontrada");
@@ -62,20 +59,15 @@ public class NotaService {
         nota.setTipo(tipo);
         nota.setCalificacion(random.nextInt(21)); // Genera una nota entre 0 y 20
         return nota;
-      }
     }
 
     public List<Nota> obtenerNotasPorCodigoAlumnoCodigoCurso(Alumno alumno, int codigoCurso) {
         List<Nota> notasCurso = new ArrayList<>();
         Set<Nota> notas = alumno.getNotas();
-        for(Nota nota: notas) {
-          
-            //System.out.println("alumno tiene nota " + nota.getCalificacion() + "del tipo " + nota.getTipo() + "para curso " + nota.getCurso().getId());
-          
+        for (Nota nota : notas) {
             if (codigoCurso == nota.getCurso().getId()) {
                 notasCurso.add(nota);
             }
-            
         }
         return notasCurso;
     }
@@ -83,36 +75,30 @@ public class NotaService {
     public Alumno obtenerKenesimoAlumnoPorNotaFinal(List<Alumno> alumnos, int idCurso, int posicionK) {
         List<AlumnoWrapper> alumnosWrapper = new ArrayList<>();
 
-        int iterationCount = 0;
-        int maxIterations = 100;
-        for (int i = 0; i < maxIterations; i++) {
-            iterationCount++;
-            Alumno alumno = alumnos.get(i);
-            List<Nota> notasAlumno = obtenerNotasPorCodigoAlumnoCodigoCurso(alumno, idCurso); //notaRepository.obtenerNotasPorAlumnoYCurso(alumno.getCodigo(), idCurso);
+        for (Alumno alumno : alumnos) {
+            List<Nota> notasAlumno = obtenerNotasPorCodigoAlumnoCodigoCurso(alumno, idCurso);
             if (notasAlumno.isEmpty()) {
                 continue;
             }
 
             Optional<Nota> notaFinal = notasAlumno.stream()
-                .filter(nota -> TipoNota.EF == nota.getTipo())
-                .findFirst();
-            
-            if(notaFinal.isPresent()) {
+                    .filter(nota -> TipoNota.EF == nota.getTipo())
+                    .findFirst();
+
+            if (notaFinal.isPresent()) {
                 AlumnoWrapper aw = new AlumnoWrapper(alumno, notaFinal.get().getCalificacion());
-                alumnosWrapper.add(aw);          
+                alumnosWrapper.add(aw);
             }
         }
-     
-        if(alumnosWrapper.isEmpty()) {
+
+        if (alumnosWrapper.isEmpty()) {
             return null;
         }
-        
+
         AlumnoWrapper awEncontrado = quickSelect(alumnosWrapper, 0, alumnosWrapper.size() - 1, posicionK - 1);
         return awEncontrado.getAlumno();
     }
-    
-    // Método QuickSelect
-    
+
     public static AlumnoWrapper quickSelect(List<AlumnoWrapper> alumnos, int low, int high, int k) {
         if (low == high) {
             return alumnos.get(low);
@@ -142,4 +128,3 @@ public class NotaService {
         return i;
     }
 }
-
