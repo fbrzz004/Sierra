@@ -39,6 +39,10 @@ public class Clase implements Serializable {
     
     @OneToMany(mappedBy = "clase")
     private List<CRA> cras;
+    
+     @ManyToOne
+    @JoinColumn(name = "ciclo_id", referencedColumnName = "id")
+    private Ciclo ciclo;
 
     public Clase() {
         this.id= CodigoClaseGenerator.generate();
@@ -108,5 +112,11 @@ public class Clase implements Serializable {
         this.cras.add(cra);
     }
     
-    
+    public Ciclo getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(Ciclo ciclo) {
+        this.ciclo = ciclo;
+    } 
 }

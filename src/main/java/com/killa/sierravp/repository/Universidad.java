@@ -1,26 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.repository;
 
-import com.killa.sierravp.domain.Alumno;
-import com.killa.sierravp.domain.Clase;
-import java.util.ArrayList;
-import com.killa.sierravp.domain.EscuelaProfesional;
-import com.killa.sierravp.domain.Profesor;
-import java.util.HashMap;
+import com.killa.sierravp.domain.*;
 import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.Usuario;
-import java.util.LinkedHashSet;
 
+import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author HITV
- */
 public class Universidad {
 
     private Map<String, FacultadData> facultades;
@@ -57,7 +46,28 @@ public class Universidad {
         }
         return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
     }
+ 
 
+    public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
+
+        FacultadData facultad = obtenerFacultad(nombreFacultad);
+        if (facultad != null) {
+            for (EscuelaData escuela : facultad.getEscuelas().values()) {
+                for (Alumno alumno : escuela.getAlumnos()) {
+                    if (alumno.getCodigo() == idAlumno) {
+                        return alumno;
+                    }
+                }
+            }
+        }
+        return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
+    }
+  
+  
+   //si no funciona la anterior lo reemplazas por esta:
+  
+    /*
+    
     public List<Usuario> obtenerUsuariosPorFacultad(String nombreFacultad) {
 
         FacultadData facultad = obtenerFacultad(nombreFacultad);
@@ -74,6 +84,8 @@ public class Universidad {
         }
         return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra la facultad o la escuela
     }
+    
+    */
 
     public Alumno obtenerAlumnoPorId(int idAlumno) {
         HashMap<Integer, Alumno> mapaAlunos = new HashMap(2000);
@@ -103,16 +115,23 @@ public class Universidad {
             }
         }   
         return mapaAlunos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
+
     }
 
     public static class FacultadData {
 
         private String nombre;
+        private int id;
         private Map<Integer, EscuelaData> escuelas;
 
         public FacultadData(String nombre) {
             this.nombre = nombre;
+            
             this.escuelas = new HashMap<>();
+        }
+
+        public int getId() {
+            return id;
         }
 
         public void agregarEscuela(EscuelaProfesional escuela) {
@@ -145,6 +164,7 @@ public class Universidad {
         private List<Profesor> profesores;
         private List<Curso> cursos;
         private List<Clase> clases;
+        private List<EscuelaProfesional> escuelasProfesionales;
 
         public EscuelaData(EscuelaProfesional escuela) {
             this.escuela = escuela;
@@ -152,6 +172,7 @@ public class Universidad {
             this.profesores = new ArrayList<>();
             this.cursos = new ArrayList<>();
             this.clases = new ArrayList<>();
+            this.escuelasProfesionales = new ArrayList<>();
         }
 
         public void agregarAlumno(Alumno alumno) {
@@ -170,6 +191,10 @@ public class Universidad {
             clases.add(clase);
         }
 
+        public void agregarEscuelaProfesional(EscuelaProfesional escuelaProfesional) {
+            escuelasProfesionales.add(escuelaProfesional);
+        }
+
         public List<Alumno> getAlumnos() {
             return alumnos;
         }
@@ -184,6 +209,10 @@ public class Universidad {
 
         public List<Clase> getClases() {
             return clases;
+        }
+
+        public List<EscuelaProfesional> getEscuelasProfesionales() {
+            return escuelasProfesionales;
         }
 
         public EscuelaProfesional getEscuela() {

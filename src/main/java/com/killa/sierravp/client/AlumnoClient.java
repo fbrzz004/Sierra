@@ -25,7 +25,7 @@ public class AlumnoClient {
         scanner.nextLine();  // Limpiar el buffer
 
         Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
-        CU03ConsultarRendimiento consultarrendimiento = new CU03ConsultarRendimiento(universidad);
+        CU03yCU05ConsultarRendimiento consultarrendimiento = new CU03yCU05ConsultarRendimiento(universidad);
         CU07RecomendacionCompañerosMejorado recomendacionCompañeros = new CU07RecomendacionCompañerosMejorado(universidad);
 
         switch (opcion) {
@@ -71,12 +71,13 @@ public class AlumnoClient {
         System.out.println("Nota máxima: " + notaMaxima);
     }
 
-    public static void consultarRendimiento(CU03ConsultarRendimiento consultarrendimiento) {
-        System.out.println("Ingrese el ID del alumno:");
+    public static void consultarRendimiento(CU03yCU05ConsultarRendimiento consultarrendimiento) {
+        System.out.println("Ingrese el código del alumno ( > = 300):");
         int codigoAlumno = scanner.nextInt();
         scanner.nextLine(); 
 
         consultarrendimiento.consultarRendimiento(codigoAlumno);
+        
     }
 
     public static void mostrarInfoAlumno(Clase clase) {
@@ -125,3 +126,4 @@ public class AlumnoClient {
         System.out.println(" correo: " + alumno.getCorreo() + " password: "+alumno.getContraseña());
     }
 }
+
