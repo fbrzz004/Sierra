@@ -1,7 +1,9 @@
 package com.killa.sierravp.client;
 
-
+import com.killa.sierravp.service.ClaseService;
 import com.killa.sierravp.service.UsuarioService;
+import com.killa.sierravp.repository.Universidad;
+
 import java.util.Scanner;
 
 public class SIERRAVP {
@@ -9,6 +11,11 @@ public class SIERRAVP {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         UsuarioService usuarioService = new UsuarioService();
+        
+        // inicializar Universidad
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas("Facultad de Ciencias Físicas");
+        
+        ClaseService claseService = new ClaseService(universidad);
 
         System.out.println("Bienvenido al Sistema Integral de Evaluación del Rendimiento Académico y Formación de Vínculos Profesionales (SIERRAVP)");
 
@@ -16,7 +23,8 @@ public class SIERRAVP {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Consultar Clase por ID");
             System.out.println("2. Modificar Perfil de Usuario");
-            System.out.println("3. Salir");
+            System.out.println("3. Ver Estadísticas de Clase");
+            System.out.println("4. Salir");
             int opcion = scanner.nextInt();
             scanner.nextLine();  
             switch (opcion) {
@@ -27,6 +35,9 @@ public class SIERRAVP {
                     modificarPerfil(scanner, usuarioService);
                     break;
                 case 3:
+                    verEstadisticasDeClase(scanner, claseService);
+                    break;
+                case 4:
                     System.out.println("Saliendo del sistema.");
                     return;
                 default:
@@ -52,11 +63,18 @@ public class SIERRAVP {
         System.out.println("Ingrese su nuevo correo:");
         String correo = scanner.nextLine();
         
-        boolean resultado = usuarioService.modificarPerfil(dni, n1,n2, a1, a2, contraseña, correo);
+        boolean resultado = usuarioService.modificarPerfil(dni, n1, n2, a1, a2, contraseña, correo);
         if (resultado) {
             System.out.println("Perfil actualizado exitosamente.");
         } else {
             System.out.println("Error al actualizar el perfil. Usuario no encontrado.");
         }
+    }
+
+    private static void verEstadisticasDeClase(Scanner scanner, ClaseService claseService) {
+        System.out.println("Ingrese el ID de la clase para ver estadísticas:");
+        int idClase = scanner.nextInt();
+        String estadisticas = claseService.obtenerEstadisticasDeClase(idClase);
+        System.out.println(estadisticas);
     }
 }
