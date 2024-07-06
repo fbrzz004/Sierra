@@ -5,6 +5,7 @@ import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
+import com.killa.sierravp.util.CodigoGeneratorUsuario;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -72,7 +73,8 @@ public class AlumnoClient {
     }
 
     public static void consultarRendimiento(CU03yCU05ConsultarRendimiento consultarrendimiento) {
-        System.out.println("Ingrese el código del alumno ( > = 300):");
+        int limiteSuperio=CodigoGeneratorUsuario.generate();
+        System.out.println("Ingrese el código del alumno (300 "+" <= "+" id "+ " < "+limiteSuperio);
         int codigoAlumno = scanner.nextInt();
         scanner.nextLine(); 
 

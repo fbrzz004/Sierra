@@ -9,7 +9,7 @@ package com.killa.sierravp.util;
  * @author karlo
  */
 
-public class CodigoGenerator {
+public class CodigoGeneratorUsuario {
 
     private static int currentCode = 0;
 
