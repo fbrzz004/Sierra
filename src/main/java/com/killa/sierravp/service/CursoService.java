@@ -39,4 +39,8 @@ public class CursoService {
                 .map(clase -> clase.getCurso())
                 .collect(Collectors.toList());
     }
+
+    public List<Nota> obtenerNotasPorClase(int idClase) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
