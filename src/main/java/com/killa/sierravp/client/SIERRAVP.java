@@ -1,6 +1,9 @@
 package com.killa.sierravp.client;
 
 import com.killa.sierravp.service.UsuarioService;
+import com.killa.sierravp.service.ClaseService;
+import com.killa.sierravp.repository.ClaseRepository;
+import com.killa.sierravp.repository.NotaRepository;
 import java.util.Scanner;
 
 public class SIERRAVP {
@@ -8,6 +11,9 @@ public class SIERRAVP {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         UsuarioService usuarioService = new UsuarioService();
+        ClaseRepository claseRepository = new ClaseRepository();
+        NotaRepository notaRepository = new NotaRepository();
+        ClaseService claseService = new ClaseService(claseRepository, notaRepository);
 
         System.out.println("Bienvenido al Sistema Integral de Evaluación del Rendimiento Académico y Formación de Vínculos Profesionales (SIERRAVP)");
 
@@ -15,9 +21,10 @@ public class SIERRAVP {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Consultar Clase por ID");
             System.out.println("2. Modificar Perfil de Usuario");
-            System.out.println("3. Salir");
+            System.out.println("3. Ver Estadísticas de Clase");
+            System.out.println("4. Salir");
             int opcion = scanner.nextInt();
-            scanner.nextLine();  
+            scanner.nextLine();
             switch (opcion) {
                 case 1:
                     ClaseClient.main(args);
@@ -26,6 +33,9 @@ public class SIERRAVP {
                     modificarPerfil(scanner, usuarioService);
                     break;
                 case 3:
+                    verEstadisticasClase(scanner, claseService);
+                    break;
+                case 4:
                     System.out.println("Saliendo del sistema.");
                     return;
                 default:
@@ -37,7 +47,7 @@ public class SIERRAVP {
     private static void modificarPerfil(Scanner scanner, UsuarioService usuarioService) {
         System.out.println("Ingrese su DNI:");
         int dni = scanner.nextInt();
-        scanner.nextLine();  // limpiar buffer
+        scanner.nextLine();
         System.out.println("Ingrese su primer nombre:");
         String n1 = scanner.nextLine();
         System.out.println("Ingrese su segundo nombre:");
@@ -50,12 +60,19 @@ public class SIERRAVP {
         String contraseña = scanner.nextLine();
         System.out.println("Ingrese su nuevo correo:");
         String correo = scanner.nextLine();
-        
-        boolean resultado = usuarioService.modificarPerfil(dni, n1,n2, a1, a2, contraseña, correo);
+
+        boolean resultado = usuarioService.modificarPerfil(dni, n1, n2, a1, a2, contraseña, correo);
         if (resultado) {
             System.out.println("Perfil actualizado exitosamente.");
         } else {
             System.out.println("Error al actualizar el perfil. Usuario no encontrado.");
         }
+    }
+
+    private static void verEstadisticasClase(Scanner scanner, ClaseService claseService) {
+        System.out.println("Ingrese el ID de la clase para consultar estadísticas:");
+        int claseId = scanner.nextInt();
+        String estadisticas = claseService.obtenerEstadisticasClase(claseId);
+        System.out.println(estadisticas);
     }
 }

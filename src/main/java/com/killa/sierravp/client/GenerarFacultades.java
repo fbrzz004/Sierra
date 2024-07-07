@@ -14,14 +14,11 @@ import com.killa.sierravp.domain.InteresesAcademicos;
 import com.killa.sierravp.domain.Nota;
 import com.killa.sierravp.domain.Profesor;
 import com.killa.sierravp.domain.UsuarioGenerico;
-import com.killa.sierravp.util.CodigoGenerator;
+import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.service.FacultadService;
 import com.killa.sierravp.util.MapaCursos;
 import com.killa.sierravp.util.ObtenerCursos;
 import com.killa.sierravp.util.TipoNota;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,72 +31,81 @@ import java.util.Set;
 
 /**
  *
- * @author karlo
+ * @author HITV
  */
-public class InsertarDataBDD {
+public class GenerarFacultades {
 
-    public static void main(String[] args) {
+    public static Universidad GenerarFacultadesCompletas(String nombreFacultad) {
         ArrayList<String> nombresMujer = obtenerLinea("Mujeres.txt");
         ArrayList<String> nombresVaron = obtenerLinea("Hombres.txt");
         ArrayList<String> apellidos = obtenerLinea("Apellidos.txt");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadPersistencia");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        ArrayList<Clase> ordenadas = new ArrayList(251);
+        FacultadService facultadService = new FacultadService();
+        Facultad facultad = facultadService.obtenerFacultadPorNombreConEscuelas(nombreFacultad);
+
+        if (facultad == null) {
+            throw new RuntimeException("Facultad not found.");
+        }
+
+        Universidad universidad = new Universidad();
+        universidad.agregarFacultad(nombreFacultad);
+        Universidad.FacultadData facultadData = universidad.obtenerFacultad(nombreFacultad);
+
+        for (EscuelaProfesional ep : facultad.getEp()) {
+            facultadData.agregarEscuela(ep);
+        }
+
+        ArrayList<Clase> ordenadas = new ArrayList<>(251);
 
         Curso cursonuncaUsado = new Curso();
         cursonuncaUsado.setNombre("Sexologia De Pollos");
         Clase clasenuncaUsada = new Clase(cursonuncaUsado);
-        ordenadas.add(clasenuncaUsada); //asi hago que mis indices de trabajo sean del 1 al 250 ioi
-        try {
-            transaction.begin();
+        ordenadas.add(clasenuncaUsada);
 
-            MapaCursos mc = ObtenerCursos.obtenerCursosDeFacultad("FDok.txt");
-            EscuelaProfesional ep = em.find(EscuelaProfesional.class, 702); //derecho
-            Facultad facultad = em.find(Facultad.class, 602);               //Fac derecho y ciencia politica
+        MapaCursos mc = ObtenerCursos.obtenerCursosDeFacultad("FDok2.txt");
 
-            if (ep == null || facultad == null) {
-                throw new RuntimeException("EscuelaProfesional or Facultad not found.");
-            }
+        byte ciclo = 1;
+        int numeroCurso = 1;
 
-            byte ciclo = 1;
-            int numeroCurso = 1;
+        Map<Byte, Set<Clase>> clasesPorCiclo = new HashMap<>();
 
-            // Mapa para almacenar las clases de cada ciclo
-            Map<Byte, Set<Clase>> clasesPorCiclo = new HashMap<>();
-
+        for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
             for (int i = 1; i <= 50; i++) {
-                String nombreCurso = mc.get("Facultad de Derecho y Ciencia Política", ciclo, numeroCurso);
+                String nombreCurso = mc.get(nombreFacultad, ciclo, numeroCurso);
                 Curso c = new Curso();
                 c.setNombre(nombreCurso);
+                if (numeroCurso==2) {
+                    c.setCreditos(3);
+                }
+                else if (numeroCurso==5) {
+                    c.setCreditos(5);
+                }
+                else{
+                    c.setCreditos(4);
+                }
                 Set<Clase> clasesDelCurso = new HashSet<>();
                 c.setClases(clasesDelCurso);
-                em.persist(c);
 
                 for (int j = 1; j <= 5; j++) {
                     Clase clase = new Clase();
                     clase.setCurso(c);
 
-                    // Generar y asignar profesor
                     Profesor profe = GenerarNombresUsuario(new Profesor(), nombresMujer, nombresVaron, apellidos, i * 5 + j);
-                    //profe.setEps(new HashSet<>(Collections.singletonList(ep))); // Utilizamos singleton para asegurar que la colección contiene solo este EP
+                    EscuelaProfesional ep = escuelaData.getEscuela();
 
                     if (ep == null) {
                         throw new RuntimeException("EscuelaProfesional no encontrada.");
                     }
-                    profe.setEps(Set.of(ep)); //antes usaba lo de arriba
+                    profe.setEps(Set.of(ep));
                     profe.generarCorreo();
-                    em.persist(profe);
-                    //el resto permanece igual
+
                     clase.setProfesor(profe);
                     clasesDelCurso.add(clase);
-                    ordenadas.add(clase); //del indice 1 a 5 primer curso del ciclo 6 a 10 segundo 
-                    //curso de primer ciclo y asi sucesivamente 
-                    em.persist(clase);
-
-                    // Agregar la clase al mapa de clases por ciclo
+                    ordenadas.add(clase);
                     clasesPorCiclo.computeIfAbsent(ciclo, k -> new HashSet<>()).add(clase);
+
+                    escuelaData.agregarProfesor(profe);
+                    escuelaData.agregarClase(clase);
                 }
 
                 numeroCurso++;
@@ -107,37 +113,29 @@ public class InsertarDataBDD {
                     numeroCurso = 1;
                     ciclo++;
                 }
+
+                escuelaData.agregarCurso(c);
             }
 
-            // Crear y asignar alumnos
             for (byte cicloActual = 1; cicloActual <= 10; cicloActual++) {
                 for (int grupo = 1; grupo <= 5; grupo++) {
-                    for (int k = 1; k <= 40; k++) {
+                    for (int k = 1; k <= 280; k++) {
                         Alumno alumno = GenerarNombresUsuario(new Alumno(), nombresMujer, nombresVaron, apellidos, k);
                         alumno.generarCorreo();
                         alumno.setFacultad(facultad);
-                        alumno.setEp(ep);                                          
-                        
+                        alumno.setEp(escuelaData.getEscuela());
+
                         BigFiveScores bfs = new BigFiveScores();
                         bfs.setAlumno(alumno);
-                        em.persist(bfs);
 
                         InteresesAcademicos ia = new InteresesAcademicos();
                         ia.setAlumno(alumno);
-                        em.persist(ia);
 
                         alumno.setCiclo(cicloActual);
                         alumno.setBfScores(bfs);
                         alumno.setInteresesAcademicos(ia);
 
-                        // Asignar 5 clases del ciclo actual al alumno, asegurando que son de cursos diferentes
                         Set<Clase> clasesAlumno = new HashSet<>();
-
-                        //los grupos 1 del primer ciclo son 1, 6, 11, 16 y 21
-                        //los grupos 1 del segundo ciclo 26, 31, 36, 41, 46
-                        //los grupos 2 del primer ciclo 2,7,12,17,22
-                        //los grupos 2 del segundo ciclo 27,32,37,42,47
-                        //los grupos son importantes pues nos permiten realizar la asignacion de notas
                         int indexBase = (cicloActual - 1) * 25;
                         Clase num1 = ordenadas.get(indexBase + grupo);
                         Clase num2 = ordenadas.get(indexBase + grupo + 5);
@@ -152,27 +150,19 @@ public class InsertarDataBDD {
                         clasesAlumno.add(num5);
 
                         alumno.setClases(clasesAlumno);
-                        em.persist(alumno);
 
-                        // Asignar notas a cada clase del ciclo para el alumno
                         for (Clase cl : clasesAlumno) {
                             Curso curso = cl.getCurso();
-                            alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo)); //hago que se asignen sus notas para las clases 1 al 5
+                            //alumno.setNotas(generarNotaAlumno(alumno, curso, cl, grupo));//creo que el error esta aqui porque asigno un nuevo grupo de notas cada vez por lo que de 15 solo me quedo con 3                       
+                            Set<Nota> notas = generarNotaAlumno(alumno, curso, cl, grupo);
+                            alumno.getNotas().addAll(notas);
                         }
+                        escuelaData.agregarAlumno(alumno);
                     }
                 }
             }
-
-            transaction.commit();
-            CodigoGenerator.saveCurrentCode(); //asi garantizo que solo se actualice el txt si se registro con exito
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
         }
+        return universidad;
     }
 
     public static HashSet<Nota> generarNotaAlumno(Alumno alumno, Curso curso, Clase clase, int numeroClase) {
@@ -185,17 +175,17 @@ public class InsertarDataBDD {
         Nota ef = new Nota(alumno, curso, clase);
         ef.setTipo(TipoNota.EF);
         if (numeroClase <= 2) { //las clases 1 y 2 tendran notas del 8 al 14
-            ec.setCalificacion(random.nextInt(6) + 8);
-            ep.setCalificacion(random.nextInt(6) + 8);
-            ef.setCalificacion(random.nextInt(6) + 8);
+            ec.setCalificacion(random.nextInt(4) + 10);  //ec de 10 a 14
+            ep.setCalificacion(random.nextInt(7) + 7);
+            ef.setCalificacion(random.nextInt(6) + 8); // de 8 a 14
         } else if (numeroClase == 3) { //la clase 3 tendran notas del 14 al 19
-            ec.setCalificacion(random.nextInt(5) + 14);
+            ec.setCalificacion(random.nextInt(3) + 12); //ec de 12 a 15
             ep.setCalificacion(random.nextInt(5) + 14);
-            ef.setCalificacion(random.nextInt(5) + 14);
-        } else {
-            ec.setCalificacion(random.nextInt(8) + 12);
-            ep.setCalificacion(random.nextInt(8) + 12);
-            ef.setCalificacion(random.nextInt(8) + 12);
+            ef.setCalificacion(random.nextInt(8) + 12); //de 12 a 20
+        } else {                        //la clase 3 tendran notas del 9 al 17
+            ec.setCalificacion(random.nextInt(5) + 15); //ec de 15 a 20
+            ep.setCalificacion(random.nextInt(8) + 9);
+            ef.setCalificacion(random.nextInt(6) + 14); //ef de 14 a 20
         }
         notasAlumno.add(ec);
         notasAlumno.add(ep);
@@ -206,23 +196,23 @@ public class InsertarDataBDD {
     public static <T extends UsuarioGenerico> T GenerarNombresUsuario(T usuario, ArrayList<String> nombreMujer, ArrayList<String> nombreVaron, ArrayList<String> apellidos, int num) {
         Random random = new Random();
         if (num % 2 == 0) {
-            int r = random.nextInt(nombreMujer.size()+1);
+            int r = random.nextInt(nombreMujer.size());
             String nomb1 = nombreMujer.get(r);
             usuario.setPrimerNombre(nomb1);
-            int r2 = random.nextInt(nombreMujer.size()+1);
+            int r2 = random.nextInt(nombreMujer.size());
             while (nomb1.equals(nombreMujer.get(r2))) {
-                r2 = random.nextInt(nombreMujer.size()+1);
+                r2 = random.nextInt(nombreMujer.size());
             }
             usuario.setSegundoNombre(nombreMujer.get(r2));
             usuario.setPrimerApellido(apellidos.get(r));
             usuario.setSegundoApellido(apellidos.get(r2));
         } else {
-            int r = random.nextInt(nombreVaron.size()+1);
+            int r = random.nextInt(nombreVaron.size());
             String nomb1 = nombreVaron.get(r);
             usuario.setPrimerNombre(nomb1);
-            int r2 = random.nextInt(nombreVaron.size()+1);
+            int r2 = random.nextInt(nombreVaron.size());
             while (nomb1.equals(nombreMujer.get(r2))) {
-                r2 = random.nextInt(nombreVaron.size()+1);
+                r2 = random.nextInt(nombreVaron.size());
             }
 
             usuario.setSegundoNombre(nombreVaron.get(r2));
@@ -250,5 +240,4 @@ public class InsertarDataBDD {
         }
         return nombres;
     }
-    
 }

@@ -1,6 +1,6 @@
 package com.killa.sierravp.domain;
 
-import com.killa.sierravp.util.CodigoGenerator;
+import com.killa.sierravp.util.CodigoGeneratorUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -27,7 +28,7 @@ public class Usuario implements Serializable {
     private int DNI;
 
     @Column(unique = true, nullable = false) //no deja crear profe ni admin si no le asigno un valor al codigo
-     int codigo;
+     private int codigo;
     
     @Column(nullable = false)
      String primerNombre;
@@ -52,8 +53,8 @@ public class Usuario implements Serializable {
     }
 
     public Usuario() {
-        this.contraseña=generarContra(6);
-        this.codigo=  CodigoGenerator.generate();
+        this.contraseña=generarContra(7);
+        this.codigo=  CodigoGeneratorUsuario.generate();
     }
 
     public int getDNI() {
@@ -140,4 +141,27 @@ public class Usuario implements Serializable {
         this.contraseña = contraseña;
         this.correo = correo;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(correo, contraseña);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Usuario usuario = (Usuario) obj;
+        return Objects.equals(correo, usuario.correo) &&
+               Objects.equals(contraseña, usuario.contraseña);
+    }  
+    
 }

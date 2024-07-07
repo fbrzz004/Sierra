@@ -1,36 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.killa.sierravp.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import java.io.Serializable;
+import jakarta.persistence.*;
 import java.util.Set;
 
-/**
- *
- * @author karlo
- */
 @Entity
-public class EscuelaProfesional implements Serializable {
+public class EscuelaProfesional {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)       
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Column(nullable = false)
     private String nombre;
+
     @ManyToOne
-    @JoinColumn(name="facultad_id")
+    @JoinColumn(name = "facultad_id", referencedColumnName = "id", nullable = false)
     private Facultad facultad;
-    @ManyToMany(mappedBy = "eps")
-    private Set<Profesor> profesores;
+
+    @OneToMany(mappedBy = "escuelaProfesional", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Ciclo> ciclos;
 
     public EscuelaProfesional() {
     }
@@ -59,11 +47,11 @@ public class EscuelaProfesional implements Serializable {
         this.facultad = facultad;
     }
 
-    public Set<Profesor> getProfesores() {
-        return profesores;
+    public Set<Ciclo> getCiclos() {
+        return ciclos;
     }
 
-    public void setProfesores(Set<Profesor> profesores) {
-        this.profesores = profesores;
+    public void setCiclos(Set<Ciclo> ciclos) {
+        this.ciclos = ciclos;
     }
 }

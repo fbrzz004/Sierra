@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Column;
 import jakarta.persistence.PreUpdate;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,6 +35,7 @@ public class Profesor extends Usuario implements UsuarioGenerico{
         
     public Profesor() {
         super(); //garantizo que se ejecuta el const del padre
+        this.clases = new HashSet<>();
     }
 
     @PrePersist

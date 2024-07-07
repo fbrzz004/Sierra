@@ -1,0 +1,121 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.killa.sierravp.client;
+
+import com.killa.sierravp.domain.Alumno;
+import com.killa.sierravp.repository.Universidad;
+import com.killa.sierravp.service.NetworkService;
+import com.killa.sierravp.util.AtributoBf5;
+import com.killa.sierravp.util.AtributosInteresesAcade;
+import com.killa.sierravp.util.Caracteristica_y_Id;
+import com.killa.sierravp.util.Caractistica;
+import com.killa.sierravp.service.AlumnoService;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Clase para la recomendación de compañeros.
+ * 
+ */
+public class CU07RecomendacionCompañerosMejorado {
+    private Universidad universidad;
+
+    public CU07RecomendacionCompañerosMejorado(Universidad universidad) {
+        this.universidad = universidad;
+    }
+    
+
+    // Método para recomendar compañeros basado en características de un alumno
+    public void RecomendarCompañeros(Alumno alumno) {
+        Scanner scanner = new Scanner(System.in);
+        String nombreFacultad = alumno.getEp().getFacultad().getNombre();
+
+        System.out.println("Generar recomendación de compañeros");
+
+        System.out.println("Características de personalidad:");
+        AtributoBf5[] values = AtributoBf5.values();
+        for (int i = 0; i < values.length; i++) {
+            System.out.println(i + ". " + values[i]);
+        }
+
+        System.out.println("Intereses académicos:");
+        AtributosInteresesAcade[] intereses = AtributosInteresesAcade.values();
+        for (int i = 0; i < intereses.length; i++) {
+            System.out.println(i + ". " + intereses[i]);
+        }
+
+        System.out.println("Ingrese la característica que desea maximizar entre sus recomendados");
+        System.out.println("1 para características de personalidad, 2 para intereses académicos:");
+        int opc = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+
+        Caracteristica_y_Id aMaximizar = null;
+        Caracteristica_y_Id noDeseable = null;
+
+        switch (opc) {
+            case 1:
+                System.out.println("Ingrese el índice de la característica de personalidad deseada:");
+                int indexMaximizarBf5 = scanner.nextInt();
+                aMaximizar = new Caracteristica_y_Id(Caractistica.BigFiveScores, AtributoBf5.values()[indexMaximizarBf5]);
+                break;
+            case 2:
+                System.out.println("Ingrese el índice del interés académico deseado:");
+                int indexMaximizarInteres = scanner.nextInt();
+                aMaximizar = new Caracteristica_y_Id(Caractistica.InteresesAcademicos, AtributosInteresesAcade.values()[indexMaximizarInteres]);
+                break;
+            default:
+                throw new IllegalArgumentException("Opción no válida");
+        }
+
+        System.out.println("Ingrese la característica que desea minimizar entre sus recomendados");
+        System.out.println("1 para características de personalidad, 2 para intereses académicos: ");
+        opc = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+        int maxCriterioLimitePorAlumno = 1;
+        switch (opc) {
+            case 1:
+                System.out.println("Ingrese el índice de la característica de personalidad no deseada:");
+                int indexNoDeseableBf5 = scanner.nextInt();
+                noDeseable = new Caracteristica_y_Id(Caractistica.BigFiveScores, AtributoBf5.values()[indexNoDeseableBf5]);
+                System.out.println("Ingrese el maximo criterio limite (un numero entre 1 a 20 para personalidad): ");
+                maxCriterioLimitePorAlumno = scanner.nextInt();
+                break;
+            case 2:
+                System.out.println("Ingrese el índice del interés académico no deseado:");
+                int indexNoDeseableInteres = scanner.nextInt();
+                noDeseable = new Caracteristica_y_Id(Caractistica.InteresesAcademicos, AtributosInteresesAcade.values()[indexNoDeseableInteres]);
+                System.out.println("Ingrese el maximo criterio limite (un numero entre 1 a 10 para intereses academicos): ");
+                maxCriterioLimitePorAlumno = scanner.nextInt();
+                break;
+            default:
+                throw new IllegalArgumentException("Opción no válida");
+        }
+
+        // Crear una instancia de AlumnoService con la universidad proporcionada
+        AlumnoService alumnoService = new AlumnoService(universidad);
+        NetworkService networkService = new NetworkService();
+        
+        long inicio = System.nanoTime();
+
+        List<Alumno> todosLosAlumnosDeFacultad = alumnoService.todosLosAlumnosDeFacultad(nombreFacultad);
+        LinkedList<Alumno> filtrados = networkService.filtrarAlumnos(todosLosAlumnosDeFacultad, aMaximizar, noDeseable, maxCriterioLimitePorAlumno);
+
+        LinkedList<Alumno> seleccionados = networkService.recomendadosPostFiltro(alumno, filtrados, 6);
+        
+        long fin = System.nanoTime();
+        long tiempoTranscurrido = fin - inicio;
+        
+        // Mostrar el tiempo transcurrido en milisegundos
+        System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
+        System.out.println("Se procesaron :  " + todosLosAlumnosDeFacultad.size() + " alumnos");
+        System.out.println("Compañeros recomendados:");
+        
+        // Mostrar los compañeros recomendados
+        for (Alumno filtrado : seleccionados) {
+            System.out.println(filtrado.getPrimerNombre() + " " + filtrado.getPrimerApellido() + " EP: " + filtrado.getEp().getNombre() + " Ciclo: " + filtrado.getCiclo());
+        }
+    }
+}

@@ -1,0 +1,27 @@
+package com.killa.sierravp.repository;
+
+import com.killa.sierravp.domain.Clase;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
+public class ClaseRepository {
+
+    private EntityManager entityManager;
+
+    public ClaseRepository() {
+        entityManager = Persistence.createEntityManagerFactory("UnidadPersistencia").createEntityManager();
+    }
+
+    public Clase findById(int id) {
+        try {
+            TypedQuery<Clase> query = entityManager.createQuery(
+                "SELECT c FROM Clase c WHERE c.id = :id", Clase.class);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+}
