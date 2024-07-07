@@ -12,20 +12,20 @@ import java.util.Set;
 
 public class AlumnoClient {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String NOMBRE_FACULTAD = "Facultad de Derecho y Ciencia Política";
+    private static Scanner scanner = new Scanner(System.in);
+
+    private static String nombreFacultad = "Facultad de Derecho y Ciencia Política"; // Nombre de la facultad Facultad de Ciencias Fisicas
 
     public static void main(String[] args) {
-        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(NOMBRE_FACULTAD);
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Ver estadísticas de la clase");
+        System.out.println("2. Consultar rendimiento del alumno");
+        System.out.println("3. Buscar recomendaciones de compañeros");
+        System.out.println("4. Modificar perfil del usuario");  // Nueva opción
+        int opcion = scanner.nextInt();
+        scanner.nextLine();  // Limpiar el buffer
 
-        // Autenticar al usuario
-        Alumno alumnoAutenticado = Login.autenticar(universidad);
-
-        // Continuar con las funcionalidades después de la autenticación
-        mostrarMenu();
-        int opcion = SCANNER.nextInt();
-        SCANNER.nextLine();  // Limpiar el buffer
-
+        Universidad universidad = GenerarFacultades.GenerarFacultadesCompletas(nombreFacultad);
         CU03yCU05ConsultarRendimiento consultarrendimiento = new CU03yCU05ConsultarRendimiento(universidad);
         CU07RecomendacionCompañerosMejorado recomendacionCompañeros = new CU07RecomendacionCompañerosMejorado(universidad);
 
@@ -37,35 +37,25 @@ public class AlumnoClient {
                 consultarRendimiento(consultarrendimiento);
                 break;
             case 3:
-                recomendacionCompañeros.RecomendarCompañeros(alumnoAutenticado);
+                Alumno alumno = universidad.obtenerAlumnoPorId(500); // Aquí debe ir el id del alumno que se logee
+                // o mejor lo pasas como parámetro, lo envío así para poder probar nomás
+                recomendacionCompañeros.RecomendarCompañeros(alumno);
                 break;
             case 4:
                 modificarPerfilUsuario(universidad);
-                break;
-            case 5:
-                consultarRanking();
                 break;
             default:
                 System.out.println("Opción no válida");
         }
     }
 
-    private static void mostrarMenu() {
-        System.out.println("Seleccione una opción:");
-        System.out.println("1. Ver estadísticas de la clase");
-        System.out.println("2. Consultar rendimiento del alumno");
-        System.out.println("3. Buscar recomendaciones de compañeros");
-        System.out.println("4. Modificar perfil del usuario");
-        System.out.println("5. Consultar ranking");  // Nueva opción
-    }
-
     public static void verEstadisticasClase(Universidad universidad) {
         System.out.println("Ingrese el ID de la clase:");
-        int idClase = SCANNER.nextInt();
-        SCANNER.nextLine();  // Limpiar el buffer
+        int idClase = scanner.nextInt();
+        scanner.nextLine();  // Limpiar el buffer
 
         CursoService cursoService = new CursoService(universidad);
-        List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);  // Supongamos que tienes un método para esto
+        List<Nota> notas = null;  // Aquí deberías obtener las notas de la clase desde la memoria
 
         if (notas == null || notas.isEmpty()) {
             System.out.println("No se encontraron notas para la clase con ID " + idClase);
@@ -83,12 +73,13 @@ public class AlumnoClient {
     }
 
     public static void consultarRendimiento(CU03yCU05ConsultarRendimiento consultarrendimiento) {
-        int limiteSuperio = CodigoGeneratorUsuario.generate();
-        System.out.println("Ingrese el código del alumno (300 <= id < " + limiteSuperio + "):");
-        int codigoAlumno = SCANNER.nextInt();
-        SCANNER.nextLine(); 
+        int limiteSuperio=CodigoGeneratorUsuario.generate();
+        System.out.println("Ingrese el código del alumno (300 "+" <= "+" id "+ " < "+limiteSuperio);
+        int codigoAlumno = scanner.nextInt();
+        scanner.nextLine(); 
 
         consultarrendimiento.consultarRendimiento(codigoAlumno);
+        
     }
 
     public static void mostrarInfoAlumno(Clase clase) {
@@ -96,22 +87,25 @@ public class AlumnoClient {
         sb.append(clase.getCurso().getNombre()).append(" y su id de curso es ").append(clase.getCurso().getId());
         Set<Clase> clases = clase.getCurso().getClases();
         System.out.println(sb.toString());
-        System.out.println("Todas las clases de ese curso son:");
+        System.out.println("Todas las clases de ese curso son ");
         for (Clase clase1 : clases) {
-            System.out.println("Id de la clase: " + clase1.getId());
+            System.out.println("Id de la clase " + clase1.getId());
         }
     }
-
+    
     public static void modificarPerfilUsuario(Universidad universidad) {
         System.out.println("Ingrese el ID del usuario:");
-        int idUsuario = SCANNER.nextInt();
-        SCANNER.nextLine();  
+        int idUsuario = scanner.nextInt();
+        scanner.nextLine();  
         Alumno alumno = null;
-        long inicio = System.nanoTime();
+        long inicio = 0;
+        long fin = 0;
+        long tiempoTranscurrido = 0;
+        inicio = System.nanoTime();
         alumno = universidad.obtenerAlumnoPorId(idUsuario);
-        long fin = System.nanoTime();
+        fin = System.nanoTime();
         
-        long tiempoTranscurrido = fin - inicio;
+        tiempoTranscurrido = fin - inicio;
         System.out.println("Solucion Optima");
         System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
         
@@ -121,21 +115,17 @@ public class AlumnoClient {
         }
 
         System.out.println("Crendiales actuales: ");
-        System.out.println(" correo: " + alumno.getCorreo() + " password: " + alumno.getContraseña());
+        System.out.println(" correo: " + alumno.getCorreo() + " password: "+alumno.getContraseña());
         
         System.out.println("Ingrese la contraseña:");
-        String contraseña = SCANNER.nextLine();
+        String contraseña = scanner.nextLine();
         System.out.println("Ingrese el correo:");
-        String correo = SCANNER.nextLine();
+        String correo = scanner.nextLine();
 
         alumno.actualizarPerfil(contraseña, correo);
 
         System.out.println("Perfil actualizado exitosamente.");
-        System.out.println(" correo: " + alumno.getCorreo() + " password: " + alumno.getContraseña());
-    }
-
-    public static void consultarRanking() {
-        // Método vacío para implementar más tarde
-        System.out.println("Funcionalidad de consultar ranking no implementada aún.");
+        System.out.println(" correo: " + alumno.getCorreo() + " password: "+alumno.getContraseña());
     }
 }
+
