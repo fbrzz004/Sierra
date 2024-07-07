@@ -2,6 +2,7 @@ package com.killa.sierravp.repository;
 
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
+import com.killa.sierravp.domain.Ciclo;
 import com.killa.sierravp.domain.Curso;
 import com.killa.sierravp.domain.EscuelaProfesional;
 import com.killa.sierravp.domain.Facultad;
@@ -71,28 +72,20 @@ public class Universidad {
                 }
             }
         }
-        System.out.println("Se busco entre -- > " + mapaAlumnos.size() + " alumnos");
         return mapaAlumnos.get(idAlumno);  // Devuelve null si no se encuentra el alumno
     }
 
     public Alumno obtenerAlumnoPorIdIngenuo(int idAlumno) {
-        int c = 0;
         for (FacultadData facultad : facultades.values()) {
             for (EscuelaData escuela : facultad.getEscuelas().values()) {
                 for (Alumno alumno : escuela.getAlumnos()) {
-                    c++;
                     if (alumno.getCodigo() == idAlumno) {
-                        System.out.println("Se busco entre -- > " + c + " alumnos");
                         return alumno;
                     }
                 }
             }
         }
         return null;  // Devuelve null si no se encuentra el alumno
-    }
-
-    public Profesor obtenerProfesorPorId(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public static class FacultadData {
@@ -138,7 +131,7 @@ public class Universidad {
         private List<Profesor> profesores;
         private List<Curso> cursos;
         private List<Clase> clases;
-        private List<EscuelaProfesional> escuelasProfesionales;
+        private List<Ciclo> ciclos;
 
         public EscuelaData(EscuelaProfesional escuela) {
             this.escuela = escuela;
@@ -146,7 +139,7 @@ public class Universidad {
             this.profesores = new ArrayList<>();
             this.cursos = new ArrayList<>();
             this.clases = new ArrayList<>();
-            this.escuelasProfesionales = new ArrayList<>();
+            this.ciclos = new ArrayList<>();
         }
 
         public void agregarAlumno(Alumno alumno) {
@@ -165,8 +158,8 @@ public class Universidad {
             clases.add(clase);
         }
 
-        public void agregarEscuelaProfesional(EscuelaProfesional escuelaProfesional) {
-            escuelasProfesionales.add(escuelaProfesional);
+        public void agregarCiclo(Ciclo ciclo) {
+            ciclos.add(ciclo);
         }
 
         public List<Alumno> getAlumnos() {
@@ -185,8 +178,8 @@ public class Universidad {
             return clases;
         }
 
-        public List<EscuelaProfesional> getEscuelasProfesionales() {
-            return escuelasProfesionales;
+        public List<Ciclo> getCiclos() {
+            return ciclos;
         }
 
         public EscuelaProfesional getEscuela() {

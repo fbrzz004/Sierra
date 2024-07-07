@@ -1,14 +1,21 @@
 package com.killa.sierravp.service;
 
 import com.killa.sierravp.domain.Ranking;
+import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.repository.RankingRepository;
+import com.killa.sierravp.repository.Universidad;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RankingService {
 
     private final RankingRepository rankingRepository;
+    private final Universidad universidad;
 
-    public RankingService() {
+    public RankingService(Universidad universidad) {
+        this.universidad = universidad;
         this.rankingRepository = new RankingRepository();
     }
 
@@ -20,7 +27,24 @@ public class RankingService {
         rankingRepository.save(ranking);
     }
 
-    // Método para ordenar los rankings usando quicksort
+    public void generarRanking() {
+        for (Universidad.FacultadData facultadData : universidad.getFacultades().values()) {
+            for (Universidad.EscuelaData escuelaData : facultadData.getEscuelas().values()) {
+                List<Alumno> alumnos = new ArrayList<>();
+                escuelaData.getCiclos().forEach(ciclo -> alumnos.addAll(ciclo.getAlumnos()));
+
+                alumnos.sort(Comparator.comparingDouble(Alumno::getCraPonderadoActual).reversed());
+
+                int posicion = 1;
+                for (Alumno alumno : alumnos) {
+                    Ranking ranking = new Ranking(posicion, alumno, escuelaData.getEscuela());
+                    guardarRanking(ranking);
+                    posicion++;
+                }
+            }
+        }
+    }
+
     public void ordenarRankings(List<Ranking> rankings) {
         quicksort(rankings, 0, rankings.size() - 1);
     }

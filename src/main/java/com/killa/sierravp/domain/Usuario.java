@@ -28,19 +28,19 @@ public class Usuario implements Serializable {
     private int DNI;
 
     @Column(unique = true, nullable = false) //no deja crear profe ni admin si no le asigno un valor al codigo
-     private int codigo;
+    private int codigo;
     
     @Column(nullable = false)
-     String primerNombre;
+    protected String primerNombre;
 
     @Column(nullable = false)
-     String segundoNombre;
+    protected String segundoNombre;
     
     @Column(nullable = false)
-     String primerApellido;
+    protected String primerApellido;
     
     @Column(nullable = false)
-     String segundoApellido;
+    protected String segundoApellido;
 
     @Column(nullable = false)
     private String contraseña;
@@ -53,8 +53,8 @@ public class Usuario implements Serializable {
     }
 
     public Usuario() {
-        this.contraseña=generarContra(7);
-        this.codigo=  CodigoGeneratorUsuario.generate();
+        this.contraseña = generarContra(7);
+        this.codigo = CodigoGeneratorUsuario.generate();
     }
 
     public int getDNI() {
@@ -81,14 +81,13 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
-    public void generarCorreo(){
+    public void generarCorreo() {
         StringBuilder sb = new StringBuilder(this.primerNombre.toLowerCase());
         sb.append(".").append(this.primerApellido.toLowerCase()).append("@unmsm.edu.pe");
-        this.correo=sb.toString();
+        this.correo = sb.toString();
     }
     
     public static String generarContra(int tamaño) {
-
         int leftLimit = 48; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = tamaño;
@@ -133,7 +132,7 @@ public class Usuario implements Serializable {
         this.segundoApellido = segundoApellido;
     }
 
-    public void actualizarPerfil(String primerNombre, String segundoNombre, String primerApe, String segundoApe,String contraseña, String correo) {
+    public void actualizarPerfil(String primerNombre, String segundoNombre, String primerApe, String segundoApe, String contraseña, String correo) {
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApe;

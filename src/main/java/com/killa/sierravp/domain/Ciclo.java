@@ -1,6 +1,8 @@
 package com.killa.sierravp.domain;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -53,5 +55,13 @@ public class Ciclo {
 
     public void setClases(Set<Clase> clases) {
         this.clases = clases;
+    }
+
+    public List<Alumno> getAlumnos() {
+        List<Alumno> alumnos = new ArrayList<>();
+        for (Clase clase : clases) {
+            alumnos.addAll(clase.getAlumnos());
+        }
+        return alumnos;
     }
 }

@@ -1,19 +1,25 @@
 package com.killa.sierravp.client;
 
+import com.killa.sierravp.domain.Ranking;
 import com.killa.sierravp.service.UsuarioService;
 import com.killa.sierravp.service.ClaseService;
+import com.killa.sierravp.service.RankingService;
 import com.killa.sierravp.repository.ClaseRepository;
 import com.killa.sierravp.repository.NotaRepository;
+import com.killa.sierravp.repository.Universidad;
+import java.util.List;
 import java.util.Scanner;
 
 public class SIERRAVP {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        UsuarioService usuarioService = new UsuarioService();
+        Universidad universidad = new Universidad();
+        UsuarioService usuarioService = new UsuarioService(universidad);
         ClaseRepository claseRepository = new ClaseRepository();
         NotaRepository notaRepository = new NotaRepository();
         ClaseService claseService = new ClaseService(claseRepository, notaRepository);
+        RankingService rankingService = new RankingService(universidad);
 
         System.out.println("Bienvenido al Sistema Integral de Evaluación del Rendimiento Académico y Formación de Vínculos Profesionales (SIERRAVP)");
 
@@ -22,7 +28,8 @@ public class SIERRAVP {
             System.out.println("1. Consultar Clase por ID");
             System.out.println("2. Modificar Perfil de Usuario");
             System.out.println("3. Ver Estadísticas de Clase");
-            System.out.println("4. Salir");
+            System.out.println("4. Generar Ranking por Facultad y Escuela Profesional");
+            System.out.println("5. Salir");
             int opcion = scanner.nextInt();
             scanner.nextLine();
             switch (opcion) {
@@ -36,6 +43,9 @@ public class SIERRAVP {
                     verEstadisticasClase(scanner, claseService);
                     break;
                 case 4:
+                    generarRanking(usuarioService);
+                    break;
+                case 5:
                     System.out.println("Saliendo del sistema.");
                     return;
                 default:
@@ -74,5 +84,11 @@ public class SIERRAVP {
         int claseId = scanner.nextInt();
         String estadisticas = claseService.obtenerEstadisticasClase(claseId);
         System.out.println(estadisticas);
+    }
+
+    private static void generarRanking(UsuarioService usuarioService) {
+        List<Ranking> rankings = usuarioService.obtenerYOrdenarRankings();
+        System.out.println("Ranking generado y guardado exitosamente.");
+        usuarioService.imprimirRankings(rankings);
     }
 }

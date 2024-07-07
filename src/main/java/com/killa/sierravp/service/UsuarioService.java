@@ -3,6 +3,7 @@ package com.killa.sierravp.service;
 import com.killa.sierravp.domain.Ranking;
 import com.killa.sierravp.domain.Usuario;
 import com.killa.sierravp.repository.UsuarioRepository;
+import com.killa.sierravp.repository.Universidad;
 import java.util.List;
 
 public class UsuarioService {
@@ -10,9 +11,9 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private RankingService rankingService;
 
-    public UsuarioService() {
+    public UsuarioService(Universidad universidad) {
         usuarioRepository = new UsuarioRepository();
-        rankingService = new RankingService();
+        rankingService = new RankingService(universidad);
     }
 
     public boolean autenticarUsuario(String correo, String contraseña) {
@@ -37,8 +38,23 @@ public class UsuarioService {
 
     // Método para obtener y ordenar rankings
     public List<Ranking> obtenerYOrdenarRankings() {
+        rankingService.generarRanking(); // Generar el ranking si no existe
         List<Ranking> rankings = rankingService.obtenerRankings();
         rankingService.ordenarRankings(rankings);
         return rankings;
+    }
+
+    // Método para imprimir rankings
+    public void imprimirRankings(List<Ranking> rankings) {
+        if (rankings.isEmpty()) {
+            System.out.println("No hay rankings disponibles para mostrar.");
+            return;
+        }
+        
+        for (Ranking ranking : rankings) {
+            System.out.println("Posición: " + ranking.getPosicion() +
+                               ", Alumno: " + ranking.getAlumno().getPrimerNombre() + " " + ranking.getAlumno().getPrimerApellido() +
+                               ", Escuela: " + ranking.getEscuela().getNombre());
+        }
     }
 }
