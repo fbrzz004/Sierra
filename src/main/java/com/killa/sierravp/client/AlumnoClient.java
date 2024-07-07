@@ -3,8 +3,10 @@ package com.killa.sierravp.client;
 import com.killa.sierravp.domain.Alumno;
 import com.killa.sierravp.domain.Clase;
 import com.killa.sierravp.domain.Nota;
+import com.killa.sierravp.domain.Ranking;
 import com.killa.sierravp.repository.Universidad;
 import com.killa.sierravp.service.CursoService;
+import com.killa.sierravp.service.UsuarioService;
 import com.killa.sierravp.util.CodigoGeneratorUsuario;
 import java.util.List;
 import java.util.Scanner;
@@ -31,7 +33,7 @@ public class AlumnoClient {
 
         switch (opcion) {
             case 1:
-                verEstadisticasClase(universidad);
+                CU04VerEstadisticasClase(universidad);
                 break;
             case 2:
                 consultarRendimiento(consultarrendimiento);
@@ -40,10 +42,10 @@ public class AlumnoClient {
                 recomendacionCompañeros.RecomendarCompañeros(alumnoAutenticado);
                 break;
             case 4:
-                modificarPerfilUsuario(universidad);
+                CU08ModificarPerfilUsuario(universidad);
                 break;
             case 5:
-                consultarRanking();
+                CU06GenerarYObtenerRanking(universidad);
                 break;
             default:
                 System.out.println("Opción no válida");
@@ -56,16 +58,16 @@ public class AlumnoClient {
         System.out.println("2. Consultar rendimiento del alumno");
         System.out.println("3. Buscar recomendaciones de compañeros");
         System.out.println("4. Modificar perfil del usuario");
-        System.out.println("5. Consultar ranking");  // Nueva opción
+        System.out.println("5. Consultar ranking");
     }
 
-    public static void verEstadisticasClase(Universidad universidad) {
+    public static void CU04VerEstadisticasClase(Universidad universidad) {
         System.out.println("Ingrese el ID de la clase:");
         int idClase = SCANNER.nextInt();
         SCANNER.nextLine();  // Limpiar el buffer
 
         CursoService cursoService = new CursoService(universidad);
-        List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);  // Supongamos que tienes un método para esto
+        List<Nota> notas = cursoService.obtenerNotasPorClase(idClase);
 
         if (notas == null || notas.isEmpty()) {
             System.out.println("No se encontraron notas para la clase con ID " + idClase);
@@ -86,7 +88,7 @@ public class AlumnoClient {
         int limiteSuperio = CodigoGeneratorUsuario.generate();
         System.out.println("Ingrese el código del alumno (300 <= id < " + limiteSuperio + "):");
         int codigoAlumno = SCANNER.nextInt();
-        SCANNER.nextLine(); 
+        SCANNER.nextLine();
 
         consultarrendimiento.consultarRendimiento(codigoAlumno);
     }
@@ -102,27 +104,27 @@ public class AlumnoClient {
         }
     }
 
-    public static void modificarPerfilUsuario(Universidad universidad) {
+    public static void CU08ModificarPerfilUsuario(Universidad universidad) {
         System.out.println("Ingrese el ID del usuario:");
         int idUsuario = SCANNER.nextInt();
-        SCANNER.nextLine();  
+        SCANNER.nextLine();
         Alumno alumno = null;
         long inicio = System.nanoTime();
         alumno = universidad.obtenerAlumnoPorId(idUsuario);
         long fin = System.nanoTime();
-        
+
         long tiempoTranscurrido = fin - inicio;
         System.out.println("Solucion Optima");
         System.out.println("Tiempo transcurrido: " + tiempoTranscurrido / 1_000_000.0 + " milisegundos");
-        
+
         if (alumno == null) {
             System.out.println("No se encontró el usuario con ID " + idUsuario);
             return;
         }
 
-        System.out.println("Crendiales actuales: ");
+        System.out.println("Credenciales actuales: ");
         System.out.println(" correo: " + alumno.getCorreo() + " password: " + alumno.getContraseña());
-        
+
         System.out.println("Ingrese la contraseña:");
         String contraseña = SCANNER.nextLine();
         System.out.println("Ingrese el correo:");
@@ -134,8 +136,10 @@ public class AlumnoClient {
         System.out.println(" correo: " + alumno.getCorreo() + " password: " + alumno.getContraseña());
     }
 
-    public static void consultarRanking() {
-        // Método vacío para implementar más tarde
-        System.out.println("Funcionalidad de consultar ranking no implementada aún.");
+    public static void CU06GenerarYObtenerRanking(Universidad universidad) {
+        UsuarioService usuarioService = new UsuarioService(universidad);
+        List<Ranking> rankings = usuarioService.obtenerYOrdenarRankings();
+        System.out.println("Ranking generado y guardado exitosamente.");
+        usuarioService.imprimirRankings(rankings);
     }
 }

@@ -37,13 +37,13 @@ public class SIERRAVP {
                     ClaseClient.main(args);
                     break;
                 case 2:
-                    modificarPerfil(scanner, usuarioService);
+                    AlumnoClient.CU08ModificarPerfilUsuario(universidad);
                     break;
                 case 3:
-                    verEstadisticasClase(scanner, claseService);
+                    AlumnoClient.CU04VerEstadisticasClase(universidad);
                     break;
                 case 4:
-                    generarRanking(usuarioService);
+                    AlumnoClient.CU06GenerarYObtenerRanking(universidad);
                     break;
                 case 5:
                     System.out.println("Saliendo del sistema.");
@@ -52,43 +52,5 @@ public class SIERRAVP {
                     System.out.println("Opción no válida. Intente nuevamente.");
             }
         }
-    }
-
-    private static void modificarPerfil(Scanner scanner, UsuarioService usuarioService) {
-        System.out.println("Ingrese su DNI:");
-        int dni = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Ingrese su primer nombre:");
-        String n1 = scanner.nextLine();
-        System.out.println("Ingrese su segundo nombre:");
-        String a1 = scanner.nextLine();
-        System.out.println("Ingrese su apellido paterno:");
-        String n2 = scanner.nextLine();
-        System.out.println("Ingrese su apellido materno:");
-        String a2 = scanner.nextLine();
-        System.out.println("Ingrese su nueva contraseña:");
-        String contraseña = scanner.nextLine();
-        System.out.println("Ingrese su nuevo correo:");
-        String correo = scanner.nextLine();
-
-        boolean resultado = usuarioService.modificarPerfil(dni, n1, n2, a1, a2, contraseña, correo);
-        if (resultado) {
-            System.out.println("Perfil actualizado exitosamente.");
-        } else {
-            System.out.println("Error al actualizar el perfil. Usuario no encontrado.");
-        }
-    }
-
-    private static void verEstadisticasClase(Scanner scanner, ClaseService claseService) {
-        System.out.println("Ingrese el ID de la clase para consultar estadísticas:");
-        int claseId = scanner.nextInt();
-        String estadisticas = claseService.obtenerEstadisticasClase(claseId);
-        System.out.println(estadisticas);
-    }
-
-    private static void generarRanking(UsuarioService usuarioService) {
-        List<Ranking> rankings = usuarioService.obtenerYOrdenarRankings();
-        System.out.println("Ranking generado y guardado exitosamente.");
-        usuarioService.imprimirRankings(rankings);
     }
 }
